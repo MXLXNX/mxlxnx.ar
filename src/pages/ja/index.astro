@@ -54,9 +54,11 @@ const silentiaProjects = [
 ---
 
 <BaseLayout title="ホーム" lang="ja">
-  <Hero name="マレナ・ポサダス" title="MXLXNX" subtitle="クリエイティブディレクター＆マルチディシプリナリーアーティスト" backgroundImage="/images/thelaundryman_Create_an_intense_futuristic_nightclub_scene_in_24ed272c-54dd-4c8f-ac37-c7c711bb28ed_2.png" />
+  <Hero name="マレナ・ポサダス" title="MXLXNX" subtitle="クリエイティブディレクター＆マルチディシプリナリーアーティスト" />
 
   <VideoShowcase video="/videos/REEL.mp4" title="ショーリール" subtitle="私のクリエイティブな世界への一瞥" />
+
+  <About lang="ja" />
 
   <section class="selected-works-header" id="selected-works">
     <div class="container">
@@ -64,18 +66,19 @@ const silentiaProjects = [
     </div>
   </section>
 
-  <VideoGrid videos={f1Videos} sectionTitle="F1 ビジュアル" sectionSubtitle="マクラーレン・パーティーでのレ・ツインズの曲のためのビジュアル — F1放送用のすべての動画を制作" featured={true} />
-  <VideoGrid videos={meliVideos} sectionTitle="MELI" sectionSubtitle="Mercado Libreのコマーシャルワーク" singleVideo={true} />
+  <VideoGrid videos={f1Videos} sectionTitle="F1 ビジュアル" sectionSubtitle="マクラーレンF1エクスクルーシブパーティーでのレ・ツインズ公式ビジュアル。クリエイティブディレクション、モーションデザイン、リアルタイムグラフィックス。Flamboyant Paradiseとの共同制作。" featured={true} />
+  <VideoGrid videos={meliVideos} sectionTitle="MELI" sectionSubtitle="Mercado Libre eコマースプラットフォーム向けAI強化広告。1st Ave Machineとのチームプロジェクト。" singleVideo={true} />
   <ProjectGrid projects={charactersProjects} lang="ja" sectionTitle="キャラクター" sectionSubtitle="強いキャラクターを作ります。あなたを掴んで離さない個性。" showFilters={false} variant="accent" />
   <ProjectGrid projects={moodsProjects} lang="ja" sectionTitle="ムード" sectionSubtitle="ラテックス、ファッションキャンペーン、ネオンワールド、そして私がデザインするビジュアルアトモスフィア" showFilters={false} variant="accent" effect="flash" />
+
   <ProjectGrid projects={silentiaProjects} lang="ja" sectionTitle="SILENTIA" sectionSubtitle="私が創造したビジュアルワールド — アーティストのフアン・ペンナと共同執筆したオリジナルSFプロジェクト。脚本とルック完成、資金調達中。" showFilters={false} effect="sand" />
 
-  <About lang="ja" />
   <Contact lang="ja" />
 </BaseLayout>
 
 <style>
-  .selected-works-header { background: var(--color-black); padding: var(--space-4xl) 0 var(--space-xl); text-align: center; }
+  .selected-works-header { background: linear-gradient(180deg, rgb(10, 10, 10) 0%, #12081a 30%, #180a1a 50%, #15081a 70%, rgb(10, 10, 10) 100%); padding: var(--space-4xl) 0 var(--space-xl); text-align: center; position: relative; }
+  .selected-works-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(200, 50, 255, 0.1) 0%, transparent 60%), radial-gradient(ellipse at 20% 30%, rgba(255, 100, 150, 0.08) 0%, transparent 40%), radial-gradient(ellipse at 80% 70%, rgba(100, 150, 255, 0.06) 0%, transparent 40%); pointer-events: none; }
   .selected-works-title { font-family: var(--font-accent); font-size: var(--text-6xl); color: var(--color-white); letter-spacing: 0.1em; position: relative; display: inline-block; }
   .selected-works-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 100px; height: 2px; background: var(--color-white); }
 </style>

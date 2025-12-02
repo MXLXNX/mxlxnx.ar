@@ -1,0 +1,88 @@
+---
+interface Props {
+  video: string;
+}
+
+const { video } = Astro.props;
+---
+
+<section class="video-interlude">
+  <div class="video-interlude__wrapper">
+    <video
+      class="video-interlude__video"
+      src={video}
+      muted
+      loop
+      playsinline
+      preload="metadata"
+    />
+  </div>
+  <div class="video-interlude__overlay"></div>
+</section>
+
+<style>
+  .video-interlude {
+    position: relative;
+    height: 50vh;
+    min-height: 300px;
+    overflow: hidden;
+    background: rgb(10, 10, 10);
+  }
+
+  .video-interlude__wrapper {
+    position: absolute;
+    inset: -20% 0;
+    height: 140%;
+  }
+
+  .video-interlude__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.25;
+    filter: saturate(0.7) blur(1px);
+  }
+
+  .video-interlude__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom,
+        rgb(10, 10, 10) 0%,
+        rgba(10, 10, 10, 0.95) 5%,
+        rgba(10, 10, 10, 0.7) 15%,
+        rgba(10, 10, 10, 0.3) 35%,
+        rgba(10, 10, 10, 0.2) 50%,
+        rgba(10, 10, 10, 0.3) 65%,
+        rgba(10, 10, 10, 0.7) 85%,
+        rgba(10, 10, 10, 0.95) 95%,
+        rgb(10, 10, 10) 100%
+      ),
+      radial-gradient(ellipse at 50% 50%, rgba(20, 10, 30, 0.3) 0%, transparent 70%);
+  }
+
+  @media (max-width: 768px) {
+    .video-interlude {
+      height: 35vh;
+      min-height: 220px;
+    }
+  }
+</style>
+
+<script>
+  const videos = document.querySelectorAll('.video-interlude__video');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target as HTMLVideoElement;
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  videos.forEach(video => observer.observe(video));
+</script>

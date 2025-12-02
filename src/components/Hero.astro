@@ -3,20 +3,18 @@ interface Props {
   title?: string;
   subtitle?: string;
   name?: string;
-  backgroundImage?: string;
 }
 
 const {
   title = "MXLXNX",
   subtitle = "Creative & Multidisciplinary Artist",
-  name = "Malena Posadas",
-  backgroundImage = "/images/thelaundryman_Create_a_pure_abstract_futuristic_cyberpunk_bac_4070d1d9-631c-4b7d-920c-8fdb4e8e8a9e_2.png"
+  name = "Malena Posadas"
 } = Astro.props;
 ---
 
 <section class="hero" id="hero">
   <div class="hero__bg">
-    <img src={backgroundImage} alt="" class="hero__bg-image" />
+    <div class="hero__flash-layer" data-flash-layer></div>
     <div class="hero__overlay"></div>
   </div>
 
@@ -68,13 +66,15 @@ const {
     position: absolute;
     inset: 0;
     z-index: 0;
+    background: rgb(10, 10, 10);
   }
 
-  .hero__bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+  .hero__flash-layer {
+    position: absolute;
+    inset: 0;
+    background: rgb(10, 10, 10);
+    opacity: 0.5;
+    transition: background-color 0.05s ease-out, opacity 0.1s ease-out;
   }
 
   .hero__overlay {
@@ -82,9 +82,11 @@ const {
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.6) 50%,
-      rgba(0, 0, 0, 0.8) 100%
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.15) 30%,
+      rgba(0, 0, 0, 0.3) 60%,
+      rgba(10, 10, 10, 0.8) 85%,
+      rgb(10, 10, 10) 100%
     );
   }
 
@@ -238,5 +240,77 @@ const {
     .hero__scroll-line {
       animation: none;
     }
+    .hero__flash-layer {
+      opacity: 0 !important;
+    }
   }
 </style>
+
+<script>
+  const flashLayer = document.querySelector('[data-flash-layer]') as HTMLElement;
+
+  if (flashLayer) {
+    const colors = [
+      { bg: '#000000', opacity: 0.9 },   // black
+      { bg: '#ffffff', opacity: 0.4 },   // white flash
+      { bg: '#000000', opacity: 0.8 },   // black
+      { bg: '#ff1744', opacity: 0.35 },  // red
+      { bg: '#0a0a0a', opacity: 0.9 },   // dark
+      { bg: '#ff4081', opacity: 0.3 },   // pink
+      { bg: '#000000', opacity: 0.85 },  // black
+      { bg: '#2979ff', opacity: 0.3 },   // blue
+      { bg: '#0a0a0a', opacity: 0.9 },   // dark
+      { bg: '#ffffff', opacity: 0.5 },   // white flash
+      { bg: '#000000', opacity: 0.9 },   // black
+      { bg: '#e040fb', opacity: 0.25 },  // purple
+      { bg: '#0a0a0a', opacity: 0.85 },  // dark
+      { bg: '#ff6e40', opacity: 0.3 },   // orange
+      { bg: '#000000', opacity: 0.9 },   // black
+      { bg: '#00e5ff', opacity: 0.25 },  // cyan
+    ];
+
+    let currentIndex = 0;
+    let nextFlashTime = 0;
+    let isFlashing = false;
+
+    function getRandomInterval() {
+      // Random intervals between 80ms and 400ms for unpredictable rhythm
+      return Math.random() * 320 + 80;
+    }
+
+    function getFlashDuration() {
+      // Flash duration between 30ms and 120ms
+      return Math.random() * 90 + 30;
+    }
+
+    function flash() {
+      const now = performance.now();
+
+      if (now >= nextFlashTime) {
+        if (!isFlashing) {
+          // Start flash
+          const color = colors[currentIndex];
+          flashLayer.style.backgroundColor = color.bg;
+          flashLayer.style.opacity = String(color.opacity);
+          isFlashing = true;
+          nextFlashTime = now + getFlashDuration();
+          currentIndex = (currentIndex + 1) % colors.length;
+        } else {
+          // End flash - return to dark
+          flashLayer.style.backgroundColor = '#0a0a0a';
+          flashLayer.style.opacity = '0.6';
+          isFlashing = false;
+          nextFlashTime = now + getRandomInterval();
+        }
+      }
+
+      requestAnimationFrame(flash);
+    }
+
+    // Start with a slight delay
+    setTimeout(() => {
+      nextFlashTime = performance.now() + 500;
+      flash();
+    }, 100);
+  }
+</script>

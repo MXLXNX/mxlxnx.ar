@@ -31,16 +31,17 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
       {videos.map((video, index) => (
         <AnimatedSection animation="fade-up" delay={index * 100} className="video-grid__item">
           <div class="video-grid__video-wrapper" data-video-wrapper>
+            {video.poster && (
+              <img class="video-grid__poster" src={video.poster} alt={video.title} />
+            )}
             <video
               class="video-grid__video"
-              data-src={video.src}
-              poster={video.poster}
-              preload="none"
+              src={video.src}
+              preload="metadata"
               playsinline
               muted
               loop
             >
-              <source data-src={video.src} type="video/mp4" />
             </video>
 
             <button class="video-grid__play-btn" aria-label="Play video" data-play-btn>
@@ -74,7 +75,18 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
 
 <style>
   .video-grid {
-    background: linear-gradient(180deg, #0a0a0a 0%, #0f0505 25%, #050510 50%, #0a0808 75%, #0a0a0a 100%);
+    background: linear-gradient(180deg,
+      rgb(10, 10, 10) 0%,
+      rgba(10, 10, 10, 0.98) 2%,
+      #120810 8%,
+      #150810 15%,
+      #1a0a12 30%,
+      #12081a 50%,
+      #0a1015 70%,
+      #0c0a10 88%,
+      rgba(10, 10, 10, 0.98) 98%,
+      rgb(10, 10, 10) 100%
+    );
     position: relative;
   }
 
@@ -86,8 +98,9 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
     right: 0;
     bottom: 0;
     background:
-      radial-gradient(ellipse at 10% 50%, rgba(255, 80, 0, 0.12) 0%, transparent 40%),
-      radial-gradient(ellipse at 90% 30%, rgba(255, 0, 80, 0.1) 0%, transparent 40%);
+      radial-gradient(ellipse at 10% 40%, rgba(255, 50, 100, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 60%, rgba(100, 50, 255, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(255, 100, 50, 0.06) 0%, transparent 40%);
     pointer-events: none;
   }
 
@@ -196,6 +209,22 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
     background: var(--color-black);
   }
 
+  .video-grid__poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .video-grid__video-wrapper.is-playing .video-grid__poster {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .video-grid__play-btn {
     position: absolute;
     top: 50%;
@@ -285,34 +314,22 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
 <script>
   document.querySelectorAll('[data-video-wrapper]').forEach(wrapper => {
     const video = wrapper.querySelector('video') as HTMLVideoElement;
-    const source = video?.querySelector('source') as HTMLSourceElement;
     const playBtn = wrapper.querySelector('[data-play-btn]') as HTMLButtonElement;
     const unmuteBtn = wrapper.querySelector('[data-unmute-btn]') as HTMLButtonElement;
-    let videoLoaded = false;
-
-    function loadAndPlay() {
-      if (!videoLoaded && video && source) {
-        const src = video.dataset.src || source.dataset.src;
-        if (src) {
-          video.src = src;
-          source.src = src;
-          video.load();
-          videoLoaded = true;
-        }
-      }
-      video?.play();
-      wrapper.classList.add('is-playing');
-    }
 
     if (video && playBtn) {
       playBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (video.paused) loadAndPlay();
+        if (video.paused) {
+          video.play();
+          wrapper.classList.add('is-playing');
+        }
       });
 
       wrapper.addEventListener('click', () => {
         if (video.paused) {
-          loadAndPlay();
+          video.play();
+          wrapper.classList.add('is-playing');
         } else {
           video.pause();
           wrapper.classList.remove('is-playing');

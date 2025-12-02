@@ -104,12 +104,47 @@ const categories = ['all', 'brands', 'own-ideas', 'f1-visuals'] as const;
 
 <style>
   .projects {
-    background: var(--color-gray-900);
+    background: linear-gradient(180deg,
+      rgb(10, 10, 10) 0%,
+      rgba(10, 10, 10, 0.98) 2%,
+      #12101a 10%,
+      #181220 35%,
+      #1a1018 55%,
+      #120a15 80%,
+      #0d0a12 92%,
+      rgba(10, 10, 10, 0.98) 98%,
+      rgb(10, 10, 10) 100%
+    );
     position: relative;
   }
 
+  .projects::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(150, 50, 255, 0.10) 0%, transparent 45%),
+      radial-gradient(ellipse at 80% 70%, rgba(255, 50, 150, 0.08) 0%, transparent 45%);
+    pointer-events: none;
+  }
+
   .projects--accent {
-    background: linear-gradient(160deg, #0a0a0a 0%, #0a0510 20%, #100505 40%, #050a08 60%, #08050a 80%, #0a0a0a 100%);
+    background: linear-gradient(180deg,
+      rgb(10, 10, 10) 0%,
+      rgba(10, 10, 10, 0.98) 2%,
+      #14081a 8%,
+      #18081a 15%,
+      #1a1020 35%,
+      #100a18 55%,
+      #0a1212 75%,
+      #0f0a15 88%,
+      #0c0810 95%,
+      rgba(10, 10, 10, 0.98) 98%,
+      rgb(10, 10, 10) 100%
+    );
     position: relative;
   }
 
@@ -121,9 +156,9 @@ const categories = ['all', 'brands', 'own-ideas', 'f1-visuals'] as const;
     right: 0;
     bottom: 0;
     background:
-      radial-gradient(ellipse at 30% 20%, rgba(255, 0, 100, 0.1) 0%, transparent 40%),
-      radial-gradient(ellipse at 70% 70%, rgba(100, 0, 255, 0.08) 0%, transparent 40%),
-      radial-gradient(ellipse at 90% 10%, rgba(255, 100, 0, 0.06) 0%, transparent 30%);
+      radial-gradient(ellipse at 25% 25%, rgba(255, 0, 150, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 75% 50%, rgba(100, 0, 255, 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(0, 255, 150, 0.06) 0%, transparent 40%);
     pointer-events: none;
   }
 
@@ -368,10 +403,26 @@ const categories = ['all', 'brands', 'own-ideas', 'f1-visuals'] as const;
       speedX: number;
       speedY: number;
       opacity: number;
+      type: 'grain' | 'dust' | 'wisp';
+      wobble: number;
+      wobbleSpeed: number;
+      color: string;
     }
 
     const particles: SandParticle[] = [];
-    const particleCount = 150;
+    const particleCount = 400;
+    let time = 0;
+    let windStrength = 1;
+    let windTarget = 1;
+
+    const colors = [
+      '210, 180, 140',  // tan
+      '220, 190, 150',  // light sand
+      '200, 170, 130',  // dark sand
+      '230, 200, 160',  // cream
+      '190, 160, 120',  // brown sand
+      '240, 220, 180',  // golden
+    ];
 
     function resizeCanvas() {
       if (parent && sandCanvas) {
@@ -382,14 +433,52 @@ const categories = ['all', 'brands', 'own-ideas', 'f1-visuals'] as const;
 
     function createParticles() {
       particles.length = 0;
-      for (let i = 0; i < particleCount; i++) {
+
+      // Small grains - lots of them
+      for (let i = 0; i < particleCount * 0.6; i++) {
         particles.push({
           x: Math.random() * sandCanvas.width,
           y: Math.random() * sandCanvas.height,
-          size: Math.random() * 2 + 1,
-          speedX: Math.random() * 1.5 + 0.5,
-          speedY: Math.random() * 0.5 - 0.25,
-          opacity: Math.random() * 0.5 + 0.2
+          size: Math.random() * 1.5 + 0.5,
+          speedX: Math.random() * 1.2 + 0.3,
+          speedY: Math.random() * 0.4 - 0.2,
+          opacity: Math.random() * 0.3 + 0.1,
+          type: 'grain',
+          wobble: Math.random() * Math.PI * 2,
+          wobbleSpeed: Math.random() * 0.02 + 0.01,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+
+      // Medium dust particles
+      for (let i = 0; i < particleCount * 0.3; i++) {
+        particles.push({
+          x: Math.random() * sandCanvas.width,
+          y: Math.random() * sandCanvas.height,
+          size: Math.random() * 3 + 2,
+          speedX: Math.random() * 0.8 + 0.2,
+          speedY: Math.random() * 0.3 - 0.15,
+          opacity: Math.random() * 0.15 + 0.05,
+          type: 'dust',
+          wobble: Math.random() * Math.PI * 2,
+          wobbleSpeed: Math.random() * 0.015 + 0.005,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+
+      // Large soft wisps - few but atmospheric
+      for (let i = 0; i < particleCount * 0.1; i++) {
+        particles.push({
+          x: Math.random() * sandCanvas.width,
+          y: Math.random() * sandCanvas.height,
+          size: Math.random() * 40 + 20,
+          speedX: Math.random() * 0.4 + 0.1,
+          speedY: Math.random() * 0.2 - 0.1,
+          opacity: Math.random() * 0.04 + 0.01,
+          type: 'wisp',
+          wobble: Math.random() * Math.PI * 2,
+          wobbleSpeed: Math.random() * 0.008 + 0.002,
+          color: colors[Math.floor(Math.random() * 3)]
         });
       }
     }
@@ -398,21 +487,53 @@ const categories = ['all', 'brands', 'own-ideas', 'f1-visuals'] as const;
       if (!ctx) return;
       ctx.clearRect(0, 0, sandCanvas.width, sandCanvas.height);
 
+      time += 0.016;
+
+      // Slowly change wind
+      if (Math.random() < 0.01) {
+        windTarget = 0.5 + Math.random() * 1;
+      }
+      windStrength += (windTarget - windStrength) * 0.01;
+
       particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
+        p.wobble += p.wobbleSpeed;
+        const wobbleOffset = Math.sin(p.wobble) * (p.type === 'wisp' ? 2 : 0.5);
+
+        p.x += p.speedX * windStrength;
+        p.y += p.speedY + wobbleOffset * 0.1;
 
         // Reset particles that go off screen
-        if (p.x > sandCanvas.width) {
-          p.x = -5;
+        if (p.x > sandCanvas.width + p.size) {
+          p.x = -p.size * 2;
           p.y = Math.random() * sandCanvas.height;
         }
+        if (p.y < -p.size) p.y = sandCanvas.height + p.size;
+        if (p.y > sandCanvas.height + p.size) p.y = -p.size;
 
-        // Draw sand grain
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(210, 180, 140, ${p.opacity})`;
-        ctx.fill();
+        // Draw based on type
+        if (p.type === 'grain') {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+          ctx.fill();
+        } else if (p.type === 'dust') {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+          gradient.addColorStop(0, `rgba(${p.color}, ${p.opacity})`);
+          gradient.addColorStop(1, `rgba(${p.color}, 0)`);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        } else if (p.type === 'wisp') {
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+          gradient.addColorStop(0, `rgba(${p.color}, ${p.opacity * 0.8})`);
+          gradient.addColorStop(0.5, `rgba(${p.color}, ${p.opacity * 0.3})`);
+          gradient.addColorStop(1, `rgba(${p.color}, 0)`);
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.size * 1.5, p.size * 0.6, Math.sin(time * 0.5) * 0.2, 0, Math.PI * 2);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
       });
 
       requestAnimationFrame(animateSand);

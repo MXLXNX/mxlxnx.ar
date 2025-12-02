@@ -222,7 +222,6 @@ const silentiaProjects = [
     name="Malena Posadas"
     title="MXLXNX"
     subtitle="Creative & Multidisciplinary Artist"
-    backgroundImage="/images/thelaundryman_Create_an_intense_futuristic_nightclub_scene_in_24ed272c-54dd-4c8f-ac37-c7c711bb28ed_2.png"
   />
 
   <!-- Showreel -->
@@ -231,6 +230,8 @@ const silentiaProjects = [
     title="Showreel"
     subtitle="I craft AI-powered worlds where anything is possible — stories with soul, characters with personality, and visual universes that feel alive. From concept to creation, I push the boundaries of what can be imagined and built."
   />
+
+  <About lang="en" />
 
   <!-- Selected Works Section -->
   <section class="selected-works-header" id="selected-works">
@@ -244,7 +245,7 @@ const silentiaProjects = [
   <VideoGrid
     videos={f1Videos}
     sectionTitle="F1 Visuals"
-    sectionSubtitle="Official visuals for Les Twins performance at McLaren's exclusive F1 party. Full creative direction, motion design & real-time graphics for the live broadcast. Collaborated with production teams to deliver high-impact content for a global audience."
+    sectionSubtitle="Official visuals for Les Twins performance at McLaren's exclusive F1 party. Full creative direction, motion design & real-time graphics for the live broadcast. Produced with Flamboyant Paradise."
     featured={true}
   />
 
@@ -252,7 +253,7 @@ const silentiaProjects = [
   <VideoGrid
     videos={meliVideos}
     sectionTitle="MELI"
-    sectionSubtitle="Commercial work for Mercado Libre"
+    sectionSubtitle="AI-enhanced commercial for Mercado Libre's e-commerce platform. Team project produced with 1st Ave Machine."
     singleVideo={true}
   />
 
@@ -287,16 +288,32 @@ const silentiaProjects = [
     effect="sand"
   />
 
-  <About lang="en" />
-
   <Contact lang="en" />
 </BaseLayout>
 
 <style>
   .selected-works-header {
-    background: var(--color-black);
+    background: linear-gradient(180deg,
+      rgb(10, 10, 10) 0%,
+      #12081a 30%,
+      #180a1a 50%,
+      #15081a 70%,
+      rgb(10, 10, 10) 100%
+    );
     padding: var(--space-4xl) 0 var(--space-xl);
     text-align: center;
+    position: relative;
+  }
+
+  .selected-works-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(200, 50, 255, 0.1) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 30%, rgba(255, 100, 150, 0.08) 0%, transparent 40%),
+      radial-gradient(ellipse at 80% 70%, rgba(100, 150, 255, 0.06) 0%, transparent 40%);
+    pointer-events: none;
   }
 
   .selected-works-title {
@@ -326,5 +343,6 @@ const silentiaProjects = [
     color: var(--color-gray-300);
     line-height: 1.7;
     text-align: center;
+    position: relative;
   }
 </style>
