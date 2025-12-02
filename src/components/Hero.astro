@@ -1,0 +1,242 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  name?: string;
+  backgroundImage?: string;
+}
+
+const {
+  title = "MXLXNX",
+  subtitle = "Creative & Multidisciplinary Artist",
+  name = "Malena Posadas",
+  backgroundImage = "/images/thelaundryman_Create_a_pure_abstract_futuristic_cyberpunk_bac_4070d1d9-631c-4b7d-920c-8fdb4e8e8a9e_2.png"
+} = Astro.props;
+---
+
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <img src={backgroundImage} alt="" class="hero__bg-image" />
+    <div class="hero__overlay"></div>
+  </div>
+
+  <div class="hero__content">
+    <!-- Main Title - MXLXNX -->
+    <div class="hero__title-wrapper">
+      <h1 class="hero__title">{title}</h1>
+    </div>
+
+    <!-- Name -->
+    <p class="hero__name">{name}</p>
+
+    <!-- Subtitle -->
+    <p class="hero__subtitle">{subtitle}</p>
+
+    <!-- CTAs -->
+    <div class="hero__actions">
+      <a href="#f1-visuals" class="hero__btn hero__btn--primary">
+        <span>View Work</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#contact" class="hero__btn hero__btn--outline">
+        <span>Contact</span>
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero__scroll">
+      <span class="hero__scroll-text">Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-4xl) var(--space-lg);
+    width: 100%;
+    max-width: 1400px;
+  }
+
+  .hero__title-wrapper {
+    position: relative;
+    margin-bottom: var(--space-xl);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__title {
+    font-family: 'Archivo Black', var(--font-display);
+    font-size: clamp(3rem, 14vw, 10rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--color-white);
+    margin: 0;
+  }
+
+  .hero__name {
+    font-family: 'Inter', var(--font-sans);
+    font-size: var(--text-xl);
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    opacity: 0.95;
+  }
+
+  .hero__subtitle {
+    font-family: 'Inter', var(--font-sans);
+    font-size: var(--text-base);
+    font-weight: 300;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    max-width: 600px;
+    margin-bottom: var(--space-3xl);
+    text-shadow: 0 2px 15px rgba(0,0,0,0.7);
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: var(--space-4xl);
+  }
+
+  .hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: var(--space-md) var(--space-2xl);
+    text-decoration: none;
+    transition: all var(--transition-base);
+  }
+
+  .hero__btn--primary {
+    background: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    font-weight: 700;
+  }
+
+  .hero__btn--primary:hover {
+    background: var(--color-gray-200);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+  }
+
+  .hero__btn--outline {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid rgba(255,255,255,0.5);
+  }
+
+  .hero__btn--outline:hover {
+    border-color: var(--color-white);
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-3px);
+  }
+
+  .hero__scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .hero__scroll-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 1; height: 60px; }
+    50% { opacity: 0.3; height: 40px; }
+  }
+
+  @media (max-width: 810px) {
+    .hero__title {
+      font-size: clamp(2.5rem, 12vw, 6rem);
+      -webkit-text-stroke: none;
+    }
+
+    .hero__name {
+      font-size: var(--text-sm);
+      letter-spacing: 0.25em;
+    }
+
+    .hero__subtitle {
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll-line {
+      animation: none;
+    }
+  }
+</style>

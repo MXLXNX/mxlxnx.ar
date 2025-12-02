@@ -1,0 +1,174 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const languages = [
+  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'es', label: 'ES', name: 'Español' },
+  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'de', label: 'DE', name: 'Deutsch' },
+  { code: 'pt', label: 'PT', name: 'Português' },
+  { code: 'ja', label: 'JA', name: '日本語' },
+  { code: 'ar', label: 'AR', name: 'العربية' },
+];
+
+const currentLang = languages.find(l => l.code === lang) || languages[0];
+---
+
+<div class="lang-switcher">
+  <button
+    class="lang-switcher__trigger"
+    type="button"
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    aria-label={`Current language: ${currentLang.name}`}
+  >
+    <span class="lang-switcher__current">{currentLang.label}</span>
+    <svg class="lang-switcher__icon" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <ul class="lang-switcher__dropdown" role="listbox" aria-label="Select language">
+    {languages.map(language => {
+      const isActive = language.code === lang;
+      const href = language.code === 'en' ? '/' : `/${language.code}/`;
+
+      return (
+        <li role="option" aria-selected={isActive}>
+          <a
+            href={href}
+            class:list={['lang-switcher__option', { 'is-active': isActive }]}
+            hreflang={language.code}
+          >
+            <span class="lang-switcher__label">{language.label}</span>
+            <span class="lang-switcher__name">{language.name}</span>
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<style>
+  .lang-switcher {
+    position: relative;
+    font-family: var(--font-ui);
+  }
+
+  .lang-switcher__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-full);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .lang-switcher__trigger:hover {
+    border-color: var(--color-gray-500);
+  }
+
+  .lang-switcher__icon {
+    transition: transform var(--transition-fast);
+  }
+
+  .lang-switcher__trigger[aria-expanded="true"] .lang-switcher__icon {
+    transform: rotate(180deg);
+  }
+
+  .lang-switcher__dropdown {
+    position: absolute;
+    top: calc(100% + var(--space-sm));
+    right: 0;
+    min-width: 150px;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--color-gray-900);
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-md);
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-fast);
+    z-index: var(--z-dropdown);
+  }
+
+  .lang-switcher__trigger[aria-expanded="true"] + .lang-switcher__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lang-switcher__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    color: var(--color-white);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .lang-switcher__option:hover {
+    background: var(--color-gray-800);
+  }
+
+  .lang-switcher__option.is-active {
+    background: var(--color-gray-800);
+  }
+
+  .lang-switcher__label {
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .lang-switcher__name {
+    font-size: var(--text-xs);
+    color: var(--color-gray-400);
+  }
+</style>
+
+<script>
+  const langSwitcher = document.querySelector('.lang-switcher');
+  const trigger = langSwitcher?.querySelector('.lang-switcher__trigger');
+  const dropdown = langSwitcher?.querySelector('.lang-switcher__dropdown');
+
+  const toggleDropdown = () => {
+    const isExpanded = trigger?.getAttribute('aria-expanded') === 'true';
+    trigger?.setAttribute('aria-expanded', String(!isExpanded));
+  };
+
+  const closeDropdown = () => {
+    trigger?.setAttribute('aria-expanded', 'false');
+  };
+
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!langSwitcher?.contains(e.target as Node)) {
+      closeDropdown();
+    }
+  });
+
+  // Close on escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDropdown();
+    }
+  });
+</script>

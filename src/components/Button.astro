@@ -1,0 +1,172 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  fullWidth?: boolean;
+  className?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  fullWidth = false,
+  className = ''
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={[
+    'btn',
+    `btn--${variant}`,
+    `btn--${size}`,
+    { 'btn--full': fullWidth },
+    className
+  ]}
+  href={href}
+  type={!href ? type : undefined}
+>
+  <span class="btn__content">
+    <slot />
+  </span>
+  <span class="btn__ripple" aria-hidden="true"></span>
+</Tag>
+
+<style>
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: var(--font-ui);
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .btn__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .btn__ripple {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.3s ease;
+  }
+
+  .btn:active .btn__ripple {
+    transform: scale(2);
+    opacity: 1;
+    transition: transform 0s, opacity 0s;
+  }
+
+  /* Sizes */
+  .btn--sm {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-sm);
+  }
+
+  .btn--md {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--text-base);
+  }
+
+  .btn--lg {
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: var(--text-lg);
+  }
+
+  /* Variants */
+  .btn--primary {
+    background: var(--gradient-vibrant);
+    background-size: 200% 200%;
+    color: var(--color-black);
+  }
+
+  .btn--primary:hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-pink);
+  }
+
+  .btn--secondary {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-gray-100);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-white);
+  }
+
+  .btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+  }
+
+  .btn--outline:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+    transform: translateY(-2px);
+  }
+
+  /* Full width */
+  .btn--full {
+    width: 100%;
+  }
+
+  /* Focus state */
+  .btn:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+  }
+
+  /* Disabled state */
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+</style>
+
+<script>
+  // Add ripple effect on click
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const ripple = this.querySelector('.btn__ripple');
+      if (ripple) {
+        ripple.style.left = e.offsetX + 'px';
+        ripple.style.top = e.offsetY + 'px';
+      }
+    });
+  });
+</script>

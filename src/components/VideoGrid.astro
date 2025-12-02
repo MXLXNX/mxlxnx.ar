@@ -1,0 +1,334 @@
+---
+import AnimatedSection from './AnimatedSection.astro';
+
+interface Video {
+  title: string;
+  description?: string;
+  src: string;
+  poster?: string;
+}
+
+interface Props {
+  videos: Video[];
+  sectionTitle: string;
+  sectionSubtitle?: string;
+  singleVideo?: boolean;
+  featured?: boolean;
+}
+
+const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = false } = Astro.props;
+---
+
+<section class="video-grid section" id={sectionTitle.toLowerCase().replace(/\s/g, '-')}>
+  <div class="video-grid__container container">
+    <AnimatedSection animation="fade-up" className="video-grid__header">
+      <span class="video-grid__eyebrow">{sectionTitle}</span>
+      <h2 class="video-grid__title">{sectionTitle}</h2>
+      {sectionSubtitle && <p class="video-grid__subtitle">{sectionSubtitle}</p>}
+    </AnimatedSection>
+
+    <div class:list={['video-grid__grid', { 'video-grid__grid--single': singleVideo || videos.length === 1, 'video-grid__grid--featured': featured }]}>
+      {videos.map((video, index) => (
+        <AnimatedSection animation="fade-up" delay={index * 100} className="video-grid__item">
+          <div class="video-grid__video-wrapper" data-video-wrapper>
+            <video
+              class="video-grid__video"
+              data-src={video.src}
+              poster={video.poster}
+              preload="none"
+              playsinline
+              muted
+              loop
+            >
+              <source data-src={video.src} type="video/mp4" />
+            </video>
+
+            <button class="video-grid__play-btn" aria-label="Play video" data-play-btn>
+              <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                <circle cx="30" cy="30" r="29" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                <path d="M24 20L44 30L24 40V20Z" fill="currentColor"/>
+              </svg>
+            </button>
+
+            <div class="video-grid__controls" data-controls>
+              <button class="video-grid__control-btn" data-unmute-btn aria-label="Unmute">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                  <line x1="23" y1="9" x2="17" y2="15"/>
+                  <line x1="17" y1="9" x2="23" y2="15"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          {video.title && (
+            <div class="video-grid__info">
+              <h3 class="video-grid__video-title">{video.title}</h3>
+              {video.description && <p class="video-grid__video-desc">{video.description}</p>}
+            </div>
+          )}
+        </AnimatedSection>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-grid {
+    background: linear-gradient(180deg, #0a0a0a 0%, #0f0505 25%, #050510 50%, #0a0808 75%, #0a0a0a 100%);
+    position: relative;
+  }
+
+  .video-grid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 10% 50%, rgba(255, 80, 0, 0.12) 0%, transparent 40%),
+      radial-gradient(ellipse at 90% 30%, rgba(255, 0, 80, 0.1) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .video-grid__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .video-grid__header {
+    text-align: center;
+    margin-bottom: var(--space-4xl);
+    padding: 0 var(--space-xl);
+  }
+
+  .video-grid__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-lg);
+    transform: rotate(-2deg);
+  }
+
+  .video-grid__title {
+    font-family: var(--font-accent);
+    font-size: var(--text-6xl);
+    color: var(--color-white);
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-xl);
+    text-shadow: 0 0 60px rgba(255, 100, 100, 0.3);
+  }
+
+  .video-grid__subtitle {
+    font-family: var(--font-sans);
+    font-size: var(--text-xl);
+    color: var(--color-gray-300);
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+  }
+
+  .video-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .video-grid__grid--single {
+    max-width: 900px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+  }
+
+  .video-grid__grid--featured {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl);
+  }
+
+  .video-grid__grid--featured .video-grid__video-wrapper {
+    aspect-ratio: 16/9;
+  }
+
+  @media (max-width: 900px) {
+    .video-grid__grid--featured {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .video-grid__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-grid__video-wrapper {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-gray-900);
+    aspect-ratio: 16/9;
+    cursor: pointer;
+  }
+
+  .video-grid__video-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .video-grid__video-wrapper:hover::before {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .video-grid__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--color-black);
+  }
+
+  .video-grid__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: var(--radius-full);
+    color: var(--color-white);
+    cursor: pointer;
+    padding: var(--space-sm);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 3;
+  }
+
+  .video-grid__play-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-black);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .video-grid__video-wrapper.is-playing .video-grid__play-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .video-grid__controls {
+    position: absolute;
+    bottom: var(--space-md);
+    right: var(--space-md);
+    display: flex;
+    gap: var(--space-sm);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+  }
+
+  .video-grid__video-wrapper.is-playing .video-grid__controls {
+    opacity: 1;
+  }
+
+  .video-grid__control-btn {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-white);
+    cursor: pointer;
+    padding: var(--space-sm);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .video-grid__control-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-black);
+  }
+
+  .video-grid__control-btn.is-unmuted svg {
+    stroke: #00FF00;
+  }
+
+  .video-grid__info {
+    padding: var(--space-md) 0;
+  }
+
+  .video-grid__video-title {
+    font-family: var(--font-accent);
+    font-size: var(--text-xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-xs);
+  }
+
+  .video-grid__video-desc {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--color-gray-400);
+  }
+
+  @media (max-width: 640px) {
+    .video-grid__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-video-wrapper]').forEach(wrapper => {
+    const video = wrapper.querySelector('video') as HTMLVideoElement;
+    const source = video?.querySelector('source') as HTMLSourceElement;
+    const playBtn = wrapper.querySelector('[data-play-btn]') as HTMLButtonElement;
+    const unmuteBtn = wrapper.querySelector('[data-unmute-btn]') as HTMLButtonElement;
+    let videoLoaded = false;
+
+    function loadAndPlay() {
+      if (!videoLoaded && video && source) {
+        const src = video.dataset.src || source.dataset.src;
+        if (src) {
+          video.src = src;
+          source.src = src;
+          video.load();
+          videoLoaded = true;
+        }
+      }
+      video?.play();
+      wrapper.classList.add('is-playing');
+    }
+
+    if (video && playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.paused) loadAndPlay();
+      });
+
+      wrapper.addEventListener('click', () => {
+        if (video.paused) {
+          loadAndPlay();
+        } else {
+          video.pause();
+          wrapper.classList.remove('is-playing');
+        }
+      });
+
+      video.addEventListener('pause', () => wrapper.classList.remove('is-playing'));
+      video.addEventListener('play', () => wrapper.classList.add('is-playing'));
+
+      if (unmuteBtn) {
+        unmuteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          unmuteBtn.classList.toggle('is-unmuted', !video.muted);
+        });
+      }
+    }
+  });
+</script>

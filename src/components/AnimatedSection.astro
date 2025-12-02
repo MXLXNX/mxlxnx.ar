@@ -1,0 +1,34 @@
+---
+interface Props {
+  animation?: 'fade-up' | 'fade-down' | 'fade-left' | 'fade-right' | 'scale' | 'fade';
+  delay?: number;
+  className?: string;
+  tag?: 'div' | 'section' | 'article' | 'aside' | 'header' | 'footer';
+  stagger?: boolean;
+}
+
+const {
+  animation = 'fade-up',
+  delay = 0,
+  className = '',
+  tag = 'div',
+  stagger = false
+} = Astro.props;
+
+const Tag = tag;
+---
+
+<Tag
+  class:list={['animated-section', className]}
+  data-animate={animation}
+  data-stagger={stagger ? '' : undefined}
+  style={delay ? `animation-delay: ${delay}ms;` : undefined}
+>
+  <slot />
+</Tag>
+
+<style>
+  .animated-section {
+    width: 100%;
+  }
+</style>

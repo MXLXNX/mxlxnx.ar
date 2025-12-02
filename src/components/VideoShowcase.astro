@@ -1,0 +1,107 @@
+---
+interface Props {
+  video: string;
+  poster?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  video,
+  poster,
+  title = 'Showreel',
+  subtitle = 'A glimpse into my creative world'
+} = Astro.props;
+---
+
+<section class="showcase section" id="showreel">
+  <div class="showcase__container container">
+    <div class="showcase__header">
+      <span class="showcase__eyebrow">Watch</span>
+      <h2 class="showcase__title">{title}</h2>
+      <p class="showcase__subtitle">{subtitle}</p>
+    </div>
+
+    <div class="showcase__video-container">
+      <video
+        class="showcase__video"
+        controls
+        playsinline
+        preload="auto"
+      >
+        <source src={video} type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0505 30%, #0a0a1a 60%, #050a0a 100%);
+    padding: var(--space-5xl) 0;
+    position: relative;
+  }
+
+  .showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(255, 50, 50, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(50, 50, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .showcase__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .showcase__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .showcase__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-400);
+    margin-bottom: var(--space-md);
+  }
+
+  .showcase__title {
+    font-family: var(--font-accent);
+    font-size: var(--text-5xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+  }
+
+  .showcase__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-gray-400);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .showcase__video-container {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: #111;
+  }
+
+  .showcase__video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+</style>

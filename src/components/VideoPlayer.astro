@@ -1,0 +1,160 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  title?: string;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  className?: string;
+  accentColor?: string;
+}
+
+const {
+  src,
+  poster,
+  title = 'Video',
+  autoplay = false,
+  loop = true,
+  muted = true,
+  controls = true,
+  className = '',
+  accentColor = '#fc9191'
+} = Astro.props;
+---
+
+<div
+  class:list={['video-player', className]}
+  style={`--accent-color: ${accentColor};`}
+>
+  <video
+    class="video-player__video"
+    src={src}
+    poster={poster}
+    autoplay={autoplay}
+    loop={loop}
+    muted={muted}
+    controls={controls}
+    playsinline
+    preload="metadata"
+    title={title}
+  >
+    <track kind="captions" />
+    Your browser does not support video playback.
+  </video>
+
+  {!controls && (
+    <button class="video-player__play-btn" type="button" aria-label="Play video">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 16L32 24L20 32V16Z" fill="currentColor"/>
+      </svg>
+    </button>
+  )}
+
+  <div class="video-player__glow"></div>
+</div>
+
+<style>
+  .video-player {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  .video-player__video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .video-player__play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 50%;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    z-index: 2;
+  }
+
+  .video-player__play-btn:hover {
+    background: var(--accent-color);
+    color: var(--color-black);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .video-player.is-playing .video-player__play-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Dynamic glow effect */
+  .video-player__glow {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(
+      circle at center,
+      var(--accent-color) 0%,
+      transparent 50%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+    z-index: -1;
+  }
+
+  .video-player:hover .video-player__glow {
+    opacity: 0.15;
+  }
+
+  /* Custom video controls styling */
+  .video-player__video::-webkit-media-controls-panel {
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  }
+
+  .video-player__video::-webkit-media-controls-play-button,
+  .video-player__video::-webkit-media-controls-mute-button,
+  .video-player__video::-webkit-media-controls-fullscreen-button {
+    filter: brightness(1.2);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.video-player').forEach(player => {
+    const video = player.querySelector('.video-player__video') as HTMLVideoElement;
+    const playBtn = player.querySelector('.video-player__play-btn');
+
+    if (playBtn && video) {
+      playBtn.addEventListener('click', () => {
+        if (video.paused) {
+          video.play();
+          player.classList.add('is-playing');
+        } else {
+          video.pause();
+          player.classList.remove('is-playing');
+        }
+      });
+
+      video.addEventListener('ended', () => {
+        player.classList.remove('is-playing');
+      });
+
+      video.addEventListener('pause', () => {
+        player.classList.remove('is-playing');
+      });
+
+      video.addEventListener('play', () => {
+        player.classList.add('is-playing');
+      });
+    }
+  });
+</script>

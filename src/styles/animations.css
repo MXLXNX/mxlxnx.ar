@@ -1,0 +1,345 @@
+/* ==========================================================================
+   Animations - mxlxnx.ar Portfolio
+   ========================================================================== */
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+/* Gradient animation for hero background */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Blob morphing animation */
+@keyframes blob-morph {
+  0%, 100% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+    transform: translate(10px, -10px) rotate(5deg);
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    transform: translate(-5px, 15px) rotate(-5deg);
+  }
+  75% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: translate(5px, 5px) rotate(3deg);
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Fade in */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Fade in up */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in down */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in left */
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Fade in right */
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale in */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Spin slow */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Typing cursor blink */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Stagger reveal for menu items */
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ripple effect */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Bounce */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ==========================================================================
+   Animation Classes
+   ========================================================================== */
+
+/* Base animation setup */
+.animate {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Durations */
+.animate-fast { animation-duration: 300ms; }
+.animate-base { animation-duration: 500ms; }
+.animate-slow { animation-duration: 700ms; }
+.animate-slower { animation-duration: 1000ms; }
+
+/* Delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* Animation types */
+.animate-fade-in { animation-name: fade-in; }
+.animate-fade-in-up { animation-name: fade-in-up; }
+.animate-fade-in-down { animation-name: fade-in-down; }
+.animate-fade-in-left { animation-name: fade-in-left; }
+.animate-fade-in-right { animation-name: fade-in-right; }
+.animate-scale-in { animation-name: scale-in; }
+
+/* Infinite animations */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-gradient {
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.animate-blob {
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Scroll Reveal Classes
+   ========================================================================== */
+
+/* Elements to be animated on scroll start hidden */
+[data-animate] {
+  opacity: 0;
+}
+
+[data-animate].is-visible {
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-animate="fade-up"].is-visible {
+  animation: fade-in-up 0.6s forwards;
+}
+
+[data-animate="fade-down"].is-visible {
+  animation: fade-in-down 0.6s forwards;
+}
+
+[data-animate="fade-left"].is-visible {
+  animation: fade-in-left 0.6s forwards;
+}
+
+[data-animate="fade-right"].is-visible {
+  animation: fade-in-right 0.6s forwards;
+}
+
+[data-animate="scale"].is-visible {
+  animation: scale-in 0.6s forwards;
+}
+
+[data-animate="fade"].is-visible {
+  animation: fade-in 0.6s forwards;
+}
+
+/* Stagger children */
+[data-stagger] > * {
+  opacity: 0;
+}
+
+[data-stagger].is-visible > *:nth-child(1) { animation: stagger-in 0.5s 0.1s forwards; }
+[data-stagger].is-visible > *:nth-child(2) { animation: stagger-in 0.5s 0.2s forwards; }
+[data-stagger].is-visible > *:nth-child(3) { animation: stagger-in 0.5s 0.3s forwards; }
+[data-stagger].is-visible > *:nth-child(4) { animation: stagger-in 0.5s 0.4s forwards; }
+[data-stagger].is-visible > *:nth-child(5) { animation: stagger-in 0.5s 0.5s forwards; }
+[data-stagger].is-visible > *:nth-child(6) { animation: stagger-in 0.5s 0.6s forwards; }
+[data-stagger].is-visible > *:nth-child(7) { animation: stagger-in 0.5s 0.7s forwards; }
+[data-stagger].is-visible > *:nth-child(8) { animation: stagger-in 0.5s 0.8s forwards; }
+
+/* ==========================================================================
+   Hover Effects
+   ========================================================================== */
+
+.hover-lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.hover-scale {
+  transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow var(--transition-base);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.hover-glow-pink:hover {
+  box-shadow: var(--shadow-glow-pink);
+}
+
+.hover-glow-green:hover {
+  box-shadow: var(--shadow-glow-green);
+}
+
+/* ==========================================================================
+   Transition Utilities
+   ========================================================================== */
+
+.transition-all {
+  transition: all var(--transition-base);
+}
+
+.transition-transform {
+  transition: transform var(--transition-base);
+}
+
+.transition-opacity {
+  transition: opacity var(--transition-base);
+}
+
+.transition-colors {
+  transition: color var(--transition-base),
+              background-color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+  }
+}

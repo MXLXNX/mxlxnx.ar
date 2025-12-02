@@ -1,0 +1,309 @@
+---
+// Floating PNG characters with physics - push them around like bouncing balls!
+// When reaching "Selected Works" section, most fall down leaving only 2 at top
+const images = [
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_7c2b8f60-4afc-436f-b791-ac2aec300cd2_1.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_7c2b8f60-4afc-436f-b791-ac2aec300cd2_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_7c2b8f60-4afc-436f-b791-ac2aec300cd2_3.png',
+  '/images/PNG/thelaundryman_A_floating_3D_toy-style_figure_of_a_tiny_girly__1e2df134-7765-4943-ba03-09db8a63607b_1.png',
+  '/images/PNG/thelaundryman_A_full-body_render_of_a_jelly-cat-girl_characte_89384fec-3e9f-4e30-b309-443ef6706631_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8a04445f-e711-4d3a-94a0-a2d3363465ba_0.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8a04445f-e711-4d3a-94a0-a2d3363465ba_1.png',
+  '/images/PNG/thelaundryman_A_floating_3D_toy-style_figure_of_a_tiny_girly__7fe29967-2479-4da8-9a5d-2a56d90c9ddf_1.png',
+  '/images/PNG/thelaundryman_A_full-body_render_of_a_jelly_girl_character_ma_138b5caa-ceb2-4e04-a4d5-98f07238229f_3.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_a96ca982-8dda-452b-814a-f32b673e0c43_0.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_a96ca982-8dda-452b-814a-f32b673e0c43_1.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_a96ca982-8dda-452b-814a-f32b673e0c43_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_a96ca982-8dda-452b-814a-f32b673e0c43_3.png',
+  '/images/PNG/thelaundryman_A_full-body_render_of_a_jelly_girl_character_ma_b0bab7dc-dac1-4463-ae5e-60133a888bc8_1.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_3D_kawaii_girl_char_7e702b67-fda4-435a-a72e-f48479c8b8c3_2.png',
+  '/images/PNG/thelaundryman_A_floating_3D_toy-style_figure_of_a_tiny_girly__8665307a-b299-41be-9c8a-c8825a0a6a9d_0.png',
+  '/images/PNG/thelaundryman_A_jelly-style_anime_face_bust_with_a_dreamy_kit_60c237a1-60cc-478a-b746-3197cdb0a278_3.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_3D_kawaii_girl_char_9ea9ce68-7f43-4dca-8685-a575b4ff45ca_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8275c0d4-a374-4191-9bf9-37d46aee6717_1.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8275c0d4-a374-4191-9bf9-37d46aee6717_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8275c0d4-a374-4191-9bf9-37d46aee6717_3.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8bafeb25-931a-42ab-846a-48cf422388b2_0.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_full-body_3D_kawaii_8bafeb25-931a-42ab-846a-48cf422388b2_3.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_single_3D_kawaii_ch_5d1a320f-9c3a-461c-802a-c780fc5e541e_3.png',
+  '/images/PNG/thelaundryman_A_full-body_render_of_a_jelly_girl_character_ma_e1770ff0-4445-4d7e-82e7-19c7787870da_2.png',
+  '/images/PNG/thelaundryman_A_centered_studio_shot_of_a_3D_furry-inspired_c_2162114b-198f-4e9a-8519-0a09ff001d30_0.png',
+];
+
+// All start from center - will explode outward on load
+const positions = images.map(() => ({ x: 50, y: 50 }));
+---
+
+<div class="floating-images" id="floating-container" aria-hidden="true">
+  {images.map((src, i) => (
+    <div
+      class="floating-img"
+      data-floating-img
+      data-index={i}
+      style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
+    >
+      <img src={src} alt="" loading="lazy" draggable="false" />
+    </div>
+  ))}
+</div>
+
+<style>
+  .floating-images {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .floating-img {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    pointer-events: auto;
+    cursor: grab;
+    user-select: none;
+    will-change: transform;
+    transition: filter 0.2s ease;
+  }
+
+  .floating-img:active {
+    cursor: grabbing;
+  }
+
+  .floating-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 40px rgba(0,0,0,0.35));
+    pointer-events: none;
+  }
+
+  .floating-img:hover img {
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
+  }
+
+  @media (max-width: 1024px) {
+    .floating-img {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .floating-images {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  interface PhysicsObject {
+    element: HTMLElement;
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    width: number;
+    height: number;
+    index: number;
+    fallen: boolean;
+    isFloater: boolean; // The 2 that stay floating
+    angle: number; // For orbital motion
+    orbitRadius: number;
+    orbitSpeed: number;
+  }
+
+  const container = document.getElementById('floating-container');
+  if (container) {
+    const floatingElements = document.querySelectorAll('[data-floating-img]');
+    const objects: PhysicsObject[] = [];
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let isMouseInWindow = false;
+    let hasReachedWork = false;
+    let hasExploded = false;
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    // Initialize physics objects - all start at center
+    floatingElements.forEach((el, index) => {
+      const element = el as HTMLElement;
+      const rect = element.getBoundingClientRect();
+
+      // Random angle for explosion direction
+      const angle = (index / floatingElements.length) * Math.PI * 2 + Math.random() * 0.5;
+
+      objects.push({
+        element,
+        x: centerX - rect.width / 2,
+        y: centerY - rect.height / 2,
+        vx: 0,
+        vy: 0,
+        width: rect.width,
+        height: rect.height,
+        index,
+        fallen: false,
+        isFloater: index < 2, // First 2 are the permanent floaters
+        angle: angle,
+        orbitRadius: 150 + Math.random() * 300,
+        orbitSpeed: 0.002 + Math.random() * 0.003
+      });
+    });
+
+    // Explosion on page load
+    setTimeout(() => {
+      hasExploded = true;
+      objects.forEach((obj) => {
+        const explosionForce = 15 + Math.random() * 20;
+        obj.vx = Math.cos(obj.angle) * explosionForce;
+        obj.vy = Math.sin(obj.angle) * explosionForce;
+      });
+    }, 300);
+
+    // Track mouse
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      isMouseInWindow = true;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      isMouseInWindow = false;
+    });
+
+    // Watch for "Selected Works" section
+    const selectedWorksSection = document.getElementById('selected-works');
+    if (selectedWorksSection) {
+      const workObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasReachedWork) {
+            hasReachedWork = true;
+            // Make all images except floaters fall down
+            objects.forEach((obj) => {
+              if (!obj.isFloater) {
+                obj.fallen = true;
+                // Spread them across the bottom
+                obj.vx = (Math.random() - 0.5) * 15;
+                obj.vy = 5 + Math.random() * 10;
+              }
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      workObserver.observe(selectedWorksSection);
+    }
+
+    // Physics constants
+    const friction = 0.98;
+    const bounciness = 0.7;
+    const mouseForce = 15;
+    const mouseRadius = 120;
+    const floatSpeed = 0.2;
+    const gravity = 0.4;
+
+    function updatePhysics() {
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      objects.forEach((obj) => {
+        // Floaters behavior - gentle floating at top
+        if (obj.isFloater && !obj.fallen) {
+          // Keep floaters in top area with gentle movement
+          obj.vx += (Math.random() - 0.5) * floatSpeed;
+          obj.vy += (Math.random() - 0.5) * floatSpeed;
+
+          // Gently pull floaters toward top corners
+          const targetX = obj.index === 0 ? windowWidth * 0.1 : windowWidth * 0.85;
+          const targetY = windowHeight * 0.15;
+          obj.vx += (targetX - obj.x - obj.width/2) * 0.001;
+          obj.vy += (targetY - obj.y - obj.height/2) * 0.001;
+        }
+        // Fallen objects get gravity
+        else if (obj.fallen) {
+          obj.vy += gravity;
+          // Add slight horizontal drift
+          obj.vx += (Math.random() - 0.5) * 0.3;
+        }
+        // Non-floaters before falling - orbit around screen
+        else if (hasExploded) {
+          obj.vx += (Math.random() - 0.5) * floatSpeed;
+          obj.vy += (Math.random() - 0.5) * floatSpeed;
+        }
+
+        // Mouse interaction - push away (works for all including fallen)
+        if (isMouseInWindow) {
+          const objCenterX = obj.x + obj.width / 2;
+          const objCenterY = obj.y + obj.height / 2;
+          const dx = objCenterX - mouseX;
+          const dy = objCenterY - mouseY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouseRadius && distance > 0) {
+            const force = (mouseRadius - distance) / mouseRadius * mouseForce;
+            obj.vx += (dx / distance) * force;
+            obj.vy += (dy / distance) * force;
+          }
+        }
+
+        // Apply friction
+        obj.vx *= friction;
+        obj.vy *= friction;
+
+        // Limit max velocity
+        const maxVel = 30;
+        obj.vx = Math.max(-maxVel, Math.min(maxVel, obj.vx));
+        obj.vy = Math.max(-maxVel, Math.min(maxVel, obj.vy));
+
+        // Update position
+        obj.x += obj.vx;
+        obj.y += obj.vy;
+
+        // Bounce off walls
+        if (obj.x < -obj.width * 0.3) {
+          obj.x = -obj.width * 0.3;
+          obj.vx = -obj.vx * bounciness;
+        }
+        if (obj.x > windowWidth - obj.width * 0.7) {
+          obj.x = windowWidth - obj.width * 0.7;
+          obj.vx = -obj.vx * bounciness;
+        }
+        if (obj.y < -obj.height * 0.3) {
+          obj.y = -obj.height * 0.3;
+          obj.vy = -obj.vy * bounciness;
+        }
+
+        // Bottom boundary
+        const bottomLimit = windowHeight - obj.height * 0.6;
+        if (obj.y > bottomLimit) {
+          obj.y = bottomLimit;
+          obj.vy = -obj.vy * bounciness * 0.6;
+          // Bounce fallen objects, let them settle
+          if (obj.fallen && Math.abs(obj.vy) < 1) {
+            obj.vy = 0;
+          }
+        }
+
+        // Apply transform
+        obj.element.style.left = '0';
+        obj.element.style.top = '0';
+        obj.element.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
+      });
+
+      requestAnimationFrame(updatePhysics);
+    }
+
+    // Start physics loop
+    updatePhysics();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      objects.forEach((obj) => {
+        obj.width = obj.element.offsetWidth;
+        obj.height = obj.element.offsetHeight;
+      });
+    });
+  }
+</script>

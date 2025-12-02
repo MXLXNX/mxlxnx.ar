@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
+import VideoShowcase from '../../components/VideoShowcase.astro';
+import VideoGrid from '../../components/VideoGrid.astro';
+import Contact from '../../components/Contact.astro';
+
+// === F1 VISUALS ===
+const f1Videos = [
+  { title: 'F1 فيجوالز I', description: 'الإخراج الإبداعي والتنفيذ', src: '/videos/F1_1.mp4' },
+  { title: 'F1 فيجوالز II', description: 'موشن جرافيكس', src: '/videos/F1_2.mp4', poster: '/images/f1_preview_2.png' },
+  { title: 'F1 فيجوالز III', description: 'المؤثرات البصرية', src: '/videos/F1_3.mp4' },
+  { title: 'F1 فيجوالز IV', description: 'الرسومات الحية', src: '/videos/F1_4.mp4' },
+  { title: 'F1 فيجوالز V', description: 'العناصر الديناميكية', src: '/videos/F1_5.mp4', poster: '/images/f1_preview_5.png' }
+];
+
+const meliVideos = [
+  { title: 'إعلان MELI', description: 'إعلان معزز بالذكاء الاصطناعي لمنصة التجارة الإلكترونية Mercado Libre', src: '/videos/MELI.mp4' }
+];
+
+const charactersProjects = [
+  { title: 'دارك 3D', thumbnail: '/images/thelaundryman_create_a_realist_realist_and_dark_obscure_3D_im_ce04f256-3272-47d9-a398-5dc1f9f39186_0.png', category: 'own-ideas' as const, accentColor: '#8b00ff', href: '#characters' },
+  { title: 'نابض I', thumbnail: '/images/thelaundryman_3d_semi_realista_con_colores_vibrantes_sobrio_h_25636e2f-a2be-4774-84e1-9e62041eba03_3.png', category: 'own-ideas' as const, accentColor: '#c8ff00', href: '#characters' },
+  { title: 'نابض II', thumbnail: '/images/thelaundryman_3d_semi_realista_con_colores_vibrantes_sobrio_h_41bf679c-c4da-44b9-af68-0a2c1928f996_0.png', category: 'own-ideas' as const, accentColor: '#ff2d92', href: '#characters' },
+  { title: 'نابض III', thumbnail: '/images/thelaundryman_3d_semi_realista_con_colores_vibrantes_sobrio_her_325939af-5db4-466a-904e-8bc1ccacbb29.png', category: 'own-ideas' as const, accentColor: '#00d4ff', href: '#characters' },
+  { title: 'صورة جماعية', thumbnail: '/images/thelaundryman_create_an_image_3d_of_a_nice_group_of_pretty_hu_384e2bff-b0c5-449b-9b59-29b034fb8400_1.png', category: 'own-ideas' as const, accentColor: '#ff2d92', href: '#characters' },
+  { title: 'موسيقي غريب', thumbnail: '/images/thelaundryman_create_an_image_3d_of_a_person_playing_a_strang_53290188-1e75-4329-8441-b28208ce4c51_2.png', category: 'own-ideas' as const, accentColor: '#00d4ff', href: '#characters' },
+  { title: 'غريب الأطوار', thumbnail: '/images/thelaundryman_Extravagant_eccentric_serious_hyperreal_3D_mode_1ae553ac-aee0-4765-92e3-c5082186fd75_2.png', category: 'own-ideas' as const, accentColor: '#ff6b9d', href: '#characters' },
+  { title: 'تحريري I', thumbnail: '/images/thelaundryman_Ultra_high-definition_editorial-style_portrait__7cd3e776-43ee-4bb5-b6e9-544b2d859a95_2.png', category: 'own-ideas' as const, accentColor: '#ff2d92', href: '#characters' }
+];
+
+const moodsProjects = [
+  { title: 'ماتريكس كوتور', thumbnail: '/images/thelaundryman_matrix_Vivienne_Westwoods_latex_emerging_people_i_5c7f0ce9-4646-46ac-a4a4-5593f2da9da0.png', category: 'own-ideas' as const, accentColor: '#00ff88', href: '#moods' },
+  { title: 'ماتريكس II', thumbnail: '/images/thelaundryman_matrix_Vivienne_Westwoods_latex_emerging_people_i_ac24aa57-947f-49e4-81da-c089a752cc86.png', category: 'own-ideas' as const, accentColor: '#8b00ff', href: '#moods' },
+  { title: 'أناقة اللاتكس', thumbnail: '/images/thelaundryman_gaspar_noe_style_latex_emerging_people_elegance_5c444c74-7bb5-4937-9e05-d2871e9b5c79_3.png', category: 'own-ideas' as const, accentColor: '#ff3d00', href: '#moods' },
+  { title: 'سقوط حر', thumbnail: '/images/thelaundryman_Vivienne_Westwoods_latex_emerging_people_is_fal_cd18563a-5005-4e48-8bc5-979b2d036f68_0.png', category: 'own-ideas' as const, accentColor: '#c8ff00', href: '#moods' },
+  { title: 'نادي سايبربانك', thumbnail: '/images/thelaundryman_Create_an_intense_futuristic_nightclub_scene_in_24ed272c-54dd-4c8f-ac37-c7c711bb28ed_2.png', category: 'own-ideas' as const, accentColor: '#00d4ff', href: '#moods' },
+  { title: 'نيون سايبربانك', thumbnail: '/images/thelaundryman_Design_a_futuristic_cyberpunk_environment_inspi_e33f89dc-4d53-4388-8707-6f1584dceeb2_0.png', category: 'own-ideas' as const, accentColor: '#8b00ff', href: '#moods' },
+  { title: 'سفينة فضاء I', thumbnail: '/images/thelaundryman_Create_the_interior_of_a_large_futuristic_space_3dc3aeca-e474-4783-b6a3-9839a43f3c8a_2.png', category: 'own-ideas' as const, accentColor: '#00ff88', href: '#moods' },
+  { title: 'سفينة فضاء II', thumbnail: '/images/thelaundryman_Create_the_interior_of_a_powered_down_large_fut_c661af6c-ffef-40cc-a624-ffc195035771_3.png', category: 'own-ideas' as const, accentColor: '#ff6b00', href: '#moods' },
+  { title: 'نيون تجريدي', thumbnail: '/images/thelaundryman_Create_a_pure_abstract_futuristic_cyberpunk_bac_4070d1d9-631c-4b7d-920c-8fdb4e8e8a9e_2.png', category: 'own-ideas' as const, accentColor: '#ff2d92', href: '#moods' },
+  { title: 'سينما بسيطة', thumbnail: '/images/thelaundryman_A_hyper-realistic_cinematic_scene_in_a_minimalist_948bcc45-d211-4d1c-9428-612773aaefee.png', category: 'own-ideas' as const, accentColor: '#ff2d92', href: '#moods' },
+  { title: 'ماكرو متوهج', thumbnail: '/images/thelaundryman_Extreme_macro_cinematic_shot_of_a_single_glowin_142d673b-7f14-460b-b1eb-4337eeaae87b_0.png', category: 'own-ideas' as const, accentColor: '#ff6b00', href: '#moods' }
+];
+
+const silentiaProjects = [
+  { thumbnail: '/images/thelaundryman_two_good_looking_persons_walking_among_the_dunes__a34047d5-56b7-4d2b-b969-ac5facee605b.png', category: 'own-ideas' as const, accentColor: '#ffd93d', href: '#silentia' },
+  { thumbnail: '/images/thelaundryman_3d_realista_persona_en_el_desierto_vestida_punk_660d2b3a-03da-41e1-960f-7f4875354f6e_1.png', category: 'own-ideas' as const, accentColor: '#ff6b00', href: '#silentia' },
+  { thumbnail: '/images/thelaundryman_caballo_transparente_en_el_desierto_con_jinetes_f625c875-0771-4651-9001-ea2047fed334_1.png', category: 'own-ideas' as const, accentColor: '#c8ff00', href: '#silentia' },
+  { thumbnail: '/images/thelaundryman_futuristic_utopy_big_city_in_the_middle_of_the__fc822f87-120d-46c8-a219-9117a16a5d20_0.png', category: 'own-ideas' as const, accentColor: '#00ff88', href: '#silentia' }
+];
+---
+
+<BaseLayout title="الرئيسية" lang="ar">
+  <Hero name="مالينا بوساداس" title="MXLXNX" subtitle="مديرة إبداعية وفنانة متعددة التخصصات" backgroundImage="/images/thelaundryman_Create_an_intense_futuristic_nightclub_scene_in_24ed272c-54dd-4c8f-ac37-c7c711bb28ed_2.png" />
+
+  <VideoShowcase video="/videos/REEL.mp4" title="شوريل" subtitle="لمحة عن عالمي الإبداعي" />
+
+  <section class="selected-works-header" id="selected-works">
+    <div class="container">
+      <h2 class="selected-works-title">أعمال مختارة</h2>
+    </div>
+  </section>
+
+  <VideoGrid videos={f1Videos} sectionTitle="F1 فيجوالز" sectionSubtitle="مرئيات لأغاني Les Twins في حفلة McLaren — صنعت جميع الفيديوهات لبث F1" featured={true} />
+  <VideoGrid videos={meliVideos} sectionTitle="MELI" sectionSubtitle="عمل تجاري لـ Mercado Libre" singleVideo={true} />
+  <ProjectGrid projects={charactersProjects} lang="ar" sectionTitle="الشخصيات" sectionSubtitle="أبني شخصيات قوية. شخصيات تأسرك ولا تتركك." showFilters={false} variant="accent" />
+  <ProjectGrid projects={moodsProjects} lang="ar" sectionTitle="الأجواء" sectionSubtitle="اللاتكس، حملات الأزياء، عوالم النيون، والأجواء البصرية التي أصممها" showFilters={false} variant="accent" effect="flash" />
+  <ProjectGrid projects={silentiaProjects} lang="ar" sectionTitle="SILENTIA" sectionSubtitle="عالم بصري أنشأته — مشروع خيال علمي أصلي كتب بالاشتراك مع الفنان خوان بينا. السيناريو والمظهر مكتملان، أبحث عن تمويل." showFilters={false} effect="sand" />
+
+  <About lang="ar" />
+  <Contact lang="ar" />
+</BaseLayout>
+
+<style>
+  .selected-works-header { background: var(--color-black); padding: var(--space-4xl) 0 var(--space-xl); text-align: center; }
+  .selected-works-title { font-family: var(--font-accent); font-size: var(--text-6xl); color: var(--color-white); letter-spacing: 0.1em; position: relative; display: inline-block; }
+  .selected-works-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 100px; height: 2px; background: var(--color-white); }
+</style>

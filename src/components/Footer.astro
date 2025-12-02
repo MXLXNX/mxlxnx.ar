@@ -1,0 +1,183 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  { label: 'Instagram', href: '#', icon: 'instagram' },
+  { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+  { label: 'Behance', href: '#', icon: 'behance' },
+];
+---
+
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="footer__logo">MXLXNX</span>
+        <p class="footer__tagline">Creative & Multidisciplinary Artist</p>
+      </div>
+
+      <div class="footer__social">
+        {socialLinks.map(link => (
+          <a
+            href={link.href}
+            class="footer__social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.label}
+          >
+            {link.icon === 'instagram' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            )}
+            {link.icon === 'linkedin' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            )}
+            {link.icon === 'behance' && (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988h-6.466v-14.967h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zm-3.466-8.988h3.584c2.508 0 2.906-3-.312-3h-3.272v3zm3.391 3h-3.391v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/>
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {currentYear} MXLXNX. All rights reserved.
+      </p>
+      <p class="footer__credits">
+        Crafted with vision & creativity
+      </p>
+    </div>
+  </div>
+
+  <!-- Decorative blob -->
+  <div class="footer__blob" aria-hidden="true"></div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding: var(--space-4xl) 0 var(--space-2xl);
+    background: var(--color-black);
+    border-top: 1px solid var(--color-gray-800);
+    overflow: hidden;
+  }
+
+  .footer__container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer__top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  @media (min-width: 810px) {
+    .footer__top {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__logo {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-style: italic;
+    color: var(--color-white);
+  }
+
+  .footer__tagline {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--color-gray-400);
+    border: 1px solid var(--color-gray-700);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-base);
+  }
+
+  .footer__social-link:hover {
+    color: var(--color-white);
+    border-color: var(--color-pink);
+    background: rgba(252, 145, 145, 0.1);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-gray-800);
+  }
+
+  @media (min-width: 810px) {
+    .footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .footer__copyright,
+  .footer__credits {
+    font-size: var(--text-sm);
+    color: var(--color-gray-500);
+    margin: 0;
+  }
+
+  .footer__blob {
+    position: absolute;
+    bottom: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: var(--color-purple);
+    opacity: 0.15;
+    border-radius: var(--radius-blob);
+    filter: blur(80px);
+    animation: blob-morph 10s ease-in-out infinite;
+  }
+</style>

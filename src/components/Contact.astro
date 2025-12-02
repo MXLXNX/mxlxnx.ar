@@ -1,0 +1,311 @@
+---
+import Blob from './Blob.astro';
+import Button from './Button.astro';
+import AnimatedSection from './AnimatedSection.astro';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const content = {
+  en: {
+    eyebrow: 'Get in Touch',
+    title: "Let's Create Something Amazing",
+    description: "Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your vision to life.",
+    form: {
+      name: 'Your Name',
+      email: 'Your Email',
+      message: 'Tell me about your project...',
+      submit: 'Send Message'
+    }
+  },
+  es: {
+    eyebrow: 'Contacto',
+    title: 'Creemos Algo Increíble',
+    description: '¿Tenés un proyecto en mente? Me encantaría escucharlo. Hablemos de cómo podemos dar vida a tu visión.',
+    form: {
+      name: 'Tu Nombre',
+      email: 'Tu Email',
+      message: 'Contame sobre tu proyecto...',
+      submit: 'Enviar Mensaje'
+    }
+  }
+};
+
+const t = content[lang as keyof typeof content] || content.en;
+---
+
+<section class="contact section" id="contact">
+  <div class="contact__background">
+    <Blob color="coral" size="xl" position="top-left" />
+    <Blob color="yellow" size="lg" position="bottom-right" />
+  </div>
+
+  <div class="contact__container container">
+    <AnimatedSection animation="fade-up" className="contact__header">
+      <span class="contact__eyebrow">{t.eyebrow}</span>
+      <h2 class="contact__title">{t.title}</h2>
+      <p class="contact__description">{t.description}</p>
+    </AnimatedSection>
+
+    <AnimatedSection animation="fade-up" delay={200} className="contact__form-wrapper">
+      <form class="contact__form" action="#" method="POST" data-netlify="true" name="contact">
+        <input type="hidden" name="form-name" value="contact" />
+
+        <div class="contact__field">
+          <label for="name" class="sr-only">{t.form.name}</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder={t.form.name}
+            required
+            class="contact__input"
+          />
+        </div>
+
+        <div class="contact__field">
+          <label for="email" class="sr-only">{t.form.email}</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder={t.form.email}
+            required
+            class="contact__input"
+          />
+        </div>
+
+        <div class="contact__field contact__field--full">
+          <label for="message" class="sr-only">{t.form.message}</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder={t.form.message}
+            rows="5"
+            required
+            class="contact__textarea"
+          ></textarea>
+        </div>
+
+        <div class="contact__submit">
+          <Button variant="primary" size="lg" type="submit" fullWidth>
+            {t.form.submit}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </Button>
+        </div>
+      </form>
+    </AnimatedSection>
+
+    <!-- Alternative contact -->
+    <AnimatedSection animation="fade-up" delay={400} className="contact__alternative">
+      <p class="contact__alternative-text">Or reach me directly at</p>
+      <a href="mailto:m@mxlxnx.ar" class="contact__email">m@mxlxnx.ar</a>
+    </AnimatedSection>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    background: var(--color-black);
+    overflow: hidden;
+  }
+
+  .contact__background {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+  }
+
+  .contact__container {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .contact__header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+  }
+
+  .contact__eyebrow {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-400);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact__title {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    color: var(--color-white);
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact__description {
+    font-size: var(--text-lg);
+    color: var(--color-gray-400);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Form */
+  .contact__form-wrapper {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl);
+  }
+
+  .contact__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 538px) {
+    .contact__form {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contact__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    outline: none;
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: var(--color-gray-500);
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.2);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+
+  .contact__submit {
+    grid-column: 1 / -1;
+    margin-top: var(--space-md);
+  }
+
+  /* Alternative contact */
+  .contact__alternative {
+    text-align: center;
+    margin-top: var(--space-3xl);
+  }
+
+  .contact__alternative-text {
+    font-size: var(--text-sm);
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-sm);
+  }
+
+  .contact__email {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-style: italic;
+    color: var(--color-white);
+    text-decoration: none;
+    position: relative;
+    transition: color var(--transition-fast);
+  }
+
+  .contact__email::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-white);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-base);
+  }
+
+  .contact__email:hover {
+    color: var(--color-gray-300);
+  }
+
+  .contact__email:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+</style>
+
+<script>
+  // Form submission handling
+  const form = document.querySelector('.contact__form');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form as HTMLFormElement);
+    const button = form.querySelector('button[type="submit"]');
+
+    if (button) {
+      button.setAttribute('disabled', 'true');
+      button.textContent = 'Sending...';
+    }
+
+    try {
+      // You can replace this with your actual form handling
+      // For Netlify forms, the default behavior works
+      // For Formspree or other services, update the action URL
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Success state
+      if (button) {
+        button.textContent = 'Sent! ✓';
+        button.classList.add('success');
+      }
+
+      (form as HTMLFormElement).reset();
+
+      setTimeout(() => {
+        if (button) {
+          button.removeAttribute('disabled');
+          button.textContent = 'Send Message';
+          button.classList.remove('success');
+        }
+      }, 3000);
+
+    } catch (error) {
+      if (button) {
+        button.textContent = 'Error - Try again';
+        button.removeAttribute('disabled');
+      }
+    }
+  });
+</script>

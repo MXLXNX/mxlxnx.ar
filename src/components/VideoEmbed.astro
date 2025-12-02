@@ -1,0 +1,122 @@
+---
+interface Props {
+  url: string;
+  title?: string;
+  className?: string;
+  accentColor?: string;
+}
+
+const { url, title = 'Video', className = '', accentColor = '#fc9191' } = Astro.props;
+
+// Parse video URL to get embed URL
+function getEmbedUrl(url: string): { embedUrl: string; platform: string } | null {
+  // YouTube
+  const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([^&\s]+)/);
+  if (youtubeMatch) {
+    return {
+      embedUrl: `https://www.youtube.com/embed/${youtubeMatch[1]}?rel=0&modestbranding=1`,
+      platform: 'youtube'
+    };
+  }
+
+  // Vimeo
+  const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeoMatch) {
+    return {
+      embedUrl: `https://player.vimeo.com/video/${vimeoMatch[1]}?title=0&byline=0&portrait=0`,
+      platform: 'vimeo'
+    };
+  }
+
+  return null;
+}
+
+const videoData = getEmbedUrl(url);
+---
+
+{videoData ? (
+  <div
+    class:list={['video-embed', `video-embed--${videoData.platform}`, className]}
+    style={`--accent-color: ${accentColor};`}
+  >
+    <div class="video-embed__wrapper">
+      <iframe
+        class="video-embed__iframe"
+        src={videoData.embedUrl}
+        title={title}
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+    <div class="video-embed__glow"></div>
+  </div>
+) : (
+  <div class="video-embed video-embed--error">
+    <p>Unable to embed video. <a href={url} target="_blank" rel="noopener noreferrer">Watch on original platform</a></p>
+  </div>
+)}
+
+<style>
+  .video-embed {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-black);
+  }
+
+  .video-embed__wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-embed__iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Dynamic glow effect */
+  .video-embed__glow {
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(
+      circle at center,
+      var(--accent-color) 0%,
+      transparent 50%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+    z-index: -1;
+  }
+
+  .video-embed:hover .video-embed__glow {
+    opacity: 0.15;
+  }
+
+  /* Error state */
+  .video-embed--error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .video-embed--error p {
+    color: var(--color-gray-400);
+  }
+
+  .video-embed--error a {
+    color: var(--color-blue);
+  }
+</style>

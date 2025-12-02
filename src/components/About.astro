@@ -1,0 +1,240 @@
+---
+import AnimatedSection from './AnimatedSection.astro';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+// Real content - Malena Posadas / MXLXNX
+const content = {
+  en: {
+    name: 'Malena Posadas',
+    eyebrow: 'About',
+    title: 'Multidisciplinary Artist & Designer',
+    description: `I am a multidisciplinary artist and designer from Buenos Aires, working across digital art, multimedia design, fashion, advertising, and entertainment. I am driven by contrast, by the tension between the wild and the refined, the dark and the luminous. My work is rooted in emotion, visual exploration, and technology, always seeking imagery with impact and intention.`,
+    description2: `My career has been shaped within the audiovisual world through advertising, marketing, and experiential projects. I have learned by collaborating closely with exceptional creative directors who expanded my approach to visual language, storytelling, and experimental thinking. In fashion, my experience within the SADAELS universe revealed new layers of aesthetic precision, identity, and detail. I have also contributed to projects with studios such as Flamboyant Paradise and 1st Ave Machine, which broadened my understanding of production, innovation, and contemporary audiovisual expression.`,
+    description3: `I write stories, develop new worlds, and explore emerging technologies, particularly artificial intelligence, as tools for expanding creative possibility. I work through intuition and controlled chaos, guided by the energy that appears when an idea feels undeniably alive.`,
+    description4: `I am a young visionary with limitless drive, fueled by ideas and creative momentum. I pursue projects that challenge me, that awaken something powerful, that breathe with intention and pulse with risk.`,
+    quote: `"If it doesn't feel like a bomb about to explode, I'm not interested."`,
+    skills: ['Creative Direction', 'Digital Art', 'AI Visual Art', 'Fashion', 'Advertising', 'Multimedia Design'],
+    stats: [
+      { value: 'Live', label: 'Action' },
+      { value: 'Story', label: 'Telling' },
+      { value: 'Unique', label: 'Experiences' }
+    ]
+  },
+  es: {
+    name: 'Malena Posadas',
+    eyebrow: 'Sobre Mí',
+    title: 'Artista & Diseñadora Multidisciplinaria',
+    description: `Soy una artista y diseñadora multidisciplinaria de Buenos Aires, trabajando en arte digital, diseño multimedia, moda, publicidad y entretenimiento. Me mueve el contraste, la tensión entre lo salvaje y lo refinado, lo oscuro y lo luminoso. Mi trabajo está arraigado en la emoción, la exploración visual y la tecnología, siempre buscando imágenes con impacto e intención.`,
+    description2: `Mi carrera se ha formado en el mundo audiovisual a través de proyectos de publicidad, marketing y experienciales. Aprendí colaborando con directores creativos excepcionales que expandieron mi enfoque del lenguaje visual, el storytelling y el pensamiento experimental. En moda, mi experiencia en el universo SADAELS reveló nuevas capas de precisión estética, identidad y detalle. También contribuí a proyectos con estudios como Flamboyant Paradise y 1st Ave Machine.`,
+    description3: `Escribo historias, desarrollo nuevos mundos y exploro tecnologías emergentes, particularmente la inteligencia artificial, como herramientas para expandir la posibilidad creativa. Trabajo a través de la intuición y el caos controlado.`,
+    description4: `Soy una joven visionaria con impulso ilimitado, alimentada por ideas y momentum creativo. Persigo proyectos que me desafíen, que despierten algo poderoso.`,
+    quote: `"Si no se siente como una bomba a punto de explotar, no me interesa."`,
+    skills: ['Dirección Creativa', 'Arte Digital', 'Arte Visual con IA', 'Moda', 'Publicidad', 'Diseño Multimedia'],
+    stats: [
+      { value: 'Live', label: 'Action' },
+      { value: 'Story', label: 'Telling' },
+      { value: 'Sensaciones', label: 'Únicas' }
+    ]
+  }
+};
+
+const t = content[lang as keyof typeof content] || content.en;
+---
+
+<section class="about section" id="about">
+  <div class="about__container container">
+    <div class="about__grid">
+      <div class="about__content">
+        <AnimatedSection animation="fade-up" delay={100}>
+          <span class="about__eyebrow">{t.eyebrow}</span>
+          <h2 class="about__title">{t.title}</h2>
+        </AnimatedSection>
+
+        <AnimatedSection animation="fade-up" delay={200}>
+          <p class="about__description">{t.description}</p>
+          <p class="about__description">{t.description2}</p>
+          <p class="about__description">{t.description3}</p>
+          <p class="about__description">{t.description4}</p>
+        </AnimatedSection>
+
+        <AnimatedSection animation="fade-up" delay={300}>
+          <blockquote class="about__quote">
+            {t.quote}
+          </blockquote>
+        </AnimatedSection>
+
+        <AnimatedSection animation="fade-up" delay={400} className="about__skills">
+          <h3 class="about__skills-title">Expertise</h3>
+          <ul class="about__skills-list">
+            {t.skills.map(skill => (
+              <li class="about__skill">{skill}</li>
+            ))}
+          </ul>
+        </AnimatedSection>
+      </div>
+    </div>
+
+    <AnimatedSection animation="fade-up" delay={500} className="about__stats" stagger>
+      {t.stats.map(stat => (
+        <div class="about__stat">
+          <span class="about__stat-value">{stat.value}</span>
+          <span class="about__stat-label">{stat.label}</span>
+        </div>
+      ))}
+    </AnimatedSection>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: #f5f5f5;
+    color: var(--color-black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .about__grid {
+    position: relative;
+  }
+
+  .about__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-gray-500);
+  }
+
+  .about__title {
+    font-family: var(--font-accent);
+    font-size: var(--text-5xl);
+    font-weight: 400;
+    color: var(--color-black);
+    margin-top: var(--space-sm);
+    letter-spacing: 0.05em;
+  }
+
+  .about__description {
+    font-family: var(--font-sans);
+    font-size: var(--text-lg);
+    line-height: 1.8;
+    color: var(--color-gray-600);
+    text-align: left;
+  }
+
+  .about__description + .about__description {
+    margin-top: var(--space-md);
+  }
+
+  .about__quote {
+    font-family: var(--font-accent);
+    font-size: var(--text-2xl);
+    font-style: normal;
+    color: var(--color-black);
+    padding: var(--space-xl);
+    background: var(--color-white);
+    margin: var(--space-xl) 0;
+    letter-spacing: 0.02em;
+    border-left: 4px solid var(--color-black);
+    text-align: left;
+  }
+
+  .about__skills {
+    margin-top: var(--space-xl);
+  }
+
+  .about__skills-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-md);
+  }
+
+  .about__skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    list-style: none;
+    justify-content: center;
+  }
+
+  .about__skill {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-gray-300);
+    transition: all var(--transition-base);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .about__skill:hover {
+    background: var(--color-gray-100);
+    transform: translateY(-2px);
+  }
+
+  .about__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-4xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid var(--color-gray-300);
+  }
+
+  .about__stat {
+    text-align: center;
+  }
+
+  .about__stat-value {
+    display: block;
+    font-family: var(--font-accent);
+    font-size: var(--text-5xl);
+    font-weight: 400;
+    color: var(--color-black);
+    line-height: 1;
+  }
+
+  .about__stat-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 640px) {
+    .about__stats {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>
