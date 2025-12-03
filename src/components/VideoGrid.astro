@@ -80,33 +80,8 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
 
 <style>
   .video-grid {
-    background: linear-gradient(180deg,
-      rgb(10, 10, 10) 0%,
-      rgba(10, 10, 10, 0.98) 2%,
-      #120810 8%,
-      #150810 15%,
-      #1a0a12 30%,
-      #12081a 50%,
-      #0a1015 70%,
-      #0c0a10 88%,
-      rgba(10, 10, 10, 0.98) 98%,
-      rgb(10, 10, 10) 100%
-    );
+    background: rgb(10, 10, 10);
     position: relative;
-  }
-
-  .video-grid::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(ellipse at 10% 40%, rgba(255, 50, 100, 0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 60%, rgba(100, 50, 255, 0.10) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 80%, rgba(255, 100, 50, 0.06) 0%, transparent 40%);
-    pointer-events: none;
   }
 
   .video-grid__container {

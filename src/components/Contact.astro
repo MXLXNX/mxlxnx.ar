@@ -12,84 +12,84 @@ const { lang = 'en' } = Astro.props;
 const content = {
   en: {
     eyebrow: 'Get in Touch',
-    title: "Let's Create Something Amazing",
-    description: "Have a project in mind? I'd love to hear about it. Let's discuss how we can bring your vision to life.",
+    title: "Let's Make Something Truly Special",
+    description: "Have a vision that needs to come alive? I'm here to listen. Let's explore the possibilities together.",
     form: {
       name: 'Your Name',
       email: 'Your Email',
-      message: 'Tell me about your project...',
+      message: 'Tell me about your vision...',
       submit: 'Send Message'
     },
     alternative: 'Or reach me directly at'
   },
   es: {
     eyebrow: 'Contacto',
-    title: 'Creemos Algo Increíble',
-    description: '¿Tenés un proyecto en mente? Me encantaría escucharlo. Hablemos de cómo podemos dar vida a tu visión.',
+    title: 'Creemos Algo Especial',
+    description: '¿Tenés una visión que necesita cobrar vida? Estoy acá para escucharte. Exploremos las posibilidades juntos.',
     form: {
       name: 'Tu Nombre',
       email: 'Tu Email',
-      message: 'Contame sobre tu proyecto...',
+      message: 'Contame sobre tu visión...',
       submit: 'Enviar Mensaje'
     },
     alternative: 'O escribime directamente a'
   },
   fr: {
     eyebrow: 'Contact',
-    title: 'Créons Quelque Chose d\'Incroyable',
-    description: 'Vous avez un projet en tête ? J\'aimerais en savoir plus. Discutons de comment donner vie à votre vision.',
+    title: 'Créons Quelque Chose de Spécial',
+    description: 'Vous avez une vision qui doit prendre vie ? Je suis là pour écouter. Explorons les possibilités ensemble.',
     form: {
       name: 'Votre Nom',
       email: 'Votre Email',
-      message: 'Parlez-moi de votre projet...',
+      message: 'Parlez-moi de votre vision...',
       submit: 'Envoyer le Message'
     },
     alternative: 'Ou contactez-moi directement à'
   },
   de: {
     eyebrow: 'Kontakt',
-    title: 'Lass Uns Etwas Erstaunliches Schaffen',
-    description: 'Haben Sie ein Projekt im Sinn? Ich würde gerne davon hören. Lassen Sie uns besprechen, wie wir Ihre Vision zum Leben erwecken können.',
+    title: 'Lass Uns Etwas Besonderes Erschaffen',
+    description: 'Haben Sie eine Vision, die zum Leben erweckt werden muss? Ich bin hier, um zuzuhören. Lassen Sie uns die Möglichkeiten gemeinsam erkunden.',
     form: {
       name: 'Ihr Name',
       email: 'Ihre Email',
-      message: 'Erzählen Sie mir von Ihrem Projekt...',
+      message: 'Erzählen Sie mir von Ihrer Vision...',
       submit: 'Nachricht Senden'
     },
     alternative: 'Oder erreichen Sie mich direkt unter'
   },
   pt: {
     eyebrow: 'Contato',
-    title: 'Vamos Criar Algo Incrível',
-    description: 'Tem um projeto em mente? Adoraria ouvir sobre ele. Vamos discutir como podemos dar vida à sua visão.',
+    title: 'Vamos Criar Algo Especial',
+    description: 'Tem uma visão que precisa ganhar vida? Estou aqui para ouvir. Vamos explorar as possibilidades juntos.',
     form: {
       name: 'Seu Nome',
       email: 'Seu Email',
-      message: 'Conte-me sobre seu projeto...',
+      message: 'Conte-me sobre sua visão...',
       submit: 'Enviar Mensagem'
     },
     alternative: 'Ou me contate diretamente em'
   },
   ja: {
     eyebrow: 'お問い合わせ',
-    title: '素晴らしいものを一緒に創りましょう',
-    description: 'プロジェクトをお考えですか？ぜひお聞かせください。あなたのビジョンを実現する方法について話し合いましょう。',
+    title: '特別なものを一緒に創りましょう',
+    description: '実現したいビジョンがありますか？お聞かせください。一緒に可能性を探求しましょう。',
     form: {
       name: 'お名前',
       email: 'メールアドレス',
-      message: 'プロジェクトについて教えてください...',
+      message: 'あなたのビジョンについて教えてください...',
       submit: 'メッセージを送信'
     },
     alternative: '直接のご連絡はこちらへ'
   },
   ar: {
     eyebrow: 'تواصل معي',
-    title: 'لنصنع شيئاً مذهلاً',
-    description: 'هل لديك مشروع في ذهنك؟ أود أن أسمع عنه. دعنا نناقش كيف يمكننا إحياء رؤيتك.',
+    title: 'لنصنع شيئاً مميزاً',
+    description: 'هل لديك رؤية تحتاج أن تتحقق؟ أنا هنا للاستماع. لنستكشف الإمكانيات معاً.',
     form: {
       name: 'اسمك',
       email: 'بريدك الإلكتروني',
-      message: 'أخبرني عن مشروعك...',
+      message: 'أخبرني عن رؤيتك...',
       submit: 'إرسال الرسالة'
     },
     alternative: 'أو تواصل معي مباشرة على'
@@ -199,14 +199,7 @@ const t = content[lang as keyof typeof content] || content.en;
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgb(10, 10, 10) 0%,
-      rgba(10, 10, 10, 0.7) 15%,
-      rgba(10, 10, 10, 0.5) 50%,
-      rgba(10, 10, 10, 0.7) 85%,
-      rgb(10, 10, 10) 100%
-    );
+    background: rgba(10, 10, 10, 0.75);
   }
 
   .contact__background {
