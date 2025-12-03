@@ -174,10 +174,10 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
       isMouseInWindow = false;
     });
 
-    // Watch for "Selected Works" section
-    const selectedWorksSection = document.getElementById('selected-works');
-    if (selectedWorksSection) {
-      const workObserver = new IntersectionObserver((entries) => {
+    // Watch for "About" section - images fall when reaching About
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const aboutObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && !hasReachedWork) {
             hasReachedWork = true;
@@ -193,7 +193,7 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
           }
         });
       }, { threshold: 0.1 });
-      workObserver.observe(selectedWorksSection);
+      aboutObserver.observe(aboutSection);
     }
 
     // Physics constants
