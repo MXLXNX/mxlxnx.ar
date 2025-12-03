@@ -307,16 +307,20 @@ const t = content[lang as keyof typeof content] || content.en;
   }
 
   .contact__submit :global(.btn) {
-    background: linear-gradient(135deg, #ff2d92, #c8ff00) !important;
-    color: #000 !important;
-    font-weight: 700;
+    background: transparent !important;
+    color: var(--color-white) !important;
+    font-weight: 500;
     padding: 1rem 2rem;
-    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
   }
 
   .contact__submit :global(.btn:hover) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 45, 146, 0.3);
+    background: var(--color-white) !important;
+    color: var(--color-black) !important;
+    border-color: var(--color-white) !important;
   }
 
   /* Alternative contact */
