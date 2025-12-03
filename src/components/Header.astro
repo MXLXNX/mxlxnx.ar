@@ -7,10 +7,57 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 
+const navContent = {
+  en: {
+    work: 'Work',
+    about: 'About',
+    contact: 'Contact',
+    tagline: 'Creative Director & Visual Artist'
+  },
+  es: {
+    work: 'Trabajos',
+    about: 'Sobre Mí',
+    contact: 'Contacto',
+    tagline: 'Directora Creativa & Artista Visual'
+  },
+  fr: {
+    work: 'Travaux',
+    about: 'À Propos',
+    contact: 'Contact',
+    tagline: 'Directrice Créative & Artiste Visuelle'
+  },
+  de: {
+    work: 'Arbeiten',
+    about: 'Über Mich',
+    contact: 'Kontakt',
+    tagline: 'Kreativdirektorin & Visuelle Künstlerin'
+  },
+  pt: {
+    work: 'Trabalhos',
+    about: 'Sobre Mim',
+    contact: 'Contato',
+    tagline: 'Diretora Criativa & Artista Visual'
+  },
+  ja: {
+    work: '作品',
+    about: 'プロフィール',
+    contact: 'お問い合わせ',
+    tagline: 'クリエイティブディレクター & ビジュアルアーティスト'
+  },
+  ar: {
+    work: 'أعمال',
+    about: 'عني',
+    contact: 'تواصل',
+    tagline: 'مديرة إبداعية وفنانة بصرية'
+  }
+};
+
+const t = navContent[lang as keyof typeof navContent] || navContent.en;
+
 const navigation = [
-  { label: 'Work', href: '#selected-works' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' }
+  { label: t.work, href: '#selected-works' },
+  { label: t.about, href: '#about' },
+  { label: t.contact, href: '#contact' }
 ];
 ---
 
@@ -63,7 +110,7 @@ const navigation = [
       </ul>
     </nav>
     <div class="mobile-menu__footer">
-      <p class="mobile-menu__tagline">Creative Director & Visual Artist</p>
+      <p class="mobile-menu__tagline">{t.tagline}</p>
     </div>
   </div>
 </div>
