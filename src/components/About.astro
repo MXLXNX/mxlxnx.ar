@@ -102,6 +102,7 @@ const t = content[lang as keyof typeof content] || content.en;
       <div class="about__content">
         <AnimatedSection animation="fade-up" delay={100}>
           <span class="about__eyebrow">{t.eyebrow}</span>
+          <h1 class="about__name">Malena Posadas</h1>
           <h2 class="about__title">{t.title}</h2>
         </AnimatedSection>
 
@@ -219,6 +220,16 @@ const t = content[lang as keyof typeof content] || content.en;
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--color-gray-400);
+  }
+
+  .about__name {
+    font-family: var(--font-accent);
+    font-size: var(--text-3xl);
+    font-weight: 300;
+    color: var(--color-white);
+    margin-top: var(--space-md);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .about__title {

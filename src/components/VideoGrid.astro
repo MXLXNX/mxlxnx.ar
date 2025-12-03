@@ -59,6 +59,11 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
                   <line x1="17" y1="9" x2="23" y2="15"/>
                 </svg>
               </button>
+              <button class="video-grid__control-btn" data-fullscreen-btn aria-label="Fullscreen">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+              </button>
             </div>
           </div>
           {video.title && (
@@ -316,6 +321,7 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
     const video = wrapper.querySelector('video') as HTMLVideoElement;
     const playBtn = wrapper.querySelector('[data-play-btn]') as HTMLButtonElement;
     const unmuteBtn = wrapper.querySelector('[data-unmute-btn]') as HTMLButtonElement;
+    const fullscreenBtn = wrapper.querySelector('[data-fullscreen-btn]') as HTMLButtonElement;
 
     if (video && playBtn) {
       playBtn.addEventListener('click', (e) => {
@@ -344,6 +350,19 @@ const { videos, sectionTitle, sectionSubtitle, singleVideo = false, featured = f
           e.stopPropagation();
           video.muted = !video.muted;
           unmuteBtn.classList.toggle('is-unmuted', !video.muted);
+        });
+      }
+
+      if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if ((video as any).webkitRequestFullscreen) {
+            (video as any).webkitRequestFullscreen();
+          } else if ((video as any).msRequestFullscreen) {
+            (video as any).msRequestFullscreen();
+          }
         });
       }
     }
