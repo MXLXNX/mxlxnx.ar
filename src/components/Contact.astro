@@ -306,6 +306,19 @@ const t = content[lang as keyof typeof content] || content.en;
     margin-top: var(--space-md);
   }
 
+  .contact__submit :global(.btn) {
+    background: linear-gradient(135deg, #ff2d92, #c8ff00) !important;
+    color: #000 !important;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+  }
+
+  .contact__submit :global(.btn:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 45, 146, 0.3);
+  }
+
   /* Alternative contact */
   .contact__alternative {
     text-align: center;
