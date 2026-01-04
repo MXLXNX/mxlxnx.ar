@@ -75,12 +75,7 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 15px 40px rgba(0,0,0,0.35));
     pointer-events: none;
-  }
-
-  .floating-img:hover img {
-    filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
   }
 
   @media (max-width: 1024px) {
@@ -289,14 +284,22 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
         // Apply transform
         obj.element.style.left = '0';
         obj.element.style.top = '0';
-        obj.element.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
+        obj.element.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
       });
 
-      requestAnimationFrame(updatePhysics);
+      if (!document.hidden) {
+        requestAnimationFrame(updatePhysics);
+      }
     }
 
-    // Start physics loop
+    // Start physics loop only when page is visible
     updatePhysics();
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        requestAnimationFrame(updatePhysics);
+      }
+    });
 
     // Handle window resize
     window.addEventListener('resize', () => {
