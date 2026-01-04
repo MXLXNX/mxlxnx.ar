@@ -287,19 +287,11 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
         obj.element.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
       });
 
-      if (!document.hidden) {
-        requestAnimationFrame(updatePhysics);
-      }
+      requestAnimationFrame(updatePhysics);
     }
 
-    // Start physics loop only when page is visible
+    // Start physics loop
     updatePhysics();
-
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        requestAnimationFrame(updatePhysics);
-      }
-    });
 
     // Handle window resize
     window.addEventListener('resize', () => {
