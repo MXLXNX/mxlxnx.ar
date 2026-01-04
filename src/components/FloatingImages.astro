@@ -34,7 +34,7 @@ const images = [
 const positions = images.map(() => ({ x: 50, y: 50 }));
 ---
 
-<div class="floating-images" id="floating-container" aria-hidden="true">
+<div class="floating-images" id="floating-container" aria-hidden="true" style="opacity: 0; transition: opacity 0.6s ease;">
   {images.map((src, i) => (
     <div
       class="floating-img"
@@ -112,6 +112,17 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
 
   const container = document.getElementById('floating-container');
   if (container) {
+    // Wait for page to fully load before showing floating images
+    const showFloatingImages = () => {
+      container.style.opacity = '1';
+    };
+
+    if (document.readyState === 'complete') {
+      showFloatingImages();
+    } else {
+      window.addEventListener('load', showFloatingImages);
+    }
+
     const floatingElements = document.querySelectorAll('[data-floating-img]');
     const objects: PhysicsObject[] = [];
 
