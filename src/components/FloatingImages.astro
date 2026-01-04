@@ -103,7 +103,8 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
     height: number;
     index: number;
     fallen: boolean;
-    isFloater: boolean; // The 2 that stay floating
+    isFloater: boolean; // The 2 that stay floating at start
+    isActive: boolean; // Whether this object is visible/active
     angle: number; // For orbital motion
     orbitRadius: number;
     orbitSpeed: number;
@@ -123,13 +124,21 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
-    // Initialize physics objects - all start at center
+    // Initialize physics objects - all start at center but hidden except first 2
     floatingElements.forEach((el, index) => {
       const element = el as HTMLElement;
       const rect = element.getBoundingClientRect();
 
       // Random angle for explosion direction
       const angle = (index / floatingElements.length) * Math.PI * 2 + Math.random() * 0.5;
+
+      const isFloater = index < 2;
+
+      // Hide all except the first 2 floaters
+      if (!isFloater) {
+        element.style.opacity = '0';
+        element.style.pointerEvents = 'none';
+      }
 
       objects.push({
         element,
@@ -141,20 +150,23 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
         height: rect.height,
         index,
         fallen: false,
-        isFloater: index < 2, // First 2 are the permanent floaters
+        isFloater: isFloater,
+        isActive: isFloater, // Only first 2 are active at start
         angle: angle,
         orbitRadius: 150 + Math.random() * 300,
         orbitSpeed: 0.002 + Math.random() * 0.003
       });
     });
 
-    // Explosion on page load
+    // Gently move the 2 floaters to their positions on load
     setTimeout(() => {
-      hasExploded = true;
       objects.forEach((obj) => {
-        const explosionForce = 15 + Math.random() * 20;
-        obj.vx = Math.cos(obj.angle) * explosionForce;
-        obj.vy = Math.sin(obj.angle) * explosionForce;
+        if (obj.isFloater) {
+          const targetX = obj.index === 0 ? window.innerWidth * 0.15 : window.innerWidth * 0.85;
+          const targetY = window.innerHeight * 0.2;
+          obj.vx = (targetX - obj.x) * 0.05;
+          obj.vy = (targetY - obj.y) * 0.05;
+        }
       });
     }, 300);
 
@@ -169,18 +181,43 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
       isMouseInWindow = false;
     });
 
-    // Watch for "About" section - images fall when reaching About
+    // Watch for footer - explosion happens when reaching bottom of page
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasExploded) {
+            hasExploded = true;
+            // Activate and explode all hidden toys
+            objects.forEach((obj) => {
+              if (!obj.isFloater) {
+                obj.isActive = true;
+                obj.element.style.opacity = '1';
+                obj.element.style.pointerEvents = 'auto';
+                obj.element.style.transition = 'opacity 0.3s ease';
+                // Explode from center
+                const explosionForce = 15 + Math.random() * 20;
+                obj.vx = Math.cos(obj.angle) * explosionForce;
+                obj.vy = Math.sin(obj.angle) * explosionForce - 10; // Bias upward
+              }
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      footerObserver.observe(footer);
+    }
+
+    // Watch for "About" section - images fall when reaching About (only if already exploded)
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
       const aboutObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting && !hasReachedWork) {
+          if (entry.isIntersecting && hasExploded && !hasReachedWork) {
             hasReachedWork = true;
             // Make all images except floaters fall down
             objects.forEach((obj) => {
-              if (!obj.isFloater) {
+              if (!obj.isFloater && obj.isActive) {
                 obj.fallen = true;
-                // Spread them across the bottom
                 obj.vx = (Math.random() - 0.5) * 15;
                 obj.vy = 5 + Math.random() * 10;
               }
@@ -204,6 +241,9 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
       const windowHeight = window.innerHeight;
 
       objects.forEach((obj) => {
+        // Skip inactive objects
+        if (!obj.isActive) return;
+
         // Floaters behavior - gentle floating at top
         if (obj.isFloater && !obj.fallen) {
           // Keep floaters in top area with gentle movement
