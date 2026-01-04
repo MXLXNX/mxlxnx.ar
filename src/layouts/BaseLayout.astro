@@ -24,7 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang={lang}>
+<html lang={lang} class="is-loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -113,9 +113,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         const preloader = document.getElementById('preloader');
         const html = document.documentElement;
 
-        // Lock scroll during loading
-        html.classList.add('is-loading');
-
         // Minimum display time for animation (2 seconds)
         const MIN_DISPLAY_TIME = 2000;
         const startTime = performance.now();
@@ -167,21 +164,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         }, 5000);
       })();
 
-      // Progressive image loading enhancement
+      // Progressive image loading - fade in when loaded
       document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        img.setAttribute('data-loading', 'true');
-
         if (img.complete) {
-          img.removeAttribute('data-loading');
           img.classList.add('is-loaded');
         } else {
           img.addEventListener('load', function() {
-            this.removeAttribute('data-loading');
             this.classList.add('is-loaded');
           }, { once: true });
-
           img.addEventListener('error', function() {
-            this.removeAttribute('data-loading');
             this.classList.add('is-loaded');
           }, { once: true });
         }
