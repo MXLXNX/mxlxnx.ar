@@ -3,17 +3,29 @@ interface Props {
   title?: string;
   subtitle?: string;
   name?: string;
+  bgVideo?: string;
 }
 
 const {
   title = "MXLXNX",
   subtitle = "Creative & Multidisciplinary Artist",
-  name = "Malena Posadas"
+  name = "Malena Posadas",
+  bgVideo = "https://res.cloudinary.com/dbm9wua3c/video/upload/v1764797670/REEL_jvojnq.mp4"
 } = Astro.props;
 ---
 
 <section class="hero" id="hero">
   <div class="hero__bg">
+    <video
+      class="hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source src={bgVideo} type="video/mp4" />
+    </video>
     <div class="hero__flash-layer" data-flash-layer></div>
     <div class="hero__overlay"></div>
   </div>
@@ -69,30 +81,45 @@ const {
     background: rgb(10, 10, 10);
   }
 
+  .hero__video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+  }
+
   .hero__flash-layer {
     position: absolute;
     inset: 0;
     background: rgb(10, 10, 10);
-    opacity: 0.5;
+    opacity: 0.4;
+    z-index: 1;
     transition: background-color 0.05s ease-out, opacity 0.1s ease-out;
   }
 
   .hero__overlay {
     position: absolute;
     inset: 0;
+    z-index: 2;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.1) 0%,
-      rgba(0, 0, 0, 0.15) 30%,
-      rgba(0, 0, 0, 0.3) 60%,
-      rgba(10, 10, 10, 0.8) 85%,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(10, 10, 10, 0.85) 85%,
       rgb(10, 10, 10) 100%
     );
   }
 
   .hero__content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
