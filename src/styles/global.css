@@ -693,3 +693,171 @@ button {
 .section--dark .card-organic {
   background: var(--color-gray-900);
 }
+
+/* ==========================================================================
+   Preloader
+   ========================================================================== */
+
+/* Prevent scroll while loading */
+html.is-loading {
+  overflow: hidden;
+}
+
+html.is-loading body {
+  overflow: hidden;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-black);
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preloader.is-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.preloader__blob {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 157, 0.4) 0%,
+    rgba(168, 85, 247, 0.4) 50%,
+    rgba(34, 211, 238, 0.4) 100%
+  );
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  filter: blur(60px);
+  animation:
+    preloader-blob-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    preloader-blob-morph 8s ease-in-out infinite;
+  transform: scale(0);
+}
+
+@keyframes preloader-blob-scale {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes preloader-blob-morph {
+  0%, 100% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  }
+  25% {
+    border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  75% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+.preloader__text {
+  position: relative;
+  font-family: 'Georgia', var(--font-serif);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-style: italic;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  opacity: 0;
+  animation:
+    preloader-text-fade 0.5s ease-out 0.2s forwards,
+    preloader-glow-cycle 2s ease-in-out infinite;
+}
+
+@keyframes preloader-text-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes preloader-glow-cycle {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(255, 107, 157, 0.8),
+      0 0 40px rgba(255, 107, 157, 0.4),
+      0 0 60px rgba(255, 107, 157, 0.2);
+  }
+  33% {
+    text-shadow:
+      0 0 20px rgba(168, 85, 247, 0.8),
+      0 0 40px rgba(168, 85, 247, 0.4),
+      0 0 60px rgba(168, 85, 247, 0.2);
+  }
+  66% {
+    text-shadow:
+      0 0 20px rgba(34, 211, 238, 0.8),
+      0 0 40px rgba(34, 211, 238, 0.4),
+      0 0 60px rgba(34, 211, 238, 0.2);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .preloader__blob {
+    animation: none;
+    transform: scale(1);
+  }
+
+  .preloader__text {
+    animation: none;
+    opacity: 1;
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+  }
+
+  .preloader {
+    transition: opacity 150ms ease;
+  }
+}
+
+/* ==========================================================================
+   Progressive Image Loading
+   ========================================================================== */
+
+/* Shimmer skeleton for lazy images */
+img[loading="lazy"]:not(.is-loaded) {
+  background: linear-gradient(
+    90deg,
+    var(--color-gray-900) 0%,
+    var(--color-gray-800) 50%,
+    var(--color-gray-900) 100%
+  );
+  background-size: 200% 100%;
+  animation: image-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes image-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Fade-in when loaded */
+img[loading="lazy"] {
+  transition: opacity 0.4s ease-out;
+}
+
+img[loading="lazy"][data-loading="true"] {
+  opacity: 0;
+}
+
+img[loading="lazy"].is-loaded {
+  animation: none;
+  background: transparent;
+}
