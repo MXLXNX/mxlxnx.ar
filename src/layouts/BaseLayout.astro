@@ -24,7 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!DOCTYPE html>
-<html lang={lang} class="is-loading">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -61,12 +61,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <!-- Preloader -->
-    <div id="preloader" class="preloader" aria-hidden="true">
-      <div class="preloader__blob"></div>
-      <span class="preloader__text">MXLXNX</span>
-    </div>
-
     <Header />
     <FloatingElements />
     <FloatingImages />
@@ -104,78 +98,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Observe stagger containers
       document.querySelectorAll('[data-stagger]').forEach(el => {
         observer.observe(el);
-      });
-    </script>
-
-    <!-- Preloader Script -->
-    <script>
-      (function() {
-        const preloader = document.getElementById('preloader');
-        const html = document.documentElement;
-
-        // Minimum display time for animation (2 seconds)
-        const MIN_DISPLAY_TIME = 2000;
-        const startTime = performance.now();
-
-        // Hide preloader when fonts ready and minimum time passed
-        async function hidePreloader() {
-          // Wait for fonts
-          await document.fonts.ready;
-
-          // Calculate remaining time to meet minimum display
-          const elapsed = performance.now() - startTime;
-          const remainingTime = Math.max(0, MIN_DISPLAY_TIME - elapsed);
-
-          // Wait for remaining time if needed
-          if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
-          }
-
-          // Hide the preloader
-          if (preloader) {
-            preloader.classList.add('is-hidden');
-
-            // Remove from DOM after transition
-            preloader.addEventListener('transitionend', function handler() {
-              preloader.removeEventListener('transitionend', handler);
-              preloader.remove();
-              html.classList.remove('is-loading');
-            }, { once: true });
-
-            // Fallback removal if transitionend doesn't fire
-            setTimeout(() => {
-              if (preloader.parentNode) {
-                preloader.remove();
-                html.classList.remove('is-loading');
-              }
-            }, 600);
-          }
-        }
-
-        // Start hiding process
-        hidePreloader();
-
-        // Safety fallback - force hide after 5 seconds
-        setTimeout(() => {
-          if (preloader && preloader.parentNode) {
-            preloader.remove();
-            html.classList.remove('is-loading');
-          }
-        }, 5000);
-      })();
-
-      // Progressive image loading - fade in when loaded
-      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        if (img.complete) {
-          img.classList.add('is-loaded');
-        } else {
-          img.addEventListener('load', function() {
-            this.classList.add('is-loaded');
-          }, { once: true });
-          img.addEventListener('error', function() {
-            this.classList.add('is-loaded');
-          }, { once: true });
-        }
       });
     </script>
   </body>
