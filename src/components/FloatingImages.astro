@@ -337,12 +337,11 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
         obj.element.style.top = '0';
         obj.element.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
       });
-
-      requestAnimationFrame(updatePhysics);
     }
 
-    // Start physics loop
-    updatePhysics();
+    // Start physics loop - use setInterval to prevent scroll throttling
+    // Browsers throttle requestAnimationFrame during scroll
+    setInterval(updatePhysics, 16);
 
     // Handle window resize
     window.addEventListener('resize', () => {
