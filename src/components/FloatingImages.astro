@@ -40,7 +40,7 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
       class="floating-img"
       data-floating-img
       data-index={i}
-      style="left: 50%; top: 50%; transform: translate(-50%, -50%);"
+      style="left: 0; top: 0;"
     >
       <img src={src} alt="" loading="lazy" draggable="false" />
     </div>
@@ -54,6 +54,8 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
     pointer-events: none;
     z-index: 2;
     overflow: hidden;
+    transform: translateZ(0);
+    isolation: isolate;
   }
 
   .floating-img {
@@ -64,7 +66,8 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
     cursor: grab;
     user-select: none;
     will-change: transform;
-    transition: filter 0.2s ease;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .floating-img:active {
@@ -332,9 +335,7 @@ const positions = images.map(() => ({ x: 50, y: 50 }));
           }
         }
 
-        // Apply transform
-        obj.element.style.left = '0';
-        obj.element.style.top = '0';
+        // Apply transform (only update transform, not left/top to avoid layout thrashing)
         obj.element.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
       });
     }
