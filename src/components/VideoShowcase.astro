@@ -1,17 +1,41 @@
 ---
+interface PastReel {
+  url: string;
+  type: 'mp4' | 'youtube';
+}
+
 interface Props {
   video: string;
+  videoType?: 'mp4' | 'youtube';
   poster?: string;
   title?: string;
   subtitle?: string;
+  pastReels?: PastReel[];
+  pastReelsLabel?: string;
+  latestReelLabel?: string;
 }
 
 const {
   video,
+  videoType = 'mp4',
   poster,
   title = 'Showreel',
-  subtitle = 'A glimpse into my creative world'
+  subtitle = 'A glimpse into my creative world',
+  pastReels = [],
+  pastReelsLabel = 'View past reels',
+  latestReelLabel = 'Back to latest reel',
 } = Astro.props;
+
+function getYouTubeEmbedUrl(url: string): string {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?#]+)/);
+  const id = match ? match[1] : url;
+  return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white`;
+}
+
+const reels = [
+  { url: video, type: videoType },
+  ...pastReels,
+];
 ---
 
 <section class="showcase section" id="showreel">
@@ -22,16 +46,49 @@ const {
       <p class="showcase__subtitle">{subtitle}</p>
     </div>
 
-    <div class="showcase__video-container">
-      <video
-        class="showcase__video"
-        controls
-        playsinline
-        preload="auto"
-      >
-        <source src={video} type="video/mp4" />
-      </video>
+    <div
+      class="showcase__video-container"
+      data-showcase-player
+      data-reels={JSON.stringify(reels)}
+      data-current="0"
+      data-label-past={pastReelsLabel}
+      data-label-latest={latestReelLabel}
+    >
+      {videoType === 'youtube' ? (
+        <div class="showcase__iframe-wrap">
+          <iframe
+            class="showcase__iframe"
+            src={getYouTubeEmbedUrl(video)}
+            title={title}
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      ) : (
+        <video
+          class="showcase__video"
+          controls
+          playsinline
+          preload="auto"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      )}
     </div>
+
+    {pastReels.length > 0 && (
+      <div class="showcase__past-reels">
+        <button class="showcase__past-toggle" data-reel-toggle>
+          <span class="showcase__past-toggle-text">{pastReelsLabel}</span>
+          <svg class="showcase__past-toggle-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    )}
   </div>
 </section>
 
@@ -91,4 +148,135 @@ const {
     height: auto;
     background: #000;
   }
+
+  .showcase__iframe-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+  }
+
+  .showcase__iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+  }
+
+  /* Past reels toggle */
+  .showcase__past-reels {
+    margin-top: var(--space-lg);
+    text-align: center;
+  }
+
+  .showcase__past-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-gray-500);
+    padding: 8px 0;
+    transition: color 0.3s ease;
+  }
+
+  .showcase__past-toggle:hover {
+    color: var(--color-gray-300);
+  }
+
+  .showcase__past-toggle-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .showcase__past-toggle.is-showing-past .showcase__past-toggle-icon {
+    transform: rotate(180deg);
+  }
 </style>
+
+<script>
+  function getYouTubeEmbedUrl(url: string): string {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?#]+)/);
+    const id = match ? match[1] : url;
+    return `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white`;
+  }
+
+  document.querySelectorAll('[data-reel-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const section = btn.closest('.showcase');
+      const player = section?.querySelector('[data-showcase-player]') as HTMLElement | null;
+      if (!player) return;
+
+      const reels = JSON.parse(player.dataset.reels || '[]');
+      const current = parseInt(player.dataset.current || '0', 10);
+      const labelPast = player.dataset.labelPast || 'View past reels';
+      const labelLatest = player.dataset.labelLatest || 'Back to latest reel';
+
+      // Toggle between 0 (latest) and 1 (past)
+      const next = current === 0 ? 1 : 0;
+      if (!reels[next]) return;
+
+      const reel = reels[next];
+      const textEl = btn.querySelector('.showcase__past-toggle-text');
+
+      // Lock the container height before swapping to prevent layout shift
+      const currentHeight = player.offsetHeight;
+      player.style.minHeight = currentHeight + 'px';
+
+      // Build new player content
+      if (reel.type === 'youtube') {
+        player.innerHTML = `
+          <div class="showcase__iframe-wrap">
+            <iframe
+              class="showcase__iframe"
+              src="${getYouTubeEmbedUrl(reel.url)}"
+              title="Showreel"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>`;
+        // Release min-height once iframe is ready
+        const iframe = player.querySelector('iframe');
+        if (iframe) {
+          iframe.addEventListener('load', () => { player.style.minHeight = ''; });
+        }
+      } else {
+        player.innerHTML = `
+          <video
+            class="showcase__video"
+            controls
+            playsinline
+            preload="auto"
+          >
+            <source src="${reel.url}" type="video/mp4" />
+          </video>`;
+        // Release min-height once video metadata loads (knows its dimensions)
+        const video = player.querySelector('video');
+        if (video) {
+          video.addEventListener('loadedmetadata', () => { player.style.minHeight = ''; });
+        }
+      }
+
+      player.dataset.current = String(next);
+
+      // Update button text & state
+      if (next === 0) {
+        if (textEl) textEl.textContent = labelPast;
+        btn.classList.remove('is-showing-past');
+      } else {
+        if (textEl) textEl.textContent = labelLatest;
+        btn.classList.add('is-showing-past');
+      }
+    });
+  });
+</script>

@@ -60,7 +60,14 @@ const silentiaProjects = [
 <BaseLayout title="Startseite" lang="de">
   <Hero name="Malena Posadas" title="MXLXNX" subtitle="Kreative & Multidisziplinäre Künstlerin" />
 
-  <VideoShowcase video="https://res.cloudinary.com/dbm9wua3c/video/upload/v1764797670/REEL_jvojnq.mp4" title="Showreel" subtitle="Ein Einblick in mein kreatives Universum" />
+  <VideoShowcase
+    video="/videos/REEL_2026.mp4"
+    title="Showreel"
+    subtitle="Ein Einblick in mein kreatives Universum"
+    pastReels={[{ url: "https://res.cloudinary.com/dbm9wua3c/video/upload/v1764797670/REEL_jvojnq.mp4", type: "mp4" }]}
+    pastReelsLabel="Frühere Reels ansehen"
+    latestReelLabel="Zurück zum neuesten Reel"
+  />
 
   <About lang="de" />
 
