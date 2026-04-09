@@ -547,13 +547,15 @@
     }
 
     /* VIEW TOGGLE */
-    .view-toggle { display:flex; gap:0.3rem; margin-left:auto; }
+    .view-toggle { display:flex; gap:0; margin-left:auto; border-radius:10px; overflow:hidden; border:1px solid rgba(176,108,255,0.25); }
     .view-btn {
-      background:var(--glass-bg); border:1px solid var(--glass-border); color:var(--text-dim);
-      padding:0.4rem 0.7rem; border-radius:8px; cursor:pointer; font-size:0.8rem;
+      background:var(--glass-bg); border:none; color:var(--text-dim);
+      padding:0.5rem 1.2rem; cursor:pointer; font-size:0.82rem;
       font-family:'Space Grotesk',sans-serif; transition:all 0.3s;
+      letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:0.4rem;
     }
-    .view-btn.active { background:rgba(176,108,255,0.15); border-color:rgba(176,108,255,0.3); color:var(--text-bright); }
+    .view-btn:first-child { border-right:1px solid rgba(176,108,255,0.15); }
+    .view-btn.active { background:linear-gradient(135deg,rgba(176,108,255,0.25),rgba(0,229,255,0.15)); color:var(--text-bright); }
 
     /* TABLE VIEW */
     .venues-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
@@ -725,14 +727,14 @@
         </select>
         <input type="text" class="search-box" placeholder="Search festivals..." oninput="searchVenues('festival', this.value)" style="margin-left:auto;">
         <div class="view-toggle">
-          <button class="view-btn active" onclick="setView('festival','cards',this)" title="Cards">&#9638;</button>
-          <button class="view-btn" onclick="setView('festival','table',this)" title="Table">&#9776;</button>
+          <button class="view-btn active" onclick="setView('festival','table',this)">&#9776; List</button>
+          <button class="view-btn" onclick="setView('festival','cards',this)">&#9638; Cards</button>
         </div>
       </div>
       <div class="venue-count" id="festival-count"></div>
     </div>
-    <div class="venues-grid" id="festival-grid"></div>
-    <div class="venues-table-wrap" id="festival-table" style="display:none;"></div>
+    <div class="venues-grid" id="festival-grid" style="display:none;"></div>
+    <div class="venues-table-wrap" id="festival-table"></div>
   </section>
 
   <div class="divider"></div>
@@ -762,14 +764,14 @@
         </select>
         <input type="text" class="search-box" placeholder="Search platforms..." oninput="searchVenues('showcase', this.value)" style="margin-left:auto;">
         <div class="view-toggle">
-          <button class="view-btn active" onclick="setView('showcase','cards',this)">&#9638;</button>
-          <button class="view-btn" onclick="setView('showcase','table',this)">&#9776;</button>
+          <button class="view-btn active" onclick="setView('showcase','table',this)">&#9776; List</button>
+          <button class="view-btn" onclick="setView('showcase','cards',this)">&#9638; Cards</button>
         </div>
       </div>
       <div class="venue-count" id="showcase-count"></div>
     </div>
-    <div class="venues-grid" id="showcase-grid"></div>
-    <div class="venues-table-wrap" id="showcase-table" style="display:none;"></div>
+    <div class="venues-grid" id="showcase-grid" style="display:none;"></div>
+    <div class="venues-table-wrap" id="showcase-table"></div>
   </section>
 
   <div class="divider"></div>
@@ -784,8 +786,8 @@
     <div class="fade-in">
       <div class="venue-count" id="award-count"></div>
     </div>
-    <div class="venues-grid" id="award-grid"></div>
-    <div class="venues-table-wrap" id="award-table" style="display:none;"></div>
+    <div class="venues-grid" id="award-grid" style="display:none;"></div>
+    <div class="venues-table-wrap" id="award-table"></div>
   </section>
 
   <div class="divider"></div>
@@ -1910,7 +1912,7 @@ venues.forEach(v => {
 // ============================================================
 // VIEW STATE
 // ============================================================
-let currentViews = { festival:'cards', showcase:'cards', award:'cards' };
+let currentViews = { festival:'table', showcase:'table', award:'table' };
 
 function setView(category, view, btn) {
   currentViews[category] = view;
