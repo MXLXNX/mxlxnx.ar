@@ -547,6 +547,47 @@
       text-align:center; padding:3rem; color:var(--text-dim);
       font-family:'Space Grotesk',sans-serif;
     }
+
+    /* VIEW TOGGLE */
+    .view-toggle { display:flex; gap:0.3rem; margin-left:auto; }
+    .view-btn {
+      background:var(--glass-bg); border:1px solid var(--glass-border); color:var(--text-dim);
+      padding:0.4rem 0.7rem; border-radius:8px; cursor:pointer; font-size:0.8rem;
+      font-family:'Space Grotesk',sans-serif; transition:all 0.3s;
+    }
+    .view-btn.active { background:rgba(176,108,255,0.15); border-color:rgba(176,108,255,0.3); color:var(--text-bright); }
+
+    /* TABLE VIEW */
+    .venues-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .venues-table-wrap::-webkit-scrollbar { height:4px; }
+    .venues-table-wrap::-webkit-scrollbar-thumb { background:var(--iris-purple); border-radius:2px; }
+    .venues-table {
+      width:100%; border-collapse:separate; border-spacing:0; font-size:0.78rem;
+      font-family:'Space Grotesk',sans-serif;
+    }
+    .venues-table th {
+      text-align:left; padding:0.6rem 0.8rem; color:var(--text-dim); text-transform:uppercase;
+      letter-spacing:1.5px; font-size:0.65rem; font-weight:600;
+      border-bottom:1px solid rgba(176,108,255,0.15); white-space:nowrap; position:sticky; top:0;
+      background:var(--bg-void);
+    }
+    .venues-table td {
+      padding:0.6rem 0.8rem; border-bottom:1px solid rgba(255,255,255,0.03);
+      color:var(--text-dim); vertical-align:top;
+    }
+    .venues-table tr:hover td { background:rgba(176,108,255,0.03); }
+    .venues-table .t-name { color:var(--text-bright); font-weight:600; white-space:nowrap; }
+    .venues-table .t-name a { color:inherit; text-decoration:none; }
+    .venues-table .t-name a:hover { color:var(--iris-cyan); }
+    .venues-table .t-loc { white-space:nowrap; }
+    .venues-table .t-stars { color:var(--iris-gold); white-space:nowrap; }
+    .venues-table .t-ai { white-space:nowrap; font-size:0.7rem; padding:0.15rem 0.5rem; border-radius:50px; display:inline-block; }
+    .t-ai-ok { background:rgba(100,255,218,0.1); color:var(--iris-mint); border:1px solid rgba(100,255,218,0.2); }
+    .t-ai-disc { background:rgba(255,215,0,0.1); color:var(--iris-gold); border:1px solid rgba(255,215,0,0.2); }
+    .t-ai-ban { background:rgba(255,107,157,0.1); color:var(--iris-coral); border:1px solid rgba(255,107,157,0.2); }
+    .t-ai-unk { background:rgba(176,108,255,0.1); color:var(--iris-purple); border:1px solid rgba(176,108,255,0.2); }
+    .venues-table .t-oscar { color:var(--iris-gold); }
+    .venues-table .t-prizes { font-size:0.72rem; max-width:200px; }
   </style>
 </head>
 <body>
@@ -565,6 +606,7 @@
       <li><a href="#awards">Awards</a></li>
       <li><a href="#timeline">Timeline</a></li>
       <li><a href="#strategy">Strategy</a></li>
+      <li><a href="#ai-policy" style="color:var(--iris-coral);">AI Policy</a></li>
     </ul>
     <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">&#9776;</button>
   </nav>
@@ -667,10 +709,15 @@
           <option value="fee">Fee (lowest)</option>
         </select>
         <input type="text" class="search-box" placeholder="Search festivals..." oninput="searchVenues('festival', this.value)" style="margin-left:auto;">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('festival','cards',this)" title="Cards">&#9638;</button>
+          <button class="view-btn" onclick="setView('festival','table',this)" title="Table">&#9776;</button>
+        </div>
       </div>
       <div class="venue-count" id="festival-count"></div>
     </div>
     <div class="venues-grid" id="festival-grid"></div>
+    <div class="venues-table-wrap" id="festival-table" style="display:none;"></div>
   </section>
 
   <div class="divider"></div>
@@ -698,10 +745,15 @@
           <option value="fee">Fee (lowest)</option>
         </select>
         <input type="text" class="search-box" placeholder="Search platforms..." oninput="searchVenues('showcase', this.value)" style="margin-left:auto;">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('showcase','cards',this)">&#9638;</button>
+          <button class="view-btn" onclick="setView('showcase','table',this)">&#9776;</button>
+        </div>
       </div>
       <div class="venue-count" id="showcase-count"></div>
     </div>
     <div class="venues-grid" id="showcase-grid"></div>
+    <div class="venues-table-wrap" id="showcase-table" style="display:none;"></div>
   </section>
 
   <div class="divider"></div>
@@ -717,6 +769,7 @@
       <div class="venue-count" id="award-count"></div>
     </div>
     <div class="venues-grid" id="award-grid"></div>
+    <div class="venues-table-wrap" id="award-table" style="display:none;"></div>
   </section>
 
   <div class="divider"></div>
@@ -855,6 +908,165 @@
 
   <div class="divider"></div>
 
+  <!-- AI POLICY -->
+  <section id="ai-policy">
+    <div class="fade-in">
+      <span class="section-tag" style="color:var(--iris-coral);">&#9888; Critical Notice</span>
+      <h2 class="section-title" style="background:linear-gradient(135deg,var(--iris-coral),var(--iris-gold),var(--iris-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI Content Policies</h2>
+      <p class="section-desc">This project is fully AI-generated. Here is the current policy landscape at each venue &mdash; updated April 2026.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem;">
+
+      <!-- POLICY: ACCEPT -->
+      <div style="background:rgba(100,255,218,0.04);border:1px solid rgba(100,255,218,0.15);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.1rem;color:var(--iris-mint);margin-bottom:1rem;">&#10003; AI Welcome / AI-Specific Categories</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">SIGGRAPH Computer Animation Festival</strong><br>
+            Requires AI disclosure. All forms of computer animation eligible. Tech-forward &mdash; one of the most natural homes for AI animation. <span style="color:var(--iris-mint);">SUBMIT.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">BIAF Bucheon (Korea)</strong><br>
+            <em>"AI-generated works are also eligible for submission in all categories."</em> Explicitly welcomes AI. <span style="color:var(--iris-mint);">SUBMIT.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Webby Awards</strong><br>
+            Expanded AI-specific categories in 2026 including Creativity & Storytelling, Arts/Culture/Events, Visual Design. <span style="color:var(--iris-mint);">SUBMIT to AI categories.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">D&AD Awards</strong><br>
+            "Use of AI & Technology" subcategories across ALL categories in 2026. Requires structured AI disclosure at entry. <span style="color:var(--iris-mint);">SUBMIT with disclosure.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Berlin Film Festival</strong><br>
+            Created a separate category for AI-directed films. Inclusive approach. <span style="color:var(--iris-mint);">Good precedent for BMVA too.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Runway AI Film Festival</strong><br>
+            Dedicated entirely to AI filmmaking. Celebrates AI as creative expansion. <span style="color:var(--iris-mint);">PERFECT FIT. SUBMIT.</span>
+          </div>
+          <div>
+            <strong style="color:var(--text-bright);">Academy Awards / Oscars</strong><br>
+            Permits AI content if <em>"human authorship is proven."</em> AI films "Ahimsa" and "All Heart" both qualified for Animated Short Film in 2026. <span style="color:var(--iris-mint);">Precedent exists.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLICY: DISCLOSURE -->
+      <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.15);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.1rem;color:var(--iris-gold);margin-bottom:1rem;">&#9888; Disclosure Required / Case-by-Case</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Annecy</strong><br>
+            <em>"Any substantial use of AI must be stated. A statement of intent justifying AI use from an artistic point of view is required."</em> No outright ban &mdash; has dedicated "Mifa AI" programme. But union protests occurred in 2025. <span style="color:var(--iris-gold);">Submit with strong artistic statement.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Sundance</strong><br>
+            Requires disclosure: <em>"How do you plan to disclose AI use to your audience?"</em> Has screened AI work. No outright ban. <span style="color:var(--iris-gold);">Submit with transparency.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">SXSW</strong><br>
+            Requires AI disclosure. Tech-forward identity makes it receptive. Hosted AI+Film panels in 2026. <span style="color:var(--iris-gold);">Submit. Good fit.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Tribeca</strong><br>
+            Has screened AI films (SORA-generated short). Forward-thinking, immersive section receptive to AI. <span style="color:var(--iris-gold);">Submit.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Leeds, Cambridge, Banff</strong><br>
+            All request AI disclosure. Cambridge warns it will disqualify copyright breaches. <span style="color:var(--iris-gold);">Submit with full transparency.</span>
+          </div>
+          <div>
+            <strong style="color:var(--text-bright);">New York Film Festival</strong><br>
+            <em>"Would not rule it out."</em> Has received and selected AI submissions. No dedicated category. <span style="color:var(--iris-gold);">Submit normally.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLICY: RESTRICTED / BAN -->
+      <div style="background:rgba(255,107,157,0.04);border:1px solid rgba(255,107,157,0.15);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.1rem;color:var(--iris-coral);margin-bottom:1rem;">&#10007; Restricted or Likely Problematic</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Ottawa (OIAF)</strong><br>
+            <em>"Works that are fully AI-generated are not eligible."</em> Requires <em>"non-algorithmic human involvement"</em> and <em>"sign of the artist's hand."</em> <span style="color:var(--iris-coral);">DO NOT SUBMIT as fully AI.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Annie Awards (ASIFA)</strong><br>
+            ASIFA-Hollywood is leaning protective of human animators. Animation Guild opposition. Rules under active debate. <span style="color:var(--iris-coral);">High risk. Research latest rules before submitting.</span>
+          </div>
+          <div>
+            <strong style="color:var(--text-bright);">Credo 23</strong><br>
+            <em>"Banned AI entirely, promoted as space for purely human creativity."</em> <span style="color:var(--iris-coral);">DO NOT SUBMIT.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLICY: NO STATED POLICY -->
+      <div style="background:rgba(176,108,255,0.04);border:1px solid rgba(176,108,255,0.15);border-radius:var(--radius);padding:1.5rem;">
+        <div style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.1rem;color:var(--iris-purple);margin-bottom:1rem;">&#63; No Stated AI Policy</div>
+        <div style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">UKMVA, Berlin Music Video Awards</strong><br>
+            No explicit AI policy found. Music video awards have historically been more receptive to experimental tech. <span style="color:var(--iris-purple);">Likely safe. Contact organizers to confirm.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Fantoche, Imaginaria, Manchester, Encounters</strong><br>
+            No public AI-specific policy found as of April 2026. <span style="color:var(--iris-purple);">Contact before submitting. Disclose proactively.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Hiroshima Animation Season</strong><br>
+            No explicit policy found. Traditionally craft-oriented &mdash; could lean restrictive. <span style="color:var(--iris-purple);">Contact organizers. Approach with caution.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Pictoplasma, ANIMATOR Poland, Anifilm</strong><br>
+            No policy found. Character/craft-oriented festivals may be skeptical. <span style="color:var(--iris-purple);">Contact first.</span>
+          </div>
+          <div style="margin-bottom:0.8rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(255,255,255,0.03);">
+            <strong style="color:var(--text-bright);">Venice Film Festival</strong><br>
+            <em>"No official guidelines and no clear position"</em> on AI work. <span style="color:var(--iris-purple);">Wild card.</span>
+          </div>
+          <div>
+            <strong style="color:var(--text-bright);">Online Platforms (Stash, Motionographer, Vimeo, etc.)</strong><br>
+            Generally no bans. Stash and Motionographer have featured AI work positively. Vimeo requires disclosure. <span style="color:var(--iris-mint);">All safe to submit.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- STRATEGIC ADVICE -->
+    <div style="margin-top:2.5rem;padding:2rem;background:var(--glass-bg);border:1px solid rgba(255,215,0,0.15);border-radius:var(--radius);">
+      <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:1.2rem;color:var(--iris-gold);margin-bottom:1rem;">Strategic Advice for a Fully AI-Generated Project</h3>
+      <div style="font-size:0.88rem;color:var(--text-dim);line-height:1.9;">
+        <ol style="padding-left:1.5rem;">
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Always disclose AI usage upfront.</strong> Hiding it risks disqualification and reputational damage. Transparency is universally valued.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Frame it as "AI-directed" rather than "AI-generated."</strong> Emphasize the human creative vision, direction, editorial decisions, music supervision, and artistic intent behind the work.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Prepare a strong artistic statement.</strong> Annecy and others require justification of AI use "from an artistic point of view." Write a compelling case for why AI was the right medium for this story.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Prioritize AI-friendly venues first:</strong> SIGGRAPH, BIAF Bucheon, Webby Awards, D&AD, Runway AI Film Festival, SXSW, Tribeca.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Music video context is your advantage.</strong> Music videos have always embraced experimental techniques. UKMVA and BMVA are likely more receptive than pure animation festivals.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Skip Ottawa (OIAF).</strong> Their policy explicitly excludes fully AI-generated work.</li>
+          <li style="margin-bottom:0.8rem;"><strong style="color:var(--text-mid);">Contact festivals with no stated policy BEFORE submitting.</strong> A quick email asking about AI eligibility saves entry fees and avoids surprises.</li>
+          <li><strong style="color:var(--text-mid);">The Oscars now have precedent.</strong> Two AI films qualified for Animated Short Film at the 98th Academy Awards (2026). This shifts the landscape significantly.</li>
+        </ol>
+      </div>
+      <p style="margin-top:1.2rem;font-size:0.75rem;color:var(--text-dim);font-style:italic;">
+        Sources: <a href="https://definitionmagazine.com/features/ai-the-craft-film-festivals/" target="_blank" style="color:var(--iris-cyan);">Definition Magazine</a> &bull;
+        <a href="https://variety.com/2025/film/global/animation-unions-anti-ai-protest-annecy-1236424470/" target="_blank" style="color:var(--iris-cyan);">Variety (Annecy)</a> &bull;
+        <a href="https://deadline.com/2025/12/oscars-ai-films-ahimsa-all-heart-1236643196/" target="_blank" style="color:var(--iris-cyan);">Deadline (Oscars AI)</a> &bull;
+        <a href="https://www.indiewire.com/awards/industry/academy-rule-changes-98th-oscars-ai-1235117204/" target="_blank" style="color:var(--iris-cyan);">IndieWire</a> &bull;
+        <a href="https://aimici.co.uk/ai-at-film-festivals-2025-venice-film-festival/" target="_blank" style="color:var(--iris-cyan);">AIMICI</a> &bull;
+        <a href="https://asianfilmfestivals.com/2026/04/02/bucheon-international-animation-festival-call-for-entry-2026/" target="_blank" style="color:var(--iris-cyan);">BIAF 2026</a> &bull;
+        <a href="https://s2026.siggraph.org/program/computer-animation-festival/" target="_blank" style="color:var(--iris-cyan);">SIGGRAPH 2026</a> &bull;
+        <a href="https://www.dandad.org/awards/d-ad-awards/whats-new" target="_blank" style="color:var(--iris-cyan);">D&AD 2026</a> &bull;
+        <a href="https://www.webbyawards.com/new-categories-webby-30/" target="_blank" style="color:var(--iris-cyan);">Webby Awards</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- FOOTER -->
   <footer>
     <h2 class="footer-title holo-text">A PIECE OF SUN</h2>
@@ -884,10 +1096,12 @@ const venues = [
     deadline:'2026-05-31', fee:0, feeCurrency:'CAD', feeLabel:'FREE',
     categories:['Animation','Short Film','Music Video'],
     prestige:5, oscar:true, bafta:false,
+    aiPolicy:'ban', aiNote:'Fully AI-generated works NOT eligible. Requires "non-algorithmic human involvement."',
+    prizes:'Grand Prize (Short), Grand Prize (Feature), CFI Award, Craft Awards',
     whyFit:'One of the "Big Five" animation festivals. Free submission, Oscar qualifying. Exceptional programming that celebrates independent and experimental animation.',
     similarWork:'Films by Koji Yamamura, "Negative Space" by Max Porter',
     platform:'Direct submission via website',
-    notes:'Completed after May 31, 2025. One of the most prestigious animation festivals in the world.'
+    notes:'⚠️ FULLY AI NOT ELIGIBLE. Requires "sign of the artist\'s hand."'
   },
   {
     id:'fantoche', name:'Fantoche International Animation Film Festival', category:'festival',
@@ -1583,6 +1797,100 @@ const venues = [
 ];
 
 // ============================================================
+// AI POLICY & PRIZES OVERLAY
+// ============================================================
+const aiPolicies = {
+  // ok = AI welcome, disc = disclosure required, ban = restricted/banned, unk = unknown
+  'ottawa':    {ai:'ban',  aiNote:'Fully AI NOT eligible', prizes:'Grand Prize, Craft Awards'},
+  'fantoche':  {ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Audience Award'},
+  'encounters':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Special Mentions'},
+  'biaf':      {ai:'ok',   aiNote:'AI explicitly welcome', prizes:'Grand Prize ₩8M, Jury Prize ₩3M, Audience Prize'},
+  'manchester':{ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Audience Award'},
+  'animotion': {ai:'unk',  aiNote:'No stated policy', prizes:'Best Animated MV, Best 3D Animation'},
+  'imaginaria':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Best MV'},
+  'annecy':    {ai:'disc', aiNote:'Disclosure + artistic statement required', prizes:'Cristal Awards (Short, Feature, Commissioned), Jury Prize'},
+  'zagreb':    {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Special Awards'},
+  'hiroshima': {ai:'unk',  aiNote:'No stated policy (craft-oriented)', prizes:'Grand Prize, Hiroshima Prize, Debut Prize'},
+  'newchitose':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Mentions'},
+  'jmaf':      {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Excellence Award, New Face Award'},
+  'sicaf':     {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Awards'},
+  'pictoplasma':{ai:'unk', aiNote:'No stated policy (character-focused)', prizes:'Best Characters in Motion'},
+  'animator':  {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize (MV Competition)'},
+  'sxsw':      {ai:'disc', aiNote:'Disclosure required, tech-forward', prizes:'Grand Jury Prize, Audience Award, Special Jury Awards'},
+  'tribeca':   {ai:'disc', aiNote:'Has screened AI films (SORA)', prizes:'Best Narrative Short, Best Animated Short'},
+  'sundance':  {ai:'disc', aiNote:'Disclosure required', prizes:'Grand Jury Prize, Audience Award (Animation)'},
+  'bmva':      {ai:'unk',  aiNote:'No stated policy', prizes:'Best MV, Best Animation, Best Emerging Director'},
+  'ukmva':     {ai:'unk',  aiNote:'No stated policy', prizes:'38+ categories incl. Best Animation, Best International'},
+  'anifilm':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best Short, Best MV, Audience Award'},
+  'itfs':      {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Lotte Reiniger Award'},
+  'glas':      {ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Special Mentions'},
+  'siggraph':  {ai:'ok',   aiNote:'AI disclosure required, all CG welcome', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student'},
+  'indieani':  {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Awards'},
+  'holland':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best Short, Applied Animation Award'},
+  'animayo':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best MV, Best 3D, Grand Prix'},
+  'digicon':   {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Regional Awards'},
+  // Showcases
+  'nowness':   {ai:'unk',  aiNote:'No stated policy', prizes:'Paid streaming rights possible'},
+  'promonews': {ai:'unk',  aiNote:'No stated policy', prizes:'One to Watch spotlight'},
+  'stash':     {ai:'ok',   aiNote:'Has featured AI work', prizes:'Best of Stash annual roundup'},
+  'motionographer':{ai:'ok',aiNote:'Has featured AI work', prizes:'Motionographer feature + Motion Awards'},
+  'vimeo':     {ai:'disc', aiNote:'Disclosure required in tags', prizes:'Staff Pick badge, massive visibility'},
+  'cartoonbrew':{ai:'unk', aiNote:'No stated policy', prizes:'Editorial feature'},
+  'itsnicethat':{ai:'unk', aiNote:'No stated policy', prizes:'Editorial feature'},
+  'shortoftheweek':{ai:'unk',aiNote:'No stated policy', prizes:'Featured short + coordinated launch'},
+  'directorsnotes':{ai:'unk',aiNote:'No stated policy', prizes:'WeAreDN Awards'},
+  'dailypsychedelic':{ai:'ok',aiNote:'Likely receptive', prizes:'Featured post'},
+  'colossal':  {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
+  'designboom':{ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
+  'booooooom': {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
+  'pixiv':     {ai:'ok',   aiNote:'AI content allowed', prizes:'Community engagement'},
+  'creativeboom':{ai:'unk',aiNote:'No stated policy', prizes:'Editorial feature'},
+  'skwigly':   {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial + podcast'},
+  'imvdb':     {ai:'ok',   aiNote:'Database listing', prizes:'Discoverability'},
+  'submithub': {ai:'ok',   aiNote:'No restrictions', prizes:'Curator placements'},
+  'groover':   {ai:'ok',   aiNote:'No restrictions', prizes:'Curator placements'},
+  'artstation':{ai:'ok',   aiNote:'AI work allowed', prizes:'Community trending'},
+  'behance':   {ai:'ok',   aiNote:'AI work allowed', prizes:'Featured project'},
+  'animationobsessive':{ai:'unk',aiNote:'No stated policy', prizes:'Newsletter feature (60K subs)'},
+  // Awards
+  'dandad':    {ai:'ok',   aiNote:'AI subcategories in ALL categories 2026', prizes:'Pencil Awards (Yellow, Graphite, Wood)'},
+  'webby':     {ai:'ok',   aiNote:'Expanded AI categories in 2026', prizes:'Webby Award + People\'s Voice Award'},
+  'motionawards':{ai:'unk',aiNote:'No stated policy', prizes:'Motion Award trophies'},
+  'commarts':  {ai:'unk',  aiNote:'No stated policy', prizes:'Award of Excellence, Award of Distinction'},
+  'telly':     {ai:'unk',  aiNote:'No stated policy', prizes:'Gold, Silver, Bronze Telly'},
+  'annie':     {ai:'disc', aiNote:'ASIFA debating, leaning protective', prizes:'Annie Award (Short Subject, Special Production)'},
+  'creativerev':{ai:'unk', aiNote:'No stated policy', prizes:'Annual Award + editorial roundup'},
+};
+// Merge into venues
+venues.forEach(v => {
+  const p = aiPolicies[v.id];
+  if (p) { v.aiPolicy = p.ai; v.aiNote = p.aiNote; v.prizes = p.prizes; }
+  if (!v.aiPolicy) { v.aiPolicy = 'unk'; v.aiNote = 'No stated policy'; }
+  if (!v.prizes) v.prizes = '';
+});
+
+// ============================================================
+// VIEW STATE
+// ============================================================
+let currentViews = { festival:'cards', showcase:'cards', award:'cards' };
+
+function setView(category, view, btn) {
+  currentViews[category] = view;
+  const grid = document.getElementById(`${category}-grid`);
+  const table = document.getElementById(`${category}-table`);
+  if (view === 'cards') {
+    if (grid) grid.style.display = '';
+    if (table) table.style.display = 'none';
+  } else {
+    if (grid) grid.style.display = 'none';
+    if (table) table.style.display = '';
+  }
+  btn.parentElement.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVenues(category);
+}
+
+// ============================================================
 // RENDERING ENGINE
 // ============================================================
 let currentFilters = { festival:'all', showcase:'all', award:'all' };
@@ -1645,6 +1953,8 @@ function renderCard(v) {
       <div class="card-why">${v.whyFit}</div>
       ${v.similarWork ? `<div class="card-similar"><strong>Similar work:</strong> ${v.similarWork}</div>` : ''}
       ${v.howToSubmit ? `<div class="card-similar"><strong>How to submit:</strong> ${v.howToSubmit}</div>` : ''}
+      ${v.prizes ? `<div class="card-similar"><strong>Prizes:</strong> ${v.prizes}</div>` : ''}
+      ${v.aiNote ? `<div class="card-similar"><strong>AI Policy:</strong> <span class="t-ai ${v.aiPolicy==='ok'?'t-ai-ok':v.aiPolicy==='disc'?'t-ai-disc':v.aiPolicy==='ban'?'t-ai-ban':'t-ai-unk'}">${v.aiNote}</span></div>` : ''}
       ${v.notes ? `<div class="card-similar" style="font-style:italic;opacity:0.7;">${v.notes}</div>` : ''}
       <div class="card-actions">
         <a href="${v.url}" target="_blank" rel="noopener" class="card-btn primary">Visit &rarr;</a>
@@ -1652,6 +1962,32 @@ function renderCard(v) {
       </div>
     </div>
   `;
+}
+
+function renderTable(category, items) {
+  const table = document.getElementById(`${category}-table`);
+  if (!table) return;
+  const aiLabel = {'ok':'✓ Welcome','disc':'⚠ Disclosure','ban':'✗ Banned','unk':'? Unknown'};
+  const aiCls = {'ok':'t-ai-ok','disc':'t-ai-disc','ban':'t-ai-ban','unk':'t-ai-unk'};
+  let html = `<table class="venues-table"><thead><tr>
+    <th>Name</th><th>Location</th><th>Deadline</th><th>Fee</th><th>Rating</th>
+    <th>AI Policy</th><th>Prizes</th><th>Oscar</th>
+  </tr></thead><tbody>`;
+  items.forEach(v => {
+    const dl = getDeadlineStatus(v.deadline);
+    html += `<tr>
+      <td class="t-name"><a href="${v.url}" target="_blank">${v.name}</a></td>
+      <td class="t-loc">${v.flag||''} ${v.location}</td>
+      <td><span class="meta-value ${dl.class}">${dl.label}</span></td>
+      <td>${v.feeLabel||'Check'}</td>
+      <td class="t-stars">${'★'.repeat(v.prestige||0)}${'☆'.repeat(5-(v.prestige||0))}</td>
+      <td><span class="t-ai ${aiCls[v.aiPolicy]||'t-ai-unk'}">${aiLabel[v.aiPolicy]||'?'}</span></td>
+      <td class="t-prizes">${v.prizes||'—'}</td>
+      <td class="t-oscar">${v.oscar?'★ Oscar':v.bafta?'★ BAFTA':'—'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  table.innerHTML = html;
 }
 
 function renderVenues(category) {
@@ -1704,6 +2040,7 @@ function renderVenues(category) {
   } else {
     grid.innerHTML = items.map(renderCard).join('');
   }
+  renderTable(category, items);
 }
 
 function filterVenues(category, filter, el) {
