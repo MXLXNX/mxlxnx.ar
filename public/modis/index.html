@@ -586,6 +586,29 @@
     .t-ai-disc { background:rgba(255,215,0,0.1); color:var(--iris-gold); border:1px solid rgba(255,215,0,0.2); }
     .t-ai-ban { background:rgba(255,107,157,0.1); color:var(--iris-coral); border:1px solid rgba(255,107,157,0.2); }
     .t-ai-unk { background:rgba(176,108,255,0.1); color:var(--iris-purple); border:1px solid rgba(176,108,255,0.2); }
+
+    /* AI GAUGE BAR */
+    .ai-gauge { display:inline-flex; gap:3px; align-items:center; vertical-align:middle; }
+    .ai-gauge-bar { display:flex; gap:2px; }
+    .ai-gauge-seg {
+      width:18px; height:10px; border-radius:3px; opacity:0.2;
+      transition:opacity 0.3s;
+    }
+    .ai-gauge-seg.active { opacity:1; }
+    .ai-gauge-seg:nth-child(1) { background:#ff4757; }
+    .ai-gauge-seg:nth-child(2) { background:#ff6b9d; }
+    .ai-gauge-seg:nth-child(3) { background:#ffd700; }
+    .ai-gauge-seg:nth-child(4) { background:#a8e06c; }
+    .ai-gauge-seg:nth-child(5) { background:#64ffda; }
+    .ai-gauge-label {
+      font-family:'Space Grotesk',sans-serif; font-size:0.68rem;
+      margin-left:6px; letter-spacing:0.5px;
+    }
+    .ai-gauge-label.ai-1 { color:#ff4757; }
+    .ai-gauge-label.ai-2 { color:#ff6b9d; }
+    .ai-gauge-label.ai-3 { color:#ffd700; }
+    .ai-gauge-label.ai-4 { color:#a8e06c; }
+    .ai-gauge-label.ai-5 { color:#64ffda; }
     .venues-table .t-oscar { color:var(--iris-gold); }
     .venues-table .t-prizes { font-size:0.72rem; max-width:200px; }
   </style>
@@ -707,6 +730,7 @@
           <option value="deadline">Deadline (soonest)</option>
           <option value="prestige">Prestige (highest)</option>
           <option value="fee">Fee (lowest)</option>
+          <option value="ai">AI-Friendly (most)</option>
         </select>
         <input type="text" class="search-box" placeholder="Search festivals..." oninput="searchVenues('festival', this.value)" style="margin-left:auto;">
         <div class="view-toggle">
@@ -1799,73 +1823,75 @@ const venues = [
 // ============================================================
 // AI POLICY & PRIZES OVERLAY
 // ============================================================
+// AI Score: 1=Banned, 2=Hostile/Restrictive, 3=Unknown/Caution, 4=Disclosure OK, 5=AI Welcome
+const aiLabels = {1:'Banned',2:'Restrictive',3:'Unknown',4:'Disclosure OK',5:'AI Welcome'};
 const aiPolicies = {
-  // ok = AI welcome, disc = disclosure required, ban = restricted/banned, unk = unknown
-  'ottawa':    {ai:'ban',  aiNote:'Fully AI NOT eligible', prizes:'Grand Prize, Craft Awards'},
-  'fantoche':  {ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Audience Award'},
-  'encounters':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Special Mentions'},
-  'biaf':      {ai:'ok',   aiNote:'AI explicitly welcome', prizes:'Grand Prize ₩8M, Jury Prize ₩3M, Audience Prize'},
-  'manchester':{ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Audience Award'},
-  'animotion': {ai:'unk',  aiNote:'No stated policy', prizes:'Best Animated MV, Best 3D Animation'},
-  'imaginaria':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Best MV'},
-  'annecy':    {ai:'disc', aiNote:'Disclosure + artistic statement required', prizes:'Cristal Awards (Short, Feature, Commissioned), Jury Prize'},
-  'zagreb':    {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Special Awards'},
-  'hiroshima': {ai:'unk',  aiNote:'No stated policy (craft-oriented)', prizes:'Grand Prize, Hiroshima Prize, Debut Prize'},
-  'newchitose':{ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Mentions'},
-  'jmaf':      {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Excellence Award, New Face Award'},
-  'sicaf':     {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Awards'},
-  'pictoplasma':{ai:'unk', aiNote:'No stated policy (character-focused)', prizes:'Best Characters in Motion'},
-  'animator':  {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize (MV Competition)'},
-  'sxsw':      {ai:'disc', aiNote:'Disclosure required, tech-forward', prizes:'Grand Jury Prize, Audience Award, Special Jury Awards'},
-  'tribeca':   {ai:'disc', aiNote:'Has screened AI films (SORA)', prizes:'Best Narrative Short, Best Animated Short'},
-  'sundance':  {ai:'disc', aiNote:'Disclosure required', prizes:'Grand Jury Prize, Audience Award (Animation)'},
-  'bmva':      {ai:'unk',  aiNote:'No stated policy', prizes:'Best MV, Best Animation, Best Emerging Director'},
-  'ukmva':     {ai:'unk',  aiNote:'No stated policy', prizes:'38+ categories incl. Best Animation, Best International'},
-  'anifilm':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best Short, Best MV, Audience Award'},
-  'itfs':      {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prix, Lotte Reiniger Award'},
-  'glas':      {ai:'unk',  aiNote:'No stated policy', prizes:'Best Film, Special Mentions'},
-  'siggraph':  {ai:'ok',   aiNote:'AI disclosure required, all CG welcome', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student'},
-  'indieani':  {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Special Awards'},
-  'holland':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best Short, Applied Animation Award'},
-  'animayo':   {ai:'unk',  aiNote:'No stated policy', prizes:'Best MV, Best 3D, Grand Prix'},
-  'digicon':   {ai:'unk',  aiNote:'No stated policy', prizes:'Grand Prize, Regional Awards'},
-  // Showcases
-  'nowness':   {ai:'unk',  aiNote:'No stated policy', prizes:'Paid streaming rights possible'},
-  'promonews': {ai:'unk',  aiNote:'No stated policy', prizes:'One to Watch spotlight'},
-  'stash':     {ai:'ok',   aiNote:'Has featured AI work', prizes:'Best of Stash annual roundup'},
-  'motionographer':{ai:'ok',aiNote:'Has featured AI work', prizes:'Motionographer feature + Motion Awards'},
-  'vimeo':     {ai:'disc', aiNote:'Disclosure required in tags', prizes:'Staff Pick badge, massive visibility'},
-  'cartoonbrew':{ai:'unk', aiNote:'No stated policy', prizes:'Editorial feature'},
-  'itsnicethat':{ai:'unk', aiNote:'No stated policy', prizes:'Editorial feature'},
-  'shortoftheweek':{ai:'unk',aiNote:'No stated policy', prizes:'Featured short + coordinated launch'},
-  'directorsnotes':{ai:'unk',aiNote:'No stated policy', prizes:'WeAreDN Awards'},
-  'dailypsychedelic':{ai:'ok',aiNote:'Likely receptive', prizes:'Featured post'},
-  'colossal':  {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
-  'designboom':{ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
-  'booooooom': {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial feature'},
-  'pixiv':     {ai:'ok',   aiNote:'AI content allowed', prizes:'Community engagement'},
-  'creativeboom':{ai:'unk',aiNote:'No stated policy', prizes:'Editorial feature'},
-  'skwigly':   {ai:'unk',  aiNote:'No stated policy', prizes:'Editorial + podcast'},
-  'imvdb':     {ai:'ok',   aiNote:'Database listing', prizes:'Discoverability'},
-  'submithub': {ai:'ok',   aiNote:'No restrictions', prizes:'Curator placements'},
-  'groover':   {ai:'ok',   aiNote:'No restrictions', prizes:'Curator placements'},
-  'artstation':{ai:'ok',   aiNote:'AI work allowed', prizes:'Community trending'},
-  'behance':   {ai:'ok',   aiNote:'AI work allowed', prizes:'Featured project'},
-  'animationobsessive':{ai:'unk',aiNote:'No stated policy', prizes:'Newsletter feature (60K subs)'},
-  // Awards
-  'dandad':    {ai:'ok',   aiNote:'AI subcategories in ALL categories 2026', prizes:'Pencil Awards (Yellow, Graphite, Wood)'},
-  'webby':     {ai:'ok',   aiNote:'Expanded AI categories in 2026', prizes:'Webby Award + People\'s Voice Award'},
-  'motionawards':{ai:'unk',aiNote:'No stated policy', prizes:'Motion Award trophies'},
-  'commarts':  {ai:'unk',  aiNote:'No stated policy', prizes:'Award of Excellence, Award of Distinction'},
-  'telly':     {ai:'unk',  aiNote:'No stated policy', prizes:'Gold, Silver, Bronze Telly'},
-  'annie':     {ai:'disc', aiNote:'ASIFA debating, leaning protective', prizes:'Annie Award (Short Subject, Special Production)'},
-  'creativerev':{ai:'unk', aiNote:'No stated policy', prizes:'Annual Award + editorial roundup'},
+  // FESTIVALS
+  'ottawa':    {aiScore:1, aiNote:'Fully AI-generated NOT eligible. Requires "non-algorithmic human involvement" and "sign of the artist\'s hand."', prizes:'Grand Prize (Short & Feature), CFI Award, Craft Awards (Script, Technique, Sound, Design)'},
+  'fantoche':  {aiScore:3, aiNote:'No public AI policy. Artistically progressive Swiss festival — contact before submitting.', prizes:'Best Film, High Risk Award, Audience Award, New Talent Award'},
+  'encounters':{aiScore:3, aiNote:'No public AI policy. UK-based, BAFTA qualifying — contact organizers.', prizes:'Grand Prix, Special Mentions, Audience Award'},
+  'biaf':      {aiScore:5, aiNote:'AI-generated works explicitly eligible in ALL categories. One of the most AI-friendly major festivals.', prizes:'Grand Prize ₩8M (~$6K), Jury Prize ₩3M, Special Distinction ₩2M, Audience Prize ₩1.5M'},
+  'manchester':{aiScore:3, aiNote:'No public AI policy. Growing UK festival — contact before submitting.', prizes:'Best Film, Audience Award, Special Jury Prize'},
+  'animotion': {aiScore:3, aiNote:'No public AI policy. Has dedicated MV + 3D categories — niche festival may be open.', prizes:'Best Animated Music Video, Best 3D Animation, Best Short'},
+  'imaginaria':{aiScore:3, aiNote:'No public AI policy. Italian Oscar-qualifying festival with MV category.', prizes:'Grand Prize, Best Music Video, Audience Award'},
+  'annecy':    {aiScore:4, aiNote:'No ban. Disclosure required + artistic statement justifying AI use. Has "Mifa AI" programme dedicated to AI in animation. But union protests occurred June 2025.', prizes:'Cristal Awards (Short, Feature, Commissioned, Graduation), Jury Prizes, André Martin Award, SACEM Music Prize'},
+  'zagreb':    {aiScore:2, aiNote:'No stated policy. One of the oldest animation festivals (since 1972). Traditionally celebrates hand-crafted work — likely skeptical.', prizes:'Grand Prix, Golden Zagreb, Special Awards, Audience Award'},
+  'hiroshima': {aiScore:2, aiNote:'No stated policy. Traditionally craft-oriented Japanese festival. May lean restrictive for fully AI work.', prizes:'Grand Prize, Hiroshima Prize, Debut Prize, Audience Prize, Renzo Kinoshita Prize'},
+  'newchitose':{aiScore:3, aiNote:'No stated policy. Unique airport festival, independent animation focus. Contact organizers.', prizes:'Grand Prize, Special Mentions, Audience Award'},
+  'jmaf':      {aiScore:3, aiNote:'No stated policy. Government-backed Japanese award. May have evolving stance on AI.', prizes:'Grand Prize, Excellence Award, New Face Award (for emerging creators)'},
+  'sicaf':     {aiScore:3, aiNote:'No stated policy. Major Korean festival — check with BIAF\'s open stance as reference.', prizes:'Grand Prize, Special Awards, Audience Prize'},
+  'pictoplasma':{aiScore:2,aiNote:'No stated policy. Character design/craft-focused community — may be skeptical of AI-generated characters.', prizes:'Best Characters in Motion, Audience Award'},
+  'animator':  {aiScore:3, aiNote:'No stated policy. Has dedicated MV competition. Polish festival — contact organizers.', prizes:'Grand Prize (MV Competition), Grand Prize (Short), Audience Award'},
+  'sxsw':      {aiScore:4, aiNote:'Disclosure required. Tech-forward identity, hosted AI+Film production panels at SXSW 2026. Very receptive.', prizes:'Grand Jury Prize, Audience Award, Special Jury Awards, Music Video Competition winner'},
+  'tribeca':   {aiScore:4, aiNote:'Has screened SORA-generated AI short film. Forward-thinking, immersive section very receptive to AI work.', prizes:'Best Narrative Short, Best Animated Short, Best Music Video, Nora Ephron Award'},
+  'sundance':  {aiScore:4, aiNote:'Disclosure required ("How do you plan to disclose AI use?"). Has screened AI work. New Frontier section receptive.', prizes:'Short Film Grand Jury Prize, Audience Award, Special Jury Awards (Animation, Editing, etc.)'},
+  'bmva':      {aiScore:3, aiNote:'No stated policy. Music video context is generally more AI-receptive. Berlin\'s Berlinale created AI category — good sign.', prizes:'Best Music Video, Best Animation, Best Experimental, Best Emerging Director, Audience Award'},
+  'ukmva':     {aiScore:3, aiNote:'No stated policy. Music video industry historically embraces experimental tech. Likely receptive.', prizes:'38+ categories incl. Best Animation, Best International, Best Low Budget, Best Editing, Best Colour Grading'},
+  'anifilm':   {aiScore:3, aiNote:'No stated policy. Czech Oscar-qualifying festival with MV category.', prizes:'Best Short Film, Best Music Video, Grand Prix, Audience Award'},
+  'itfs':      {aiScore:3, aiNote:'No stated policy. German Oscar-qualifying festival with industry market.', prizes:'Grand Prix (€5,000), Lotte Reiniger Award, Young Animation Award'},
+  'glas':      {aiScore:3, aiNote:'No stated policy. Independent/experimental focus — could go either way on AI.', prizes:'Best Film, Special Mentions, Audience Award'},
+  'siggraph':  {aiScore:5, aiNote:'AI disclosure required, but ALL computer animation is eligible. The most natural home for AI-generated CG work. Academy Award qualifying.', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student Project'},
+  'indieani':  {aiScore:3, aiNote:'No stated policy. Korean independent animation focus.', prizes:'Grand Prize, Special Awards'},
+  'holland':   {aiScore:3, aiNote:'No stated policy. Has "Applied Animation" category fitting for MVs.', prizes:'Best Short, Applied Animation Award, Audience Award'},
+  'animayo':   {aiScore:3, aiNote:'No stated policy. Spanish Oscar-qualifying festival.', prizes:'Best Music Video, Best 3D Animation, Grand Prix, Audience Award'},
+  'digicon':   {aiScore:3, aiNote:'No stated policy. Pan-Asian digital content festival by TBS Japan.', prizes:'Grand Prize, Regional Awards'},
+  // SHOWCASES
+  'nowness':   {aiScore:3, aiNote:'No stated policy. Prestige visual culture platform. Values aesthetic quality over medium.', prizes:'Paid exclusive streaming rights, massive prestige'},
+  'promonews': {aiScore:3, aiNote:'No stated policy. #1 music video platform. MV industry embraces experimental tech.', prizes:'"One to Watch" spotlight, daily features, director interviews'},
+  'stash':     {aiScore:5, aiNote:'Has actively featured AI animation work. Part of the motion design community which embraces AI tools.', prizes:'"Best of Stash" annual roundup, permanent archive'},
+  'motionographer':{aiScore:5,aiNote:'Has featured AI work positively. Evaluates on innovation/concept/craft — AI can score well on innovation.', prizes:'Motionographer feature, eligibility for Motion Awards'},
+  'vimeo':     {aiScore:4, aiNote:'AI content allowed, disclosure required in tags. Staff Picks curation team values quality regardless of medium.', prizes:'Staff Pick badge (1.5B monthly visitors auto-follow)'},
+  'cartoonbrew':{aiScore:2, aiNote:'Major animation news site. Community leans protective of traditional animation. May cover AI work but critically.', prizes:'Editorial feature, industry visibility'},
+  'itsnicethat':{aiScore:3, aiNote:'No stated policy. Design-forward publication, values visual quality.', prizes:'Editorial feature across 35K+ article archive'},
+  'shortoftheweek':{aiScore:3,aiNote:'No stated policy. Premier short film curation — judges on artistic merit.', prizes:'Featured short, coordinated launch timing, awards qualifying'},
+  'directorsnotes':{aiScore:3,aiNote:'No stated policy. Director-focused MV coverage.', prizes:'WeAreDN Awards, director interview feature'},
+  'dailypsychedelic':{aiScore:5,aiNote:'Niche psychedelic art platform. Very likely receptive — embraces experimental/trippy visuals regardless of medium.', prizes:'Featured post to engaged niche audience'},
+  'colossal':  {aiScore:3, aiNote:'No stated policy. Art/design blog — values visual impact.', prizes:'Editorial feature (2M+ monthly readers)'},
+  'designboom':{aiScore:4, aiNote:'No explicit ban. Design/tech publication receptive to innovation. Fast turnaround.', prizes:'Editorial feature (3.5M monthly readers)'},
+  'booooooom': {aiScore:3, aiNote:'No stated policy. Currently developing new iteration.', prizes:'Feature (200K Vimeo, 75K YouTube, 80K Twitter)'},
+  'pixiv':     {aiScore:4, aiNote:'AI content allowed with tags. Large Japanese creative community — some AI backlash from illustrators but platform allows it.', prizes:'Community engagement, Japanese market reach (4M+ creators)'},
+  'creativeboom':{aiScore:3,aiNote:'No stated policy. UK creative industry publication.', prizes:'Editorial feature'},
+  'skwigly':   {aiScore:3, aiNote:'No stated policy. Animation magazine + podcast.', prizes:'Editorial feature, potential podcast interview'},
+  'imvdb':     {aiScore:5, aiNote:'Database listing — no content restrictions. Essential for credits.', prizes:'Permanent archive, discoverability, credits database'},
+  'submithub': {aiScore:5, aiNote:'No restrictions on AI content. Credit-based curator submission platform.', prizes:'Curator blog placements, playlist additions'},
+  'groover':   {aiScore:5, aiNote:'No restrictions on AI content. Guaranteed 7-day response.', prizes:'Curator placements, guaranteed feedback'},
+  'artstation':{aiScore:4, aiNote:'AI work allowed. Strong 3D community. Some user backlash but platform supports AI art.', prizes:'Trending/featured, recruiter/studio visibility'},
+  'behance':   {aiScore:4, aiNote:'AI work allowed (Adobe platform). Case study format works well for AI process showcase.', prizes:'Featured project, global creative network reach'},
+  'animationobsessive':{aiScore:3,aiNote:'No stated policy. 60K subscriber newsletter covering independent animation.', prizes:'Newsletter feature (60K engaged subscribers)'},
+  // AWARDS
+  'dandad':    {aiScore:5, aiNote:'"Use of AI & Technology" subcategories across ALL categories in 2026. Requires structured AI disclosure. Most AI-forward major creative award.', prizes:'Yellow Pencil, Graphite Pencil, Wood Pencil, New Blood Awards (emerging)'},
+  'webby':     {aiScore:5, aiNote:'Expanded AI-specific categories in 2026: Creativity & Storytelling, Arts/Culture/Events, Visual Design, and 15+ AI subcategories.', prizes:'Webby Award + People\'s Voice Award (dual track)'},
+  'motionawards':{aiScore:4,aiNote:'By Motionographer (AI-friendly). Motion design community embraces AI tools.', prizes:'Motion Award trophies, Motionographer feature'},
+  'commarts':  {aiScore:3, aiNote:'No stated policy. Long-standing US creative industry publication.', prizes:'Award of Excellence, Award of Distinction'},
+  'telly':     {aiScore:3, aiNote:'No stated policy. Broad video content awards.', prizes:'Gold, Silver, Bronze Telly'},
+  'annie':     {aiScore:2, aiNote:'ASIFA-Hollywood leaning protective. Animation Guild (IATSE Local 839) opposition to AI. Rules under active debate — high risk.', prizes:'Annie Award (Short Subject, Special Production, Best Direction)'},
+  'creativerev':{aiScore:3,aiNote:'No stated policy. UK creative industry annual awards.', prizes:'Annual Award, "Music Videos of the Year" editorial roundup'},
 };
 // Merge into venues
 venues.forEach(v => {
   const p = aiPolicies[v.id];
-  if (p) { v.aiPolicy = p.ai; v.aiNote = p.aiNote; v.prizes = p.prizes; }
-  if (!v.aiPolicy) { v.aiPolicy = 'unk'; v.aiNote = 'No stated policy'; }
+  if (p) { v.aiScore = p.aiScore; v.aiNote = p.aiNote; v.prizes = p.prizes; }
+  if (!v.aiScore) { v.aiScore = 3; v.aiNote = 'No stated policy'; }
   if (!v.prizes) v.prizes = '';
 });
 
@@ -1896,6 +1922,16 @@ function setView(category, view, btn) {
 let currentFilters = { festival:'all', showcase:'all', award:'all' };
 let currentSorts = { festival:'deadline', showcase:'prestige', award:'prestige' };
 let currentSearches = { festival:'', showcase:'', award:'' };
+
+function renderAiGauge(score, showLabel) {
+  const labels = {1:'Banned',2:'Restrictive',3:'Unknown',4:'Disclosure OK',5:'AI Welcome'};
+  let segs = '';
+  for (let i = 1; i <= 5; i++) {
+    segs += `<div class="ai-gauge-seg${i<=score?' active':''}"></div>`;
+  }
+  const lbl = showLabel !== false ? `<span class="ai-gauge-label ai-${score}">${labels[score]||'?'}</span>` : '';
+  return `<span class="ai-gauge"><span class="ai-gauge-bar">${segs}</span>${lbl}</span>`;
+}
 
 function getDeadlineStatus(dateStr) {
   if (!dateStr) return { class:'', label:'Ongoing' };
@@ -1954,7 +1990,10 @@ function renderCard(v) {
       ${v.similarWork ? `<div class="card-similar"><strong>Similar work:</strong> ${v.similarWork}</div>` : ''}
       ${v.howToSubmit ? `<div class="card-similar"><strong>How to submit:</strong> ${v.howToSubmit}</div>` : ''}
       ${v.prizes ? `<div class="card-similar"><strong>Prizes:</strong> ${v.prizes}</div>` : ''}
-      ${v.aiNote ? `<div class="card-similar"><strong>AI Policy:</strong> <span class="t-ai ${v.aiPolicy==='ok'?'t-ai-ok':v.aiPolicy==='disc'?'t-ai-disc':v.aiPolicy==='ban'?'t-ai-ban':'t-ai-unk'}">${v.aiNote}</span></div>` : ''}
+      <div class="card-similar" style="display:flex;align-items:flex-start;gap:0.5rem;flex-wrap:wrap;">
+        <strong style="white-space:nowrap;">AI Policy:</strong> ${renderAiGauge(v.aiScore)}
+      </div>
+      ${v.aiNote ? `<div class="card-similar" style="font-size:0.78rem;opacity:0.8;padding-left:0.8rem;border-left:2px solid ${v.aiScore>=4?'rgba(100,255,218,0.3)':v.aiScore<=2?'rgba(255,71,87,0.3)':'rgba(255,215,0,0.3)'};">${v.aiNote}</div>` : ''}
       ${v.notes ? `<div class="card-similar" style="font-style:italic;opacity:0.7;">${v.notes}</div>` : ''}
       <div class="card-actions">
         <a href="${v.url}" target="_blank" rel="noopener" class="card-btn primary">Visit &rarr;</a>
@@ -1967,8 +2006,7 @@ function renderCard(v) {
 function renderTable(category, items) {
   const table = document.getElementById(`${category}-table`);
   if (!table) return;
-  const aiLabel = {'ok':'✓ Welcome','disc':'⚠ Disclosure','ban':'✗ Banned','unk':'? Unknown'};
-  const aiCls = {'ok':'t-ai-ok','disc':'t-ai-disc','ban':'t-ai-ban','unk':'t-ai-unk'};
+  // AI gauge in table uses compact version
   let html = `<table class="venues-table"><thead><tr>
     <th>Name</th><th>Location</th><th>Deadline</th><th>Fee</th><th>Rating</th>
     <th>AI Policy</th><th>Prizes</th><th>Oscar</th>
@@ -1981,7 +2019,7 @@ function renderTable(category, items) {
       <td><span class="meta-value ${dl.class}">${dl.label}</span></td>
       <td>${v.feeLabel||'Check'}</td>
       <td class="t-stars">${'★'.repeat(v.prestige||0)}${'☆'.repeat(5-(v.prestige||0))}</td>
-      <td><span class="t-ai ${aiCls[v.aiPolicy]||'t-ai-unk'}">${aiLabel[v.aiPolicy]||'?'}</span></td>
+      <td>${renderAiGauge(v.aiScore)}</td>
       <td class="t-prizes">${v.prizes||'—'}</td>
       <td class="t-oscar">${v.oscar?'★ Oscar':v.bafta?'★ BAFTA':'—'}</td>
     </tr>`;
@@ -2028,6 +2066,7 @@ function renderVenues(category) {
     }
     if (sort === 'prestige') return (b.prestige||0) - (a.prestige||0);
     if (sort === 'fee') return (a.fee||0) - (b.fee||0);
+    if (sort === 'ai') return (b.aiScore||3) - (a.aiScore||3);
     return 0;
   });
 
