@@ -100,7 +100,7 @@
       position:absolute; inset:0;
       background:
         linear-gradient(180deg, rgba(7,5,16,0.3) 0%, rgba(7,5,16,0.6) 40%, rgba(7,5,16,0.95) 80%, rgba(7,5,16,1) 100%),
-        url('https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=p') center/cover no-repeat;
+        url('https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g395f0db50ce_0_289') center/cover no-repeat;
       animation: hero-pulse 12s ease-in-out infinite;
     }
     @keyframes hero-pulse {
@@ -574,7 +574,7 @@
       color:var(--text-dim); vertical-align:middle; font-size:0.82rem;
     }
     .venues-table tr:hover td { background:rgba(176,108,255,0.03); }
-    .venues-table .t-name { color:var(--text-bright); font-weight:600; white-space:nowrap; }
+    .venues-table .t-name { color:var(--text-bright); font-weight:600; white-space:nowrap; max-width:260px; overflow:hidden; text-overflow:ellipsis; }
     .venues-table .t-name a { color:inherit; text-decoration:none; }
     .venues-table .t-name a:hover { color:var(--iris-cyan); }
     .venues-table .t-loc { white-space:nowrap; }
@@ -608,7 +608,7 @@
     .ai-gauge-label.ai-4 { color:#a8e06c; }
     .ai-gauge-label.ai-5 { color:#64ffda; }
     .venues-table .t-oscar { color:var(--iris-gold); }
-    .venues-table .t-prizes { font-size:0.72rem; max-width:200px; }
+    .venues-table .t-prizes { font-size:0.72rem; max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   </style>
 </head>
 <body>
@@ -2008,7 +2008,7 @@ function renderTable(category, items) {
   // AI gauge in table uses compact version
   let html = `<table class="venues-table"><thead><tr>
     <th>Name</th><th>Location</th><th>Deadline</th><th>Fee</th><th>Stars</th>
-    <th>AI</th><th>Prizes</th><th>Qualifying</th><th>Why Submit</th>
+    <th>AI</th><th>Prizes</th><th>Qualifying</th>
   </tr></thead><tbody>`;
   items.forEach(v => {
     const dl = getDeadlineStatus(v.deadline);
@@ -2017,11 +2017,10 @@ function renderTable(category, items) {
       <td class="t-loc">${v.flag||''} ${v.location}</td>
       <td><span class="meta-value ${dl.class}">${dl.label}</span></td>
       <td>${v.feeLabel||'Check'}</td>
-      <td class="t-stars">${'★'.repeat(v.prestige||0)}${'☆'.repeat(5-(v.prestige||0))}</td>
-      <td>${renderAiGauge(v.aiScore)}</td>
+      <td class="t-stars">${'★'.repeat(v.prestige||0)}</td>
+      <td>${renderAiGauge(v.aiScore, false)}</td>
       <td class="t-prizes">${v.prizes||'—'}</td>
       <td class="t-oscar">${v.oscar?'★ Oscar':v.bafta?'★ BAFTA':'—'}</td>
-      <td style="font-size:0.75rem;max-width:180px;color:var(--text-dim);">${(v.whyFit||'').substring(0,100)}${(v.whyFit||'').length>100?'...':''}</td>
     </tr>`;
   });
   html += '</tbody></table>';
