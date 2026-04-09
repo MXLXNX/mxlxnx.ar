@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A PIECE OF SUN — Submission Guide</title>
+  <meta name="description" content="Where to submit A Piece of Sun — an animated music video submission guide for festivals, showcases, and awards worldwide.">
+  <meta property="og:title" content="A PIECE OF SUN — Submission Guide">
+  <meta property="og:description" content="Festival & showcase submission guide for the animated music video">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #070510;
+      --bg-deep: #0d0a1a;
+      --bg-surface: #151026;
+      --bg-card: rgba(255,255,255,0.03);
+      --iris-pink: #ff6eb4;
+      --iris-purple: #b06cff;
+      --iris-cyan: #00e5ff;
+      --iris-gold: #ffd700;
+      --iris-mint: #64ffda;
+      --iris-coral: #ff6b9d;
+      --iris-blue: #6eb4ff;
+      --text-bright: #f0e6ff;
+      --text-mid: #b8a6d9;
+      --text-dim: #6b5a8a;
+      --deadline-safe: #64ffda;
+      --deadline-warn: #ffd700;
+      --deadline-urgent: #ff6b9d;
+      --deadline-passed: #4a3a5a;
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-hover: rgba(255,255,255,0.08);
+      --radius: 20px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--bg-void); color:var(--text-bright); overflow-x:hidden; line-height:1.6; }
+    ::selection { background:var(--iris-purple); color:var(--bg-void); }
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background:var(--iris-purple); border-radius:3px; }
+
+    /* HOLOGRAPHIC TEXT */
+    .holo-text {
+      background: linear-gradient(135deg, var(--iris-pink), var(--iris-purple), var(--iris-cyan), var(--iris-gold), var(--iris-pink));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: holo-shift 6s ease-in-out infinite;
+    }
+    @keyframes holo-shift {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* FLOATING PARTICLES */
+    .particles {
+      position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden;
+    }
+    .particle {
+      position:absolute; border-radius:50%; opacity:0; animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      0% { transform:translateY(100vh) translateX(0) scale(0); opacity:0; }
+      10% { opacity:1; }
+      90% { opacity:0.6; }
+      100% { transform:translateY(-10vh) translateX(var(--drift)) scale(1); opacity:0; }
+    }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      padding:0.7rem 2rem; display:flex; justify-content:space-between; align-items:center;
+      background:rgba(7,5,16,0.85); backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(176,108,255,0.1);
+    }
+    .nav-logo {
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:1.1rem;
+      letter-spacing:2px; text-decoration:none;
+    }
+    .nav-logo .holo-text { font-size:inherit; }
+    .nav-links { display:flex; gap:1.5rem; list-style:none; }
+    .nav-links a {
+      color:var(--text-dim); text-decoration:none; font-family:'Space Grotesk',sans-serif;
+      font-size:0.8rem; text-transform:uppercase; letter-spacing:2px; transition:color 0.3s;
+    }
+    .nav-links a:hover { color:var(--iris-cyan); }
+    .mobile-menu-btn { display:none; background:none; border:none; color:var(--text-mid); font-size:1.5rem; cursor:pointer; }
+
+    /* HERO */
+    .hero {
+      position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(176,108,255,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 30% 60%, rgba(255,110,180,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 70% 30%, rgba(0,229,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(255,215,0,0.05) 0%, transparent 50%);
+      animation: hero-pulse 12s ease-in-out infinite;
+    }
+    @keyframes hero-pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.7; transform:scale(1.05); }
+    }
+    .hero-orb {
+      position:absolute; width:400px; height:400px; border-radius:50%;
+      background:radial-gradient(circle, rgba(255,215,0,0.4) 0%, rgba(255,110,180,0.2) 30%, rgba(176,108,255,0.1) 60%, transparent 70%);
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      filter:blur(40px); animation: orb-breathe 8s ease-in-out infinite;
+    }
+    @keyframes orb-breathe {
+      0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.8; }
+      50% { transform:translate(-50%,-50%) scale(1.3); opacity:1; }
+    }
+    .hero-content {
+      position:relative; z-index:2; text-align:center; padding:2rem; max-width:900px;
+    }
+    .hero-eyebrow {
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; text-transform:uppercase;
+      letter-spacing:6px; color:var(--iris-cyan); margin-bottom:1.5rem; opacity:0.8;
+    }
+    .hero-title {
+      font-family:'Outfit',sans-serif; font-weight:900;
+      font-size:clamp(3rem,10vw,7rem); line-height:0.95; margin-bottom:1.5rem;
+      text-shadow:0 0 80px rgba(176,108,255,0.3);
+    }
+    .hero-logline {
+      font-family:'Inter',sans-serif; font-size:clamp(1rem,2.5vw,1.3rem);
+      color:var(--text-mid); max-width:550px; margin:0 auto 2rem; line-height:1.7;
+      font-weight:300;
+    }
+    .hero-logline em {
+      color:var(--iris-gold); font-style:normal; font-weight:500;
+    }
+    .hero-badges {
+      display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin-bottom:2.5rem;
+    }
+    .badge {
+      font-family:'Space Grotesk',sans-serif; font-size:0.7rem; text-transform:uppercase;
+      letter-spacing:2px; padding:0.4rem 1rem; border-radius:50px;
+      border:1px solid rgba(176,108,255,0.3); color:var(--iris-purple);
+      background:rgba(176,108,255,0.05);
+    }
+    .badge.pink { border-color:rgba(255,110,180,0.3); color:var(--iris-pink); background:rgba(255,110,180,0.05); }
+    .badge.cyan { border-color:rgba(0,229,255,0.3); color:var(--iris-cyan); background:rgba(0,229,255,0.05); }
+    .badge.gold { border-color:rgba(255,215,0,0.3); color:var(--iris-gold); background:rgba(255,215,0,0.05); }
+    .hero-scroll {
+      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+      animation:bounce 2s ease-in-out infinite; color:var(--text-dim); font-size:0.7rem;
+      font-family:'Space Grotesk',sans-serif; letter-spacing:3px; text-transform:uppercase;
+    }
+    .hero-scroll::after {
+      content:''; display:block; width:1px; height:30px; background:linear-gradient(to bottom, var(--iris-purple), transparent);
+      margin:0.5rem auto 0;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
+
+    /* SECTIONS */
+    section { padding:5rem 2rem; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+    .section-tag {
+      font-family:'Space Grotesk',sans-serif; font-size:0.7rem; text-transform:uppercase;
+      letter-spacing:5px; color:var(--iris-cyan); margin-bottom:0.5rem; display:block;
+    }
+    .section-title {
+      font-family:'Outfit',sans-serif; font-weight:800;
+      font-size:clamp(1.8rem,4vw,3rem); margin-bottom:0.8rem; letter-spacing:-0.5px;
+    }
+    .section-desc {
+      font-size:1rem; color:var(--text-dim); max-width:600px; line-height:1.8; margin-bottom:2.5rem;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height:1px; max-width:1200px; margin:0 auto;
+      background:linear-gradient(90deg, transparent, var(--iris-purple), var(--iris-cyan), var(--iris-pink), transparent);
+      opacity:0.15;
+    }
+
+    /* STORYBOARD GALLERY */
+    .gallery-strip {
+      display:flex; gap:1rem; overflow-x:auto; padding:1rem 0 2rem;
+      scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    }
+    .gallery-strip::-webkit-scrollbar { height:4px; }
+    .gallery-strip::-webkit-scrollbar-thumb { background:var(--iris-purple); border-radius:2px; }
+    .gallery-frame {
+      flex:0 0 auto; width:320px; height:200px; border-radius:16px; overflow:hidden;
+      scroll-snap-align:start; position:relative; cursor:pointer;
+      border:1px solid var(--glass-border); transition:all 0.4s;
+    }
+    .gallery-frame:hover {
+      transform:translateY(-4px); border-color:rgba(176,108,255,0.3);
+      box-shadow:0 8px 32px rgba(176,108,255,0.15);
+    }
+    .gallery-frame iframe {
+      width:100%; height:100%; border:none; pointer-events:none;
+      transform:scale(1.01);
+    }
+    .gallery-frame .frame-label {
+      position:absolute; bottom:0; left:0; right:0; padding:0.6rem 1rem;
+      background:linear-gradient(transparent, rgba(7,5,16,0.9));
+      font-family:'Space Grotesk',sans-serif; font-size:0.7rem;
+      letter-spacing:2px; text-transform:uppercase; color:var(--text-mid);
+    }
+
+    /* GOOGLE SLIDES EMBED */
+    .storyboard-embed {
+      width:100%; aspect-ratio:16/9; border-radius:var(--radius); overflow:hidden;
+      border:1px solid var(--glass-border); margin:2rem 0;
+      box-shadow:0 0 60px rgba(176,108,255,0.1);
+    }
+    .storyboard-embed iframe { width:100%; height:100%; border:none; }
+
+    /* FILTER PILLS */
+    .filter-bar {
+      display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; padding:0.5rem 0;
+    }
+    .filter-pill {
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; text-transform:uppercase;
+      letter-spacing:2px; padding:0.5rem 1.2rem; border-radius:50px; cursor:pointer;
+      border:1px solid var(--glass-border); background:var(--glass-bg);
+      color:var(--text-dim); transition:all 0.3s; user-select:none;
+    }
+    .filter-pill:hover { border-color:rgba(176,108,255,0.3); color:var(--text-mid); }
+    .filter-pill.active {
+      background:linear-gradient(135deg, rgba(176,108,255,0.2), rgba(0,229,255,0.15));
+      border-color:rgba(176,108,255,0.4); color:var(--text-bright);
+      box-shadow:0 0 20px rgba(176,108,255,0.1);
+    }
+
+    /* SORT BAR */
+    .sort-bar {
+      display:flex; gap:1rem; align-items:center; margin-bottom:1.5rem;
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; color:var(--text-dim);
+    }
+    .sort-bar label { text-transform:uppercase; letter-spacing:2px; }
+    .sort-bar select {
+      background:var(--glass-bg); border:1px solid var(--glass-border); color:var(--text-mid);
+      padding:0.4rem 0.8rem; border-radius:8px; font-family:inherit; font-size:inherit;
+      cursor:pointer;
+    }
+    .sort-bar select option { background:var(--bg-deep); }
+
+    /* VENUE CARDS */
+    .venues-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(360px, 1fr));
+      gap:1.5rem;
+    }
+    .venue-card {
+      background:var(--glass-bg); backdrop-filter:blur(20px);
+      border:1px solid var(--glass-border); border-radius:var(--radius);
+      padding:1.5rem; transition:all 0.4s; position:relative; overflow:hidden;
+    }
+    .venue-card::before {
+      content:''; position:absolute; inset:-1px; border-radius:inherit;
+      background:conic-gradient(from var(--angle, 0deg), var(--iris-pink), var(--iris-purple), var(--iris-cyan), var(--iris-gold), var(--iris-pink));
+      opacity:0; transition:opacity 0.4s; z-index:-1;
+      animation:card-border-spin 8s linear infinite;
+    }
+    @property --angle { syntax:"<angle>"; initial-value:0deg; inherits:false; }
+    @keyframes card-border-spin { to { --angle:360deg; } }
+    .venue-card:hover {
+      transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(176,108,255,0.1);
+      border-color:rgba(176,108,255,0.2);
+    }
+    .venue-card:hover::before { opacity:0.15; }
+    .venue-card.tier-1 { border-color:rgba(255,215,0,0.15); }
+    .venue-card.tier-1::after {
+      content:''; position:absolute; top:12px; right:12px; width:8px; height:8px;
+      border-radius:50%; background:var(--iris-gold);
+      box-shadow:0 0 12px var(--iris-gold);
+    }
+
+    .card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem; }
+    .card-name {
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:1.15rem;
+      color:var(--text-bright); line-height:1.3;
+    }
+    .card-prestige { display:flex; gap:2px; }
+    .star { width:14px; height:14px; }
+    .star.filled { color:var(--iris-gold); }
+    .star.empty { color:var(--text-dim); opacity:0.3; }
+
+    .card-location {
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; color:var(--text-dim);
+      margin-bottom:1rem; display:flex; align-items:center; gap:0.4rem;
+    }
+    .card-location .flag { font-size:1rem; }
+
+    .card-meta { display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap; }
+    .meta-item {
+      font-family:'Space Grotesk',sans-serif; font-size:0.72rem;
+      text-transform:uppercase; letter-spacing:1px;
+    }
+    .meta-label { color:var(--text-dim); }
+    .meta-value { font-weight:600; }
+    .meta-value.deadline-safe { color:var(--deadline-safe); }
+    .meta-value.deadline-warn { color:var(--deadline-warn); }
+    .meta-value.deadline-urgent { color:var(--deadline-urgent); }
+    .meta-value.deadline-passed { color:var(--deadline-passed); text-decoration:line-through; }
+
+    .card-tags { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .card-tag {
+      font-family:'Space Grotesk',sans-serif; font-size:0.65rem; text-transform:uppercase;
+      letter-spacing:1px; padding:0.25rem 0.6rem; border-radius:50px;
+      background:rgba(176,108,255,0.08); color:var(--iris-purple); border:1px solid rgba(176,108,255,0.15);
+    }
+    .card-tag.mv { background:rgba(255,110,180,0.08); color:var(--iris-pink); border-color:rgba(255,110,180,0.15); }
+    .card-tag.oscar { background:rgba(255,215,0,0.08); color:var(--iris-gold); border-color:rgba(255,215,0,0.15); }
+    .card-tag.free { background:rgba(100,255,218,0.08); color:var(--iris-mint); border-color:rgba(100,255,218,0.15); }
+
+    .card-why {
+      font-size:0.85rem; color:var(--text-dim); line-height:1.6; margin-bottom:1rem;
+      border-left:2px solid rgba(176,108,255,0.2); padding-left:0.8rem;
+    }
+    .card-similar {
+      font-size:0.75rem; color:var(--text-dim); margin-bottom:1rem;
+    }
+    .card-similar strong { color:var(--text-mid); }
+
+    .card-actions { display:flex; gap:0.8rem; }
+    .card-btn {
+      font-family:'Space Grotesk',sans-serif; font-size:0.72rem; text-transform:uppercase;
+      letter-spacing:2px; padding:0.5rem 1rem; border-radius:10px; text-decoration:none;
+      transition:all 0.3s; cursor:pointer; border:none;
+    }
+    .card-btn.primary {
+      background:linear-gradient(135deg, var(--iris-purple), var(--iris-pink));
+      color:white;
+    }
+    .card-btn.primary:hover { transform:translateY(-1px); box-shadow:0 4px 20px rgba(176,108,255,0.3); }
+    .card-btn.ghost {
+      background:transparent; border:1px solid var(--glass-border); color:var(--text-dim);
+    }
+    .card-btn.ghost:hover { border-color:var(--iris-cyan); color:var(--iris-cyan); }
+
+    /* TIMELINE */
+    .timeline-container {
+      overflow-x:auto; padding:2rem 0; position:relative;
+      -webkit-overflow-scrolling:touch;
+    }
+    .timeline-container::-webkit-scrollbar { height:4px; }
+    .timeline-container::-webkit-scrollbar-thumb { background:var(--iris-purple); border-radius:2px; }
+    .timeline {
+      display:flex; gap:0; min-width:max-content; position:relative; padding:3rem 2rem;
+    }
+    .timeline::before {
+      content:''; position:absolute; top:50%; left:0; right:0; height:2px;
+      background:linear-gradient(90deg, transparent, var(--iris-purple), var(--iris-cyan), var(--iris-pink), var(--iris-gold), transparent);
+      opacity:0.3;
+    }
+    .tl-month {
+      min-width:200px; position:relative; text-align:center;
+    }
+    .tl-month-label {
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:0.85rem;
+      color:var(--text-mid); position:absolute; top:-2rem; left:50%; transform:translateX(-50%);
+      white-space:nowrap;
+    }
+    .tl-events { display:flex; flex-direction:column; gap:0.8rem; padding-top:2rem; }
+    .tl-event {
+      position:relative; padding:0.6rem 0.8rem; border-radius:10px;
+      background:var(--glass-bg); border:1px solid var(--glass-border);
+      font-size:0.72rem; font-family:'Space Grotesk',sans-serif;
+      transition:all 0.3s; cursor:default; min-width:160px;
+    }
+    .tl-event::before {
+      content:''; position:absolute; top:-1.2rem; left:50%; transform:translateX(-50%);
+      width:10px; height:10px; border-radius:50%;
+    }
+    .tl-event.festival::before { background:var(--iris-purple); box-shadow:0 0 10px var(--iris-purple); }
+    .tl-event.showcase::before { background:var(--iris-cyan); box-shadow:0 0 10px var(--iris-cyan); }
+    .tl-event.award::before { background:var(--iris-gold); box-shadow:0 0 10px var(--iris-gold); }
+    .tl-event:hover { transform:translateY(-2px); border-color:rgba(176,108,255,0.3); }
+    .tl-event-name { color:var(--text-bright); font-weight:600; margin-bottom:0.2rem; }
+    .tl-event-date { color:var(--text-dim); letter-spacing:1px; }
+    .tl-today {
+      position:absolute; top:calc(50% - 20px); width:2px; height:40px;
+      background:var(--iris-coral); z-index:10;
+      box-shadow:0 0 10px var(--iris-coral);
+    }
+    .tl-today-label {
+      position:absolute; top:-1.5rem; left:50%; transform:translateX(-50%);
+      font-family:'Space Grotesk',sans-serif; font-size:0.65rem; color:var(--iris-coral);
+      text-transform:uppercase; letter-spacing:2px; white-space:nowrap;
+      animation:pulse-today 2s ease-in-out infinite;
+    }
+    @keyframes pulse-today { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+
+    /* STRATEGY */
+    .strategy-accordion { max-width:800px; }
+    .accordion-item { margin-bottom:1rem; }
+    .accordion-header {
+      width:100%; padding:1rem 1.5rem; background:var(--glass-bg);
+      border:1px solid var(--glass-border); border-radius:var(--radius);
+      color:var(--text-bright); font-family:'Outfit',sans-serif; font-weight:600;
+      font-size:1rem; cursor:pointer; display:flex; justify-content:space-between;
+      align-items:center; transition:all 0.3s;
+    }
+    .accordion-header:hover { border-color:rgba(176,108,255,0.3); }
+    .accordion-header .arrow { transition:transform 0.3s; color:var(--iris-purple); }
+    .accordion-header.open .arrow { transform:rotate(180deg); }
+    .accordion-header.open { border-radius:var(--radius) var(--radius) 0 0; border-bottom-color:transparent; }
+    .accordion-body {
+      display:none; padding:1.5rem; background:var(--glass-bg);
+      border:1px solid var(--glass-border); border-top:none;
+      border-radius:0 0 var(--radius) var(--radius);
+      color:var(--text-dim); line-height:1.8; font-size:0.9rem;
+    }
+    .accordion-body.open { display:block; }
+    .accordion-body ol, .accordion-body ul { padding-left:1.5rem; margin:0.5rem 0; }
+    .accordion-body li { margin-bottom:0.5rem; }
+    .accordion-body strong { color:var(--text-mid); }
+    .accordion-body .phase {
+      padding:0.8rem 1rem; background:rgba(176,108,255,0.05); border-radius:12px;
+      margin-bottom:0.8rem; border-left:3px solid var(--iris-purple);
+    }
+    .accordion-body .phase-title { color:var(--iris-purple); font-weight:600; font-size:0.85rem; margin-bottom:0.3rem; }
+    .accordion-body .budget-row { display:flex; justify-content:space-between; padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.03); }
+    .accordion-body .budget-total { color:var(--iris-gold); font-weight:600; border-bottom:none; padding-top:0.8rem; }
+
+    /* STATS BAR */
+    .stats-bar {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+      gap:1rem; margin-bottom:3rem;
+    }
+    .stat-card {
+      text-align:center; padding:1.5rem; border-radius:var(--radius);
+      background:var(--glass-bg); border:1px solid var(--glass-border);
+    }
+    .stat-number {
+      font-family:'Outfit',sans-serif; font-weight:900; font-size:2.5rem;
+      line-height:1;
+    }
+    .stat-number.purple { color:var(--iris-purple); }
+    .stat-number.cyan { color:var(--iris-cyan); }
+    .stat-number.pink { color:var(--iris-pink); }
+    .stat-number.gold { color:var(--iris-gold); }
+    .stat-label {
+      font-family:'Space Grotesk',sans-serif; font-size:0.7rem;
+      text-transform:uppercase; letter-spacing:2px; color:var(--text-dim); margin-top:0.4rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align:center; padding:4rem 2rem; border-top:1px solid rgba(176,108,255,0.08);
+      position:relative; z-index:1;
+    }
+    .footer-title {
+      font-family:'Outfit',sans-serif; font-weight:800; font-size:2rem; margin-bottom:0.5rem;
+    }
+    .footer-sub {
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; color:var(--text-dim);
+      letter-spacing:3px; text-transform:uppercase; margin-bottom:2rem;
+    }
+    .back-top {
+      display:inline-block; padding:0.6rem 1.5rem; border-radius:50px;
+      border:1px solid var(--glass-border); color:var(--text-dim);
+      text-decoration:none; font-family:'Space Grotesk',sans-serif; font-size:0.75rem;
+      letter-spacing:2px; text-transform:uppercase; transition:all 0.3s;
+    }
+    .back-top:hover { border-color:var(--iris-purple); color:var(--iris-purple); }
+
+    /* FADE IN */
+    .fade-in { opacity:0; transform:translateY(20px); transition:opacity 0.8s, transform 0.8s; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+    .fade-in:nth-child(2) { transition-delay:0.1s; }
+    .fade-in:nth-child(3) { transition-delay:0.2s; }
+    .fade-in:nth-child(4) { transition-delay:0.3s; }
+    /* Hero elements animate via CSS keyframes instead */
+    .hero .fade-in { animation: hero-fade-in 1.2s ease-out forwards; opacity:0; transform:translateY(30px); }
+    .hero .fade-in:nth-child(1) { animation-delay:0.2s; }
+    .hero .fade-in:nth-child(2) { animation-delay:0.5s; }
+    .hero .fade-in:nth-child(3) { animation-delay:0.8s; }
+    .hero .fade-in:nth-child(4) { animation-delay:1.1s; }
+    @keyframes hero-fade-in { to { opacity:1; transform:translateY(0); } }
+
+    /* ABOUT GRID */
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; }
+    .about-text h3 { font-family:'Outfit',sans-serif; font-weight:700; font-size:1.3rem; margin-bottom:0.5rem; color:var(--text-bright); }
+    .about-text p { color:var(--text-dim); line-height:1.8; margin-bottom:1rem; }
+    .about-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem; }
+    .about-detail { display:flex; gap:0.5rem; align-items:center; font-size:0.85rem; color:var(--text-mid); margin-bottom:0.4rem; }
+    .about-detail .icon { color:var(--iris-purple); }
+
+    /* SEARCH */
+    .search-box {
+      width:100%; max-width:400px; padding:0.6rem 1rem; border-radius:12px;
+      background:var(--glass-bg); border:1px solid var(--glass-border);
+      color:var(--text-bright); font-family:'Inter',sans-serif; font-size:0.9rem;
+      outline:none; transition:border-color 0.3s;
+    }
+    .search-box:focus { border-color:var(--iris-purple); }
+    .search-box::placeholder { color:var(--text-dim); }
+
+    /* COUNTERS */
+    .venue-count {
+      font-family:'Space Grotesk',sans-serif; font-size:0.75rem; color:var(--text-dim);
+      letter-spacing:1px; margin-bottom:1.5rem;
+    }
+    .venue-count span { color:var(--iris-cyan); font-weight:600; }
+
+    /* RESPONSIVE */
+    @media(max-width:768px) {
+      .nav-links { display:none; }
+      .mobile-menu-btn { display:block; }
+      .about-grid { grid-template-columns:1fr; }
+      .venues-grid { grid-template-columns:1fr; }
+      section { padding:3rem 1.2rem; }
+      .stats-bar { grid-template-columns:repeat(2, 1fr); }
+      .hero-title { font-size:clamp(2.5rem,10vw,4.5rem); }
+    }
+    @media(max-width:500px) {
+      .stats-bar { grid-template-columns:1fr 1fr; }
+      .filter-bar { gap:0.3rem; }
+      .filter-pill { padding:0.4rem 0.8rem; font-size:0.65rem; }
+      .card-meta { flex-direction:column; gap:0.4rem; }
+    }
+
+    /* SECTION SPECIFIC ACCENTS */
+    .showcase-section .card-tag { background:rgba(0,229,255,0.08); color:var(--iris-cyan); border-color:rgba(0,229,255,0.15); }
+    .award-section .card-tag { background:rgba(255,215,0,0.08); color:var(--iris-gold); border-color:rgba(255,215,0,0.15); }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(7,5,16,0.95); backdrop-filter:blur(20px);
+      justify-content:center; align-items:center; cursor:pointer;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox iframe { max-width:90vw; max-height:85vh; border:none; border-radius:16px; box-shadow:0 0 60px rgba(176,108,255,0.2); }
+    .lightbox-close {
+      position:absolute; top:2rem; right:2rem; color:var(--text-mid); font-size:2rem;
+      cursor:pointer; background:none; border:none; font-family:'Inter',sans-serif;
+    }
+
+    /* NO RESULTS */
+    .no-results {
+      text-align:center; padding:3rem; color:var(--text-dim);
+      font-family:'Space Grotesk',sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PARTICLES -->
+  <div class="particles" id="particles"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo"><span class="holo-text">A PIECE OF SUN</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#storyboard">Storyboard</a></li>
+      <li><a href="#festivals">Festivals</a></li>
+      <li><a href="#showcases">Showcases</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#strategy">Strategy</a></li>
+    </ul>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">&#9776;</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow fade-in">Animated Music Video &mdash; Submission Guide</div>
+      <h1 class="hero-title holo-text fade-in">A PIECE<br>OF SUN</h1>
+      <p class="hero-logline fade-in">
+        <em>The sun hasn't appeared for 10,000 days.</em><br>
+        A stunning 3D animated journey through a world of iridescent dreams, kawaii characters, and cosmic wonder.
+      </p>
+      <div class="hero-badges fade-in">
+        <span class="badge">3D Animation</span>
+        <span class="badge pink">Experimental Music</span>
+        <span class="badge cyan">Ambient / Instrumental</span>
+        <span class="badge gold">Emerging Director</span>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="fade-in">
+      <span class="section-tag">About the project</span>
+      <h2 class="section-title holo-text">A world without sunlight</h2>
+    </div>
+    <div class="about-grid fade-in">
+      <div class="about-text">
+        <p>"A Piece of Sun" is a beautifully crafted animated music video that tells the story of a fantastical world where the sun hasn't appeared for 10,000 days. Through iridescent landscapes and psychedelic dreamscapes, tiny kawaii characters &mdash; bears, bunnies, and cats with sparkling textures and enormous expressive eyes &mdash; journey through rainbow-furred surfaces, chrome bubble-filled homes, neon-lit subway stations, and futuristic cities in search of a lost piece of warmth.</p>
+        <p>The music is experimental, ambient, and instrumental &mdash; a conceptual sonic landscape that merges perfectly with the visual world. Directed by an emerging talent, this project represents a unique fusion of Japanese kawaii aesthetics, cosmic psychedelia, and contemporary 3D animation craft.</p>
+        <div class="about-tags">
+          <span class="badge">Kawaii</span>
+          <span class="badge pink">Psychedelic</span>
+          <span class="badge cyan">Cosmic</span>
+          <span class="badge gold">Iridescent</span>
+          <span class="badge">Cyberpunk</span>
+          <span class="badge pink">3D CGI</span>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="storyboard-embed">
+          <iframe src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/embed?start=true&loop=true&delayms=3000" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STATS -->
+  <section style="padding-top:3rem;padding-bottom:2rem;">
+    <div class="stats-bar fade-in">
+      <div class="stat-card">
+        <div class="stat-number purple" id="stat-festivals">0</div>
+        <div class="stat-label">Film Festivals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number cyan" id="stat-showcases">0</div>
+        <div class="stat-label">Online Showcases</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number pink" id="stat-awards">0</div>
+        <div class="stat-label">Awards</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number gold" id="stat-open">0</div>
+        <div class="stat-label">Open Now</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FESTIVALS -->
+  <section id="festivals">
+    <div class="fade-in">
+      <span class="section-tag">Film Festivals</span>
+      <h2 class="section-title holo-text">Festival Circuit</h2>
+      <p class="section-desc">From Oscar-qualifying animation festivals to dedicated music video competitions, these are the best festival targets for "A Piece of Sun".</p>
+    </div>
+    <div class="fade-in">
+      <div class="filter-bar" id="festival-filters">
+        <div class="filter-pill active" data-filter="all" onclick="filterVenues('festival','all',this)">All</div>
+        <div class="filter-pill" data-filter="us" onclick="filterVenues('festival','us',this)">&#127482;&#127480; US & Canada</div>
+        <div class="filter-pill" data-filter="europe" onclick="filterVenues('festival','europe',this)">&#127466;&#127482; Europe</div>
+        <div class="filter-pill" data-filter="japan" onclick="filterVenues('festival','japan',this)">&#127471;&#127477; Japan</div>
+        <div class="filter-pill" data-filter="korea" onclick="filterVenues('festival','korea',this)">&#127472;&#127479; Korea</div>
+        <div class="filter-pill" data-filter="other" onclick="filterVenues('festival','other',this)">&#127758; Other</div>
+      </div>
+      <div class="sort-bar">
+        <label>Sort by</label>
+        <select onchange="sortVenues('festival', this.value)">
+          <option value="deadline">Deadline (soonest)</option>
+          <option value="prestige">Prestige (highest)</option>
+          <option value="fee">Fee (lowest)</option>
+        </select>
+        <input type="text" class="search-box" placeholder="Search festivals..." oninput="searchVenues('festival', this.value)" style="margin-left:auto;">
+      </div>
+      <div class="venue-count" id="festival-count"></div>
+    </div>
+    <div class="venues-grid" id="festival-grid"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SHOWCASES -->
+  <section id="showcases" class="showcase-section">
+    <div class="fade-in">
+      <span class="section-tag">Online Showcases</span>
+      <h2 class="section-title holo-text">Digital Platforms</h2>
+      <p class="section-desc">Curator platforms, creative blogs, and online showcases where "A Piece of Sun" can reach audiences, press, and industry professionals.</p>
+    </div>
+    <div class="fade-in">
+      <div class="filter-bar" id="showcase-filters">
+        <div class="filter-pill active" data-filter="all" onclick="filterVenues('showcase','all',this)">All</div>
+        <div class="filter-pill" data-filter="animation" onclick="filterVenues('showcase','animation',this)">Animation</div>
+        <div class="filter-pill" data-filter="musicvideo" onclick="filterVenues('showcase','musicvideo',this)">Music Video</div>
+        <div class="filter-pill" data-filter="creative" onclick="filterVenues('showcase','creative',this)">Creative / Design</div>
+        <div class="filter-pill" data-filter="video" onclick="filterVenues('showcase','video',this)">Video Curators</div>
+        <div class="filter-pill" data-filter="asian" onclick="filterVenues('showcase','asian',this)">&#127471;&#127477; Asian</div>
+      </div>
+      <div class="sort-bar">
+        <label>Sort by</label>
+        <select onchange="sortVenues('showcase', this.value)">
+          <option value="prestige">Priority (highest)</option>
+          <option value="fee">Fee (lowest)</option>
+        </select>
+        <input type="text" class="search-box" placeholder="Search platforms..." oninput="searchVenues('showcase', this.value)" style="margin-left:auto;">
+      </div>
+      <div class="venue-count" id="showcase-count"></div>
+    </div>
+    <div class="venues-grid" id="showcase-grid"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AWARDS -->
+  <section id="awards" class="award-section">
+    <div class="fade-in">
+      <span class="section-tag">Awards & Competitions</span>
+      <h2 class="section-title holo-text">Industry Recognition</h2>
+      <p class="section-desc">Prestigious awards and competitions that recognize excellence in animation, music videos, and creative direction.</p>
+    </div>
+    <div class="fade-in">
+      <div class="venue-count" id="award-count"></div>
+    </div>
+    <div class="venues-grid" id="award-grid"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="fade-in">
+      <span class="section-tag">Deadlines</span>
+      <h2 class="section-title holo-text">Submission Timeline</h2>
+      <p class="section-desc">A chronological view of all upcoming deadlines. Scroll horizontally to explore.</p>
+    </div>
+    <div class="timeline-container" id="timeline-container">
+      <div class="timeline" id="timeline-track"></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STRATEGY -->
+  <section id="strategy">
+    <div class="fade-in">
+      <span class="section-tag">Game Plan</span>
+      <h2 class="section-title holo-text">Submission Strategy</h2>
+      <p class="section-desc">Strategic guidance for maximizing impact and visibility.</p>
+    </div>
+    <div class="strategy-accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Recommended Submission Order
+          <span class="arrow">&#9662;</span>
+        </button>
+        <div class="accordion-body">
+          <div class="phase">
+            <div class="phase-title">Phase 1 &mdash; Pre-Release (Before Public Upload)</div>
+            Offer an <strong>exclusive premiere</strong> to <strong>NOWNESS</strong> (requires unpublished work). If declined, offer to <strong>Promonews</strong> ("One to Watch" spotlight for emerging directors) or <strong>Short of the Week</strong> (they plan launch dates in advance).
+          </div>
+          <div class="phase">
+            <div class="phase-title">Phase 2 &mdash; Release Week</div>
+            Upload to <strong>Vimeo</strong> (optimized for Staff Pick: strong title, thumbnail, description, post early in the week). Simultaneously submit to <strong>Stash Media</strong>, <strong>Motionographer</strong>, <strong>Cartoon Brew</strong>, <strong>It's Nice That</strong>, <strong>Directors Notes</strong>, and <strong>IMVDb</strong>.
+          </div>
+          <div class="phase">
+            <div class="phase-title">Phase 3 &mdash; Weeks 1-2</div>
+            Submit to <strong>Colossal</strong>, <strong>Creative Boom</strong>, <strong>Designboom</strong>, <strong>Skwigly</strong>, <strong>Daily Psychedelic Video</strong>, <strong>Animation Obsessive</strong>. Start <strong>SubmitHub</strong> and <strong>Groover</strong> campaigns for music-focused curators.
+          </div>
+          <div class="phase">
+            <div class="phase-title">Phase 4 &mdash; Weeks 2-4</div>
+            Upload to <strong>ArtStation</strong>, <strong>Behance</strong>, <strong>Pixiv</strong> (essential for Japanese audience reach), <strong>Reddit</strong> (r/animation, r/woahdude), <strong>GIPHY Artist</strong>. Create behind-the-scenes content.
+          </div>
+          <div class="phase">
+            <div class="phase-title">Phase 5 &mdash; Awards Season (Months 1-6)</div>
+            Enter <strong>SIGGRAPH 2026</strong>, <strong>Webby Awards</strong>, <strong>D&AD</strong>, <strong>Motion Awards</strong>, <strong>Communication Arts</strong>, <strong>Telly Awards</strong>, <strong>Creative Review Annual</strong>. Monitor for <strong>Booooooom TV</strong> reopening.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Budget Estimate
+          <span class="arrow">&#9662;</span>
+        </button>
+        <div class="accordion-body">
+          <p style="margin-bottom:1rem;">Many top platforms accept free submissions. Here's a budget breakdown:</p>
+          <div class="budget-row"><span><strong>Free submissions</strong> (Ottawa, Fantoche, Imaginaria, Stash, Motionographer, Cartoon Brew, etc.)</span><span>$0</span></div>
+          <div class="budget-row"><span><strong>Low-cost festivals</strong> (Manchester, Encounters, Animotion, etc.)</span><span>~$150-250</span></div>
+          <div class="budget-row"><span><strong>Mid-range festivals</strong> (SXSW, Tribeca, Berlin MV Awards, etc.)</span><span>~$300-500</span></div>
+          <div class="budget-row"><span><strong>Industry awards</strong> (D&AD, Webby, Telly, etc.)</span><span>~$500-800</span></div>
+          <div class="budget-row"><span><strong>Music curator platforms</strong> (SubmitHub, Groover credits)</span><span>~$50-100</span></div>
+          <div class="budget-row budget-total"><span><strong>Total estimated range</strong></span><span><strong>$1,000 - $1,650</strong></span></div>
+          <p style="margin-top:1rem;font-size:0.8rem;">Note: Many festivals offer fee waivers or early-bird discounts. FilmFreeway discount codes also reduce costs.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Premiere Status Considerations
+          <span class="arrow">&#9662;</span>
+        </button>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>NOWNESS</strong> requires the work to be <em>unpublished anywhere</em>. Submit here FIRST if you want their exclusive.</li>
+            <li><strong>Some festivals</strong> prefer or require premieres (world, international, or regional). Check each festival's premiere policy.</li>
+            <li><strong>Sundance & Tribeca</strong> have the strictest premiere requirements. If targeting these for 2027, do NOT publish publicly before submitting.</li>
+            <li><strong>Most online platforms</strong> (Stash, Motionographer, etc.) do NOT require exclusivity and can be submitted after public release.</li>
+            <li><strong>Recommended approach</strong>: Submit to festivals with premiere requirements FIRST, then go public, then submit to online platforms.</li>
+            <li><strong>FilmFreeway</strong> has a "premiere status" tracking feature &mdash; use it to manage which festivals have seen the work.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Materials Checklist
+          <span class="arrow">&#9662;</span>
+        </button>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Video file</strong>: DCP version (some festivals require this if selected), ProRes master, H.264 for online</li>
+            <li><strong>Screener link</strong>: Vimeo private link with password (standard for festival submissions)</li>
+            <li><strong>Stills</strong>: At least 3 high-res production stills (300dpi for print, 72dpi for web)</li>
+            <li><strong>Synopsis</strong>: Short (50 words), medium (100 words), and long (200 words) versions in English</li>
+            <li><strong>Director bio</strong>: Short and long versions + headshot photo</li>
+            <li><strong>Technical specs</strong>: Duration, resolution, aspect ratio, sound format, completion date</li>
+            <li><strong>Credits list</strong>: Full crew credits</li>
+            <li><strong>Behind-the-scenes</strong>: Process images, making-of content (valuable for press and platforms like Stash)</li>
+            <li><strong>Social media</strong>: Trailer or teaser clip (15-30sec) for Instagram/TikTok</li>
+            <li><strong>Accounts</strong>: FilmFreeway, Vimeo Pro, IMVDb profiles created and complete</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Best-Fit Venues (Top 10)
+          <span class="arrow">&#9662;</span>
+        </button>
+        <div class="accordion-body">
+          <p style="margin-bottom:1rem;">Given the psychedelic/cosmic aesthetic, kawaii character design, high-quality 3D, and experimental ambient music, these are the absolute top-priority targets:</p>
+          <ol>
+            <li><strong>Pictoplasma (Berlin)</strong> &mdash; Character-driven music visuals are their core programming. THE perfect fit.</li>
+            <li><strong>ANIMATOR Poland</strong> &mdash; Dedicated animated music video competition, free, Oscar qualifying.</li>
+            <li><strong>BIAF Bucheon (Korea)</strong> &mdash; Music video explicitly listed, Oscar qualifying, OPEN NOW.</li>
+            <li><strong>Annecy (France)</strong> &mdash; Ultimate prestige, Commissioned Films category. Target 2027.</li>
+            <li><strong>Ottawa International Animation Festival</strong> &mdash; Free, prestigious, Big Five. OPEN NOW.</li>
+            <li><strong>UKMVA</strong> &mdash; Best Animation category, THE premier music video awards.</li>
+            <li><strong>Berlin Music Video Awards</strong> &mdash; Premier music video festival.</li>
+            <li><strong>Promonews</strong> &mdash; "One to Watch" emerging director spotlight. Perfect for discovery.</li>
+            <li><strong>NOWNESS</strong> &mdash; Prestige visual culture platform. Exclusive premiere potential.</li>
+            <li><strong>Hiroshima Animation Season</strong> &mdash; Japanese audience, Oscar qualifying, perfect aesthetic fit.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <h2 class="footer-title holo-text">A PIECE OF SUN</h2>
+    <p class="footer-sub">The sun hasn't appeared for 10,000 days</p>
+    <a href="#" class="back-top">&uarr; Back to top</a>
+    <p style="margin-top:2rem;font-size:0.7rem;color:var(--text-dim);font-family:'Space Grotesk',sans-serif;letter-spacing:1px;">
+      Last updated: April 2026 &mdash; Research by GM4N
+    </p>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close">&times;</button>
+    <iframe id="lightbox-frame" src="" width="960" height="540"></iframe>
+  </div>
+
+<script>
+// ============================================================
+// VENUE DATA
+// ============================================================
+const venues = [
+  // ─── FILM FESTIVALS ─────────────────────────────────────
+  {
+    id:'ottawa', name:'Ottawa International Animation Festival', category:'festival',
+    region:'us', location:'Ottawa, Canada', flag:'🇨🇦',
+    url:'https://www.animationfestival.ca/', submitUrl:'https://www.animationfestival.ca/index.php?option=com_content&view=article&id=901',
+    deadline:'2026-05-31', fee:0, feeCurrency:'CAD', feeLabel:'FREE',
+    categories:['Animation','Short Film','Music Video'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'One of the "Big Five" animation festivals. Free submission, Oscar qualifying. Exceptional programming that celebrates independent and experimental animation.',
+    similarWork:'Films by Koji Yamamura, "Negative Space" by Max Porter',
+    platform:'Direct submission via website',
+    notes:'Completed after May 31, 2025. One of the most prestigious animation festivals in the world.'
+  },
+  {
+    id:'fantoche', name:'Fantoche International Animation Film Festival', category:'festival',
+    region:'europe', location:'Baden, Switzerland', flag:'🇨🇭',
+    url:'https://fantoche.ch/', submitUrl:'https://fantoche.ch/en/entry',
+    deadline:'2026-05-03', fee:0, feeCurrency:'CHF', feeLabel:'FREE',
+    categories:['Animation','Short Film','Commissioned'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Highly respected European animation festival. Free entry, excellent programming for experimental and artistic animation. Strong commissioning culture.',
+    similarWork:'Experimental animation shorts, commissioned music videos',
+    platform:'FilmFreeway or email film@fantoche.ch',
+    notes:'Completed after Dec 31, 2024. Very well respected in the European animation community.'
+  },
+  {
+    id:'encounters', name:'Encounters Film Festival', category:'festival',
+    region:'europe', location:'Bristol, UK', flag:'🇬🇧',
+    url:'https://encounters.film/', submitUrl:'https://encounters.film/submit',
+    deadline:'2026-05-18', fee:15, feeCurrency:'GBP', feeLabel:'£15',
+    categories:['Animation','Short Film','Music Video'],
+    prestige:4, oscar:false, bafta:true,
+    whyFit:'BAFTA qualifying festival based in the animation capital of the UK (Bristol, home of Aardman). Strong animation programming.',
+    similarWork:'Award-winning British animation shorts',
+    platform:'FilmFreeway',
+    notes:'Completed after Jan 1, 2025. Bristol is one of the key animation hubs in Europe.'
+  },
+  {
+    id:'biaf', name:'BIAF - Bucheon International Animation Festival', category:'festival',
+    region:'korea', location:'Bucheon, South Korea', flag:'🇰🇷',
+    url:'https://www.biaf.or.kr/', submitUrl:'https://www.biaf.or.kr/eng/',
+    deadline:'2026-06-30', fee:0, feeCurrency:'USD', feeLabel:'Check',
+    categories:['Animation','Music Video','TV & Commissioned'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'Oscar qualifying Korean animation festival. Music video is EXPLICITLY listed as a category under TV & Commissioned Film. Perfect gateway to the Korean animation market.',
+    similarWork:'Korean and international animated music videos, commissioned films',
+    platform:'FilmFreeway',
+    notes:'Oct 23-27 festival dates. Music video category makes this an ideal fit.'
+  },
+  {
+    id:'manchester', name:'Manchester Animation Festival', category:'festival',
+    region:'europe', location:'Manchester, UK', flag:'🇬🇧',
+    url:'https://www.manchesteranimationfestival.co.uk/', submitUrl:'https://filmfreeway.com/manchesteranimationfestival',
+    deadline:'2026-07-31', fee:6.75, feeCurrency:'GBP', feeLabel:'£6.75+',
+    categories:['Animation','Short Film','Music Video','Student'],
+    prestige:4, oscar:true, bafta:true,
+    whyFit:'Both Oscar AND BAFTA qualifying. Growing festival with excellent industry connections. Very affordable entry fee.',
+    similarWork:'British and international animation shorts and music videos',
+    platform:'FilmFreeway',
+    notes:'Nov 8-12 festival dates. Regular deadline Jun 23, Late deadline Jul 31.'
+  },
+  {
+    id:'animotion', name:'Animotion Film Festival', category:'festival',
+    region:'us', location:'USA', flag:'🇺🇸',
+    url:'https://filmfreeway.com/AnimotionFilmFestival', submitUrl:'https://filmfreeway.com/AnimotionFilmFestival',
+    deadline:'2026-04-28', fee:48, feeCurrency:'USD', feeLabel:'~$48',
+    categories:['Animation','Music Video','3D Animation'],
+    prestige:3, oscar:false, bafta:false,
+    whyFit:'Has a DEDICATED Best Animated Music Video category plus Best 3D Animation. Perfect category match for this project.',
+    similarWork:'Animated music videos, 3D animation shorts',
+    platform:'FilmFreeway',
+    notes:'Extended final deadline April 28. Niche but exact-category match.'
+  },
+  {
+    id:'imaginaria', name:'Imaginaria International Animated Film Festival', category:'festival',
+    region:'europe', location:'Conversano, Italy', flag:'🇮🇹',
+    url:'https://www.imaginariafilmfest.it/', submitUrl:'https://filmfreeway.com/imaginaria',
+    deadline:'2026-07-15', fee:0, feeCurrency:'EUR', feeLabel:'FREE',
+    categories:['Animation','Music Video','Short Film'],
+    prestige:4, oscar:true, bafta:false,
+    whyFit:'Oscar qualifying Italian festival with a DEDICATED Animated Music Video category. Free submission. Aug 23-29 festival dates.',
+    similarWork:'International animated music videos, Italian and European animation',
+    platform:'FilmFreeway',
+    notes:'One of the few Oscar-qualifying festivals with an explicit music video category.'
+  },
+  {
+    id:'annecy', name:'Annecy International Animation Film Festival', category:'festival',
+    region:'europe', location:'Annecy, France', flag:'🇫🇷',
+    url:'https://www.annecy.org/', submitUrl:'https://www.annecy.org/participate',
+    deadline:'2026-11-30', fee:0, feeCurrency:'EUR', feeLabel:'Check',
+    categories:['Animation','Commissioned Films','Short Film'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'THE most prestigious animation festival in the world. The "Cannes of Animation." Commissioned Films category accepts music videos. Target for 2027 edition.',
+    similarWork:'"Bestia" (Hugo Covarrubias), "Affairs of the Art" (Joanna Quinn)',
+    platform:'Direct submission via website',
+    notes:'Call opens ~November 2026 for June 2027 festival. Absolute top-tier prestige.'
+  },
+  {
+    id:'zagreb', name:'Zagreb World Festival of Animated Films (Animafest)', category:'festival',
+    region:'europe', location:'Zagreb, Croatia', flag:'🇭🇷',
+    url:'https://www.animafest.hr/', submitUrl:'https://www.animafest.hr/en/2026/participation',
+    deadline:'2026-12-15', fee:0, feeCurrency:'EUR', feeLabel:'FREE',
+    categories:['Animation','Short Film','Experimental'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'One of the Big Five animation festivals. Oscar qualifying. Strong tradition of showcasing experimental and artistic animation since 1972.',
+    similarWork:'Avant-garde and experimental animated shorts',
+    platform:'Direct submission',
+    notes:'Call opens ~December 2026 for June 2027 festival.'
+  },
+  {
+    id:'hiroshima', name:'Hiroshima International Animation Festival (Animation Season)', category:'festival',
+    region:'japan', location:'Hiroshima, Japan', flag:'🇯🇵',
+    url:'https://hiroanim.org/', submitUrl:'https://hiroanim.org/en/',
+    deadline:'2027-01-15', fee:0, feeCurrency:'JPY', feeLabel:'Check',
+    categories:['Animation','Short Film','Music Video'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'THE premier Japanese animation festival. Oscar qualifying. The kawaii-cosmic aesthetic of this project is a perfect fit for Japanese audiences. Now called "Animation Season."',
+    similarWork:'Works by Koji Yamamura, Mirai Mizue, Japanese independent animation',
+    platform:'Direct submission',
+    notes:'Biennial (next edition 2027). Japanese audience + Oscar qualifying = must-submit.'
+  },
+  {
+    id:'newchitose', name:'New Chitose Airport International Animation Festival', category:'festival',
+    region:'japan', location:'Sapporo, Japan', flag:'🇯🇵',
+    url:'https://airport-anifes.jp/', submitUrl:'https://airport-anifes.jp/en/',
+    deadline:'2026-06-30', fee:0, feeCurrency:'JPY', feeLabel:'FREE',
+    categories:['Animation','Short Film','Music Video'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Unique festival held inside an airport. Strong focus on independent and experimental animation. Japanese audience, free submission. Emerging director-friendly.',
+    similarWork:'Independent animation, experimental shorts from Asia',
+    platform:'Direct submission',
+    notes:'Watch for 2026 call opening ~April/May. Unique venue attracts industry attention.'
+  },
+  {
+    id:'jmaf', name:'Japan Media Arts Festival', category:'festival',
+    region:'japan', location:'Tokyo, Japan', flag:'🇯🇵',
+    url:'https://j-mediaarts.jp/', submitUrl:'https://j-mediaarts.jp/en/',
+    deadline:'2026-09-30', fee:0, feeCurrency:'JPY', feeLabel:'FREE',
+    categories:['Animation','Digital Art','Entertainment'],
+    prestige:5, oscar:false, bafta:false,
+    whyFit:'Japan\'s most prestigious media arts award. Animation Division celebrates innovative works. Government-backed, massive exposure in Japanese media landscape.',
+    similarWork:'Makoto Shinkai early works, experimental Japanese animation',
+    platform:'Direct submission',
+    notes:'Animation Division is the perfect category. Enormous prestige in Japan.'
+  },
+  {
+    id:'sicaf', name:'SICAF - Seoul International Cartoon & Animation Festival', category:'festival',
+    region:'korea', location:'Seoul, South Korea', flag:'🇰🇷',
+    url:'https://www.sicaf.org/', submitUrl:'https://www.sicaf.org/eng/',
+    deadline:'2026-08-31', fee:0, feeCurrency:'KRW', feeLabel:'Check',
+    categories:['Animation','Short Film','TV & Commissioned'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Major Korean animation festival with strong industry presence. Gateway to the Korean creative scene and animation market.',
+    similarWork:'Korean animation, Asian independent animated shorts',
+    platform:'FilmFreeway',
+    notes:'Check for 2026 cycle opening. Strong Korean market exposure.'
+  },
+  {
+    id:'pictoplasma', name:'Pictoplasma', category:'festival',
+    region:'europe', location:'Berlin, Germany', flag:'🇩🇪',
+    url:'https://pictoplasma.com/', submitUrl:'https://pictoplasma.com/submit/',
+    deadline:'2026-12-01', fee:0, feeCurrency:'EUR', feeLabel:'Check',
+    categories:['Character Design','Animation','Music Visuals'],
+    prestige:5, oscar:false, bafta:false,
+    whyFit:'THE world\'s leading character design festival. "Music visuals" explicitly listed. The kawaii/cosmic character-driven aesthetic of this project is a NEAR-PERFECT fit for their programming.',
+    similarWork:'Character-driven music videos, designer vinyl toy animations',
+    platform:'Direct submission',
+    notes:'#1 best-fit festival for this specific project. Character focus matches perfectly.'
+  },
+  {
+    id:'animator', name:'ANIMATOR International Animated Film Festival', category:'festival',
+    region:'europe', location:'Poznan, Poland', flag:'🇵🇱',
+    url:'https://animator-festival.com/', submitUrl:'https://animator-festival.com/en/',
+    deadline:'2026-11-30', fee:0, feeCurrency:'EUR', feeLabel:'FREE',
+    categories:['Animation','Music Video','Short Film'],
+    prestige:4, oscar:true, bafta:false,
+    whyFit:'Has a specific "Animated Music Videos Competition" — dedicated category just for music videos. Free entry, Oscar qualifying, no production year restrictions.',
+    similarWork:'International animated music videos (dedicated competition)',
+    platform:'Direct submission',
+    notes:'One of the VERY few festivals with a dedicated animated MV competition. Must-submit.'
+  },
+  {
+    id:'sxsw', name:'SXSW Film & TV Festival', category:'festival',
+    region:'us', location:'Austin, Texas, USA', flag:'🇺🇸',
+    url:'https://www.sxsw.com/', submitUrl:'https://www.sxsw.com/film-tv/',
+    deadline:'2026-10-15', fee:55, feeCurrency:'USD', feeLabel:'$55-75',
+    categories:['Music Video','Animation','Short Film'],
+    prestige:5, oscar:false, bafta:false,
+    whyFit:'SXSW has a dedicated Music Video Competition. Massive industry exposure, Austin music scene, press coverage. Perfect intersection of music + film + tech.',
+    similarWork:'Award-winning music videos across all genres',
+    platform:'FilmFreeway',
+    notes:'Target 2027 edition. Music Video Competition is competitive but high-reward.'
+  },
+  {
+    id:'tribeca', name:'Tribeca Film Festival', category:'festival',
+    region:'us', location:'New York City, USA', flag:'🇺🇸',
+    url:'https://tribecafilm.com/', submitUrl:'https://tribecafilm.com/festival/submissions',
+    deadline:'2026-10-31', fee:75, feeCurrency:'USD', feeLabel:'$75-115',
+    categories:['Short Film','Animation','Music Video'],
+    prestige:5, oscar:false, bafta:false,
+    whyFit:'Major NYC festival with explicit music video category. Enormous press and industry exposure. Discount codes often available.',
+    similarWork:'Tribeca-selected animated shorts and music videos',
+    platform:'FilmFreeway + Direct',
+    notes:'Target 2027 edition. Premium prestige, heavy industry attendance.'
+  },
+  {
+    id:'sundance', name:'Sundance Film Festival', category:'festival',
+    region:'us', location:'Park City, Utah, USA', flag:'🇺🇸',
+    url:'https://www.sundance.org/', submitUrl:'https://www.sundance.org/submit/',
+    deadline:'2027-06-15', fee:55, feeCurrency:'USD', feeLabel:'~$55',
+    categories:['Short Film','Animation'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'THE most prestigious US film festival. Animated shorts have increasingly been showcased. Oscar qualifying. Ultimate career launchpad for directors.',
+    similarWork:'"If Anything Happens I Love You", "Hair Love", "Negative Space"',
+    platform:'Direct submission',
+    notes:'Target 2028 edition. Strictest premiere requirements — do NOT publish before submitting.'
+  },
+  {
+    id:'bmva', name:'Berlin Music Video Awards', category:'festival',
+    region:'europe', location:'Berlin, Germany', flag:'🇩🇪',
+    url:'https://berlinmva.com/', submitUrl:'https://berlinmva.com/submit/',
+    deadline:'2026-11-15', fee:85, feeCurrency:'USD', feeLabel:'~$85',
+    categories:['Music Video','Animation','Experimental','Emerging Director'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Premier music video festival. Has categories for Animation, Experimental, AND Emerging Director — all three fit this project perfectly.',
+    similarWork:'Award-winning animated and experimental music videos',
+    platform:'Direct submission',
+    notes:'Target 2027 edition. Triple-category potential makes this a strong submission.'
+  },
+  {
+    id:'ukmva', name:'UK Music Video Awards (UKMVA)', category:'festival',
+    region:'europe', location:'London, UK', flag:'🇬🇧',
+    url:'https://www.ukmva.com/', submitUrl:'https://www.ukmva.com/enter/',
+    deadline:'2026-08-31', fee:0, feeCurrency:'GBP', feeLabel:'Check',
+    categories:['Music Video','Best Animation','Best International','Low Budget'],
+    prestige:5, oscar:false, bafta:false,
+    whyFit:'THE premier music video awards. 38+ categories including Best Animation, Best International, and Best Low Budget (under £5000). Industry standard for music video recognition.',
+    similarWork:'Top animated music videos from around the world',
+    platform:'Direct submission via website',
+    notes:'Opens June 2026. This is THE music video award to target.'
+  },
+  {
+    id:'anifilm', name:'Anifilm International Festival of Animated Films', category:'festival',
+    region:'europe', location:'Liberec, Czech Republic', flag:'🇨🇿',
+    url:'https://www.anifilm.cz/', submitUrl:'https://www.anifilm.cz/en/',
+    deadline:'2026-10-31', fee:0, feeCurrency:'EUR', feeLabel:'FREE',
+    categories:['Animation','Music Video','Short Film'],
+    prestige:4, oscar:true, bafta:false,
+    whyFit:'Oscar qualifying Czech animation festival with an explicit music video category. Free submission. Strong Central European animation community.',
+    similarWork:'Central and Eastern European animated shorts and music videos',
+    platform:'Direct submission',
+    notes:'Target 2027 edition. Free + Oscar qualifying + MV category = strong match.'
+  },
+  {
+    id:'itfs', name:'ITFS Stuttgart International Festival of Animated Film', category:'festival',
+    region:'europe', location:'Stuttgart, Germany', flag:'🇩🇪',
+    url:'https://www.itfs.de/', submitUrl:'https://www.itfs.de/en/',
+    deadline:'2026-10-31', fee:0, feeCurrency:'EUR', feeLabel:'Check',
+    categories:['Animation','Short Film','Commissioned'],
+    prestige:4, oscar:true, bafta:false,
+    whyFit:'Oscar qualifying German animation festival. Large industry market component. Strong for commissioned and music video-adjacent works.',
+    similarWork:'German and international animation shorts',
+    platform:'Direct submission',
+    notes:'Target 2027 edition. Major industry market alongside festival.'
+  },
+  {
+    id:'glas', name:'GLAS Animation Festival', category:'festival',
+    region:'us', location:'Berkeley, California, USA', flag:'🇺🇸',
+    url:'https://glasanimation.com/', submitUrl:'https://glasanimation.com/',
+    deadline:'2026-10-31', fee:0, feeCurrency:'USD', feeLabel:'Check',
+    categories:['Animation','Short Film','Experimental'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Growing US animation festival with strong focus on independent and experimental animation. Excellent for emerging directors. Very curated.',
+    similarWork:'Independent US and international experimental animation',
+    platform:'Direct submission',
+    notes:'Target 2027. Curatorial focus on artistic innovation aligns well.'
+  },
+  {
+    id:'siggraph', name:'SIGGRAPH Computer Animation Festival', category:'festival',
+    region:'us', location:'Los Angeles, USA (2026)', flag:'🇺🇸',
+    url:'https://s2026.siggraph.org/', submitUrl:'https://s2026.siggraph.org/program/computer-animation-festival/',
+    deadline:'2026-04-15', fee:0, feeCurrency:'USD', feeLabel:'Check',
+    categories:['Computer Animation','3D Animation','Visual Effects'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'Academy Award qualifying. "Best in Show" prize. Perfect for high-quality 3D animation. Jul 19-23 in LA. Work must be completed after March 18, 2025.',
+    similarWork:'Pixar shorts, high-end 3D animation',
+    platform:'Direct submission',
+    notes:'If deadline hasn\'t passed, submit ASAP. Top-tier for CG animation.'
+  },
+  {
+    id:'indieani', name:'Korea Independent Animation Film Festival (Indie-AniFest)', category:'festival',
+    region:'korea', location:'Seoul, South Korea', flag:'🇰🇷',
+    url:'https://www.kiafa.org/', submitUrl:'https://www.kiafa.org/eng/',
+    deadline:'2026-07-31', fee:0, feeCurrency:'KRW', feeLabel:'FREE',
+    categories:['Animation','Independent','Short Film'],
+    prestige:3, oscar:false, bafta:false,
+    whyFit:'Focused on independent animation. Excellent gateway for emerging directors into the Korean animation scene. Free submission.',
+    similarWork:'Korean independent animated shorts',
+    platform:'Direct submission',
+    notes:'Great for building Korean market presence alongside BIAF.'
+  },
+  {
+    id:'holland', name:'Holland Animation Film Festival', category:'festival',
+    region:'europe', location:'Utrecht, Netherlands', flag:'🇳🇱',
+    url:'https://haff.nl/', submitUrl:'https://haff.nl/en/',
+    deadline:'2026-09-30', fee:0, feeCurrency:'EUR', feeLabel:'Check',
+    categories:['Animation','Short Film','Applied Animation'],
+    prestige:4, oscar:false, bafta:false,
+    whyFit:'Well-established Dutch animation festival with "Applied Animation" category perfect for music videos. Strong European industry connections.',
+    similarWork:'European independent and applied animation',
+    platform:'Direct submission',
+    notes:'Target 2027. Applied Animation category fits music videos.'
+  },
+  {
+    id:'animayo', name:'Animayo International Animation Festival', category:'festival',
+    region:'europe', location:'Gran Canaria, Spain', flag:'🇪🇸',
+    url:'https://www.animayo.com/', submitUrl:'https://www.animayo.com/en/',
+    deadline:'2026-09-30', fee:0, feeCurrency:'EUR', feeLabel:'Check',
+    categories:['Animation','Music Video','3D Animation','VFX'],
+    prestige:4, oscar:true, bafta:false,
+    whyFit:'Oscar qualifying. Has BOTH Best Music Video AND Best 3D Animation categories. Double-category potential.',
+    similarWork:'Spanish and international animated music videos and 3D shorts',
+    platform:'FilmFreeway',
+    notes:'Target 2027. Double category submission opportunity.'
+  },
+  {
+    id:'digicon', name:'DigiCon6 Asia', category:'festival',
+    region:'japan', location:'Tokyo + Pan-Asia', flag:'🇯🇵',
+    url:'https://www.tbs.co.jp/digicon/', submitUrl:'https://www.tbs.co.jp/digicon/',
+    deadline:'2026-07-31', fee:0, feeCurrency:'JPY', feeLabel:'FREE',
+    categories:['Digital Content','Animation','Short Film'],
+    prestige:3, oscar:false, bafta:false,
+    whyFit:'Pan-Asian digital content festival organized by TBS (Japan). Regional entries from across Asia. Good for building Asian visibility.',
+    similarWork:'Asian digital animation and content',
+    platform:'Direct submission',
+    notes:'Regional deadlines may vary. Good supplementary Asian submission.'
+  },
+
+  // ─── ONLINE SHOWCASES ────────────────────────────────────
+  {
+    id:'nowness', name:'NOWNESS', category:'showcase', subcategory:'video',
+    location:'London / Global', flag:'🌍',
+    url:'https://www.nowness.com/', submitUrl:'https://www.nowness.com/story/become-a-nowness-contributor',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Film','Animation','Music Video'],
+    prestige:5,
+    whyFit:'Prestige visual culture platform. CRITICAL: Must NOT have been posted anywhere else. Potential for paid exclusive streaming rights. Submit BEFORE going public. NOWNESS Asia: submissions@nowness.hk',
+    similarWork:'Curated art films, premium music videos, visual essays',
+    howToSubmit:'Online portal. Film must be completed/near-completed and UNPUBLISHED.',
+    audience:'Massive global reach, premium audience',
+    notes:'Submit first, before any public upload. Exclusive premiere potential.'
+  },
+  {
+    id:'promonews', name:'Promonews', category:'showcase', subcategory:'musicvideo',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://www.promonews.tv/', submitUrl:'https://www.promonews.tv/submit',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music Video'],
+    prestige:5,
+    whyFit:'THE #1 dedicated music video platform. "ONE TO WATCH" emerging director spotlight is tailor-made for this project. Run by David Knight (also curates BUG at BFI Southbank). Daily features, director interviews.',
+    similarWork:'Björk, FKA Twigs, Arca music videos — all featured here',
+    howToSubmit:'Online form + Google Form on their submit page.',
+    audience:'Music video industry professionals, directors, labels',
+    notes:'The "One to Watch" column is ideal for emerging directors.'
+  },
+  {
+    id:'stash', name:'Stash Media', category:'showcase', subcategory:'animation',
+    location:'Global', flag:'🌍',
+    url:'https://www.stashmedia.tv/', submitUrl:'https://www.stashmedia.tv/submit/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation','Motion Design','Music Video','VFX'],
+    prestige:5,
+    whyFit:'"Planet\'s largest online library of animation, VFX and motion design." Music videos are a core category with annual "Best of Stash: Music Videos" roundups. Include 2+ paragraphs about creative/technical process.',
+    similarWork:'High-end animated music videos, motion design showcase',
+    howToSubmit:'Email with video link (Vimeo/YouTube, embedding enabled), 2+ paragraphs about process, full credits, social handles. No attachments — all copy in email body.',
+    audience:'Animation and motion design professionals worldwide',
+    notes:'Annual "Best of Stash" roundup is a major goal. Already planned for submission.'
+  },
+  {
+    id:'motionographer', name:'Motionographer', category:'showcase', subcategory:'animation',
+    location:'Global', flag:'🌍',
+    url:'https://motionographer.com/', submitUrl:'https://motionographer.com/submit/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation','Motion Design','Music Video'],
+    prestige:5,
+    whyFit:'Premier motion design platform. Evaluates on "Three C\'s": Carving new ground (innovation), Concept (emotional impact), Craft (execution). All three align with this project.',
+    similarWork:'Award-winning motion design and animated music videos',
+    howToSubmit:'Online form ONLY (they ignore email submissions). Submit once only.',
+    audience:'Motion design professionals, 4-week response time',
+    notes:'Do NOT submit via email. Use the form. One submission only.'
+  },
+  {
+    id:'vimeo', name:'Vimeo Staff Picks', category:'showcase', subcategory:'video',
+    location:'Global', flag:'🌍',
+    url:'https://vimeo.com/channels/staffpicks', submitUrl:'https://vimeo.com/upload',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Film','Animation','Music Video'],
+    prestige:5,
+    whyFit:'1.51 billion monthly Vimeo visitors; all members auto-follow Staff Picks. Curation team favors animation with "hand-animated touch," defined color palettes, strong sound design.',
+    similarWork:'Premium short films, animated music videos, visual art',
+    howToSubmit:'No formal submission process. Upload with optimized title (<5 words), strong thumbnail, description. Post early in the week.',
+    audience:'Creative professionals worldwide',
+    notes:'Pro account recommended. Optimize title, thumbnail, and description.'
+  },
+  {
+    id:'cartoonbrew', name:'Cartoon Brew', category:'showcase', subcategory:'animation',
+    location:'Global', flag:'🌍',
+    url:'https://www.cartoonbrew.com/', submitUrl:'https://www.cartoonbrew.com/suggest',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation','Industry News'],
+    prestige:4,
+    whyFit:'Major animation news site. ~312K monthly visitors, 80K Instagram followers. Only submissions through their suggestion form are considered.',
+    similarWork:'Animation industry news, independent shorts, festival coverage',
+    howToSubmit:'Suggestion form only. Editor: Jamie Lang.',
+    audience:'Animation industry professionals and fans',
+    notes:'Also has advertising options for indie creators.'
+  },
+  {
+    id:'itsnicethat', name:'It\'s Nice That', category:'showcase', subcategory:'creative',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://www.itsnicethat.com/', submitUrl:'https://www.itsnicethat.com/submissions',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation','Design','Illustration','Music Video'],
+    prestige:5,
+    whyFit:'35,000+ articles archive, massive creative industry reach. Has dedicated Animation and Music Video sections. Essential for creative press coverage.',
+    similarWork:'Design-forward animation, creative music videos, illustration-based works',
+    howToSubmit:'Email submit@itsnicethat.com with bio, project info, links (no large attachments). Response in 2 weeks (only if featuring).',
+    audience:'Creative professionals, designers, agencies',
+    notes:'Very selective. Clean presentation in the email is key.'
+  },
+  {
+    id:'shortoftheweek', name:'Short of the Week', category:'showcase', subcategory:'video',
+    location:'Global', flag:'🌍',
+    url:'https://www.shortoftheweek.com/', submitUrl:'https://www.shortoftheweek.com/submit',
+    deadline:'', fee:5, feeLabel:'~$5',
+    categories:['Short Film','Animation','Music Video'],
+    prestige:5,
+    whyFit:'Premier short film curation since 2007. Dedicated Music Video channel. Awards-qualifying. They plan launch dates weeks in advance with selected filmmakers.',
+    similarWork:'Award-winning short films and animated music videos',
+    howToSubmit:'Via website or FilmFreeway. Fee waivers via Shortverse rewards. 7-day response.',
+    audience:'Film industry, press, festivals',
+    notes:'They coordinate launch timing — great for premiere strategy.'
+  },
+  {
+    id:'directorsnotes', name:'Directors Notes', category:'showcase', subcategory:'musicvideo',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://directorsnotes.com/', submitUrl:'https://directorsnotes.com/submit/',
+    deadline:'', fee:10, feeLabel:'~$10',
+    categories:['Music Video','Animation','Short Film','Experimental'],
+    prestige:4,
+    whyFit:'Dedicated music video and animation coverage. Recently launched WeAreDN Awards 2025. Priority for premieres but exclusivity not required.',
+    similarWork:'Director-focused music video features, animation breakdowns',
+    howToSubmit:'Via FilmFreeway. Non-refundable fee. 7 working days response.',
+    audience:'Directors, producers, music video professionals',
+    notes:'Director interview format is great for emerging talent visibility.'
+  },
+  {
+    id:'dailypsychedelic', name:'The Daily Psychedelic Video', category:'showcase', subcategory:'video',
+    location:'Global', flag:'🌍',
+    url:'https://dailypsychedelicvideo.com/', submitUrl:'https://dailypsychedelicvideo.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Psychedelic Art','Animation','Music Video'],
+    prestige:3,
+    whyFit:'EXACT target audience for cosmic-psychedelic aesthetic. Dedicated "psychedelic animation" category. Niche but highly engaged audience. Founded by Dr. Ido Hartogsohn.',
+    similarWork:'Psychedelic animation, trippy music videos, visual art',
+    howToSubmit:'Contact through website.',
+    audience:'Psychedelic art enthusiasts',
+    notes:'Perfect niche audience match. The iridescent/cosmic aesthetic fits perfectly.'
+  },
+  {
+    id:'colossal', name:'Colossal', category:'showcase', subcategory:'creative',
+    location:'Global', flag:'🌍',
+    url:'https://www.thisiscolossal.com/', submitUrl:'https://www.thisiscolossal.com/submissions/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Art','Animation','Design','Craft'],
+    prestige:4,
+    whyFit:'Major art and design blog. Covers animation that pushes visual boundaries. High-res stills are key for submission.',
+    similarWork:'Visually stunning art, animation, and design',
+    howToSubmit:'Email with description + high-res images.',
+    audience:'Art and design enthusiasts, 2M+ monthly readers',
+    notes:'Include multiple high-res stills — they\'re an image-first publication.'
+  },
+  {
+    id:'designboom', name:'Designboom', category:'showcase', subcategory:'creative',
+    location:'Global', flag:'🌍',
+    url:'https://www.designboom.com/', submitUrl:'https://www.designboom.com/readers-submit/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Design','Art','Animation','Technology'],
+    prestige:4,
+    whyFit:'3.5M monthly readers. Online form submission. Can publish within hours. Strong international readership including Asia.',
+    similarWork:'Design-forward creative projects, digital art, animation',
+    howToSubmit:'Online submission form.',
+    audience:'3.5M monthly readers, design professionals',
+    notes:'Fast turnaround. Good international (Asian) reach.'
+  },
+  {
+    id:'booooooom', name:'Booooooom TV', category:'showcase', subcategory:'video',
+    location:'Vancouver, Canada', flag:'🇨🇦',
+    url:'https://tv.booooooom.com/', submitUrl:'https://tv.booooooom.com/submit/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Short Film','Animation','Music Video'],
+    prestige:4,
+    whyFit:'Founded by Jeff Hamada (Japanese Canadian artist/curator). 200K Vimeo followers, 75K YouTube, 80K Twitter. The kawaii-cosmic aesthetic aligns with their curatorial taste. CURRENTLY developing new iteration — sign up for reopening.',
+    similarWork:'Art-forward short films and music videos',
+    howToSubmit:'Currently closed. Sign up for mailer to be notified of reopening.',
+    audience:'Creative community, strong social following',
+    notes:'Japanese Canadian founder = natural cultural alignment. Watch for reopening.'
+  },
+  {
+    id:'pixiv', name:'Pixiv', category:'showcase', subcategory:'asian',
+    location:'Tokyo, Japan', flag:'🇯🇵',
+    url:'https://www.pixiv.net/', submitUrl:'https://www.pixiv.net/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Illustration','Animation','Digital Art'],
+    prestige:4,
+    whyFit:'~4 million creators, massive Japanese user base. Supports "Ugoira" animated uploads. Essential for Japanese audience reach. The kawaii aesthetic perfectly matches the Pixiv community.',
+    similarWork:'Japanese kawaii illustration, anime-inspired digital art',
+    howToSubmit:'Create account, upload directly.',
+    audience:'4M+ Japanese and global creators',
+    notes:'Essential for Japanese market penetration. Tag strategically in Japanese.'
+  },
+  {
+    id:'creativeboom', name:'Creative Boom', category:'showcase', subcategory:'creative',
+    location:'UK', flag:'🇬🇧',
+    url:'https://www.creativeboom.com/', submitUrl:'https://www.creativeboom.com/page/submit/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Design','Animation','Creative Industry'],
+    prestige:3,
+    whyFit:'Growing creative industry publication. Covers animation and music videos. Email submission with GIFs/MP4s/video links.',
+    similarWork:'Creative industry projects, design-led animation',
+    howToSubmit:'Email with GIFs/MP4s/video links.',
+    audience:'UK-focused creative industry',
+    notes:'Good supplementary UK press coverage.'
+  },
+  {
+    id:'skwigly', name:'Skwigly Animation Magazine', category:'showcase', subcategory:'animation',
+    location:'UK', flag:'🇬🇧',
+    url:'https://www.skwigly.co.uk/', submitUrl:'mailto:aaron@skwigly.co.uk',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation'],
+    prestige:3,
+    whyFit:'Dedicated animation magazine and podcast. Contact: aaron@skwigly.co.uk. Good for animation-specific coverage and community reach.',
+    similarWork:'Animation industry coverage, festival reports, independent shorts',
+    howToSubmit:'Email aaron@skwigly.co.uk',
+    audience:'Animation community',
+    notes:'Also has a podcast — potential interview opportunity.'
+  },
+  {
+    id:'imvdb', name:'IMVDb', category:'showcase', subcategory:'musicvideo',
+    location:'Global', flag:'🌍',
+    url:'https://imvdb.com/', submitUrl:'https://imvdb.com/guides/submitting-videos',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music Video'],
+    prestige:3,
+    whyFit:'The Internet Music Video Database. Essential for credits, discoverability, and archival. The "IMDb of music videos."',
+    similarWork:'All music videos — comprehensive database',
+    howToSubmit:'Create account, submit via guide page.',
+    audience:'Music video researchers, fans, industry',
+    notes:'Essential housekeeping. Create entry for credits/discoverability.'
+  },
+  {
+    id:'submithub', name:'SubmitHub', category:'showcase', subcategory:'musicvideo',
+    location:'Global', flag:'🌍',
+    url:'https://www.submithub.com/', submitUrl:'https://www.submithub.com/',
+    deadline:'', fee:1, feeLabel:'~$0.79-0.98/credit',
+    categories:['Music','Music Video'],
+    prestige:3,
+    whyFit:'6,000+ curators. Credit-based system. Electronic/ambient genres see 8-10% approval rate. Good for broad music press coverage.',
+    similarWork:'Independent music and music videos across genres',
+    howToSubmit:'Credit-based submission. Purchase credits, select curators.',
+    audience:'Music blogs, playlisters, curators',
+    notes:'Target ambient/electronic/experimental curators specifically.'
+  },
+  {
+    id:'groover', name:'Groover', category:'showcase', subcategory:'musicvideo',
+    location:'Global', flag:'🌍',
+    url:'https://groover.co/', submitUrl:'https://groover.co/',
+    deadline:'', fee:2, feeLabel:'From $2/curator',
+    categories:['Music','Music Video'],
+    prestige:3,
+    whyFit:'3,000+ curators. Guaranteed response within 1 week or refund. Good alternative/complement to SubmitHub.',
+    similarWork:'Independent music and music videos',
+    howToSubmit:'Select curators, pay per curator. Guaranteed 7-day response.',
+    audience:'Music blogs, playlisters, radio',
+    notes:'Guaranteed response is a nice feature vs SubmitHub.'
+  },
+  {
+    id:'artstation', name:'ArtStation', category:'showcase', subcategory:'creative',
+    location:'Global', flag:'🌍',
+    url:'https://www.artstation.com/', submitUrl:'https://www.artstation.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['3D Art','Animation','Character Design','VFX'],
+    prestige:4,
+    whyFit:'Strong 3D animation community. Perfect for process/breakdown posts. Industry recruiters and studios browse regularly.',
+    similarWork:'High-end 3D character work, animation breakdowns',
+    howToSubmit:'Create account, upload project. Include breakdown/process.',
+    audience:'CG artists, studios, recruiters',
+    notes:'Process/breakdown posts get more engagement than just the final video.'
+  },
+  {
+    id:'behance', name:'Behance', category:'showcase', subcategory:'creative',
+    location:'Global', flag:'🌍',
+    url:'https://www.behance.net/', submitUrl:'https://www.behance.net/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Design','Animation','Motion Graphics','3D'],
+    prestige:4,
+    whyFit:'World\'s largest creative network (Adobe). Upload as case study with process images, stills, and video. Good for building director portfolio.',
+    similarWork:'Creative case studies, animation projects',
+    howToSubmit:'Create account, upload project case study.',
+    audience:'Global creative network, agencies, studios',
+    notes:'Case study format (process + stills + video) gets best engagement.'
+  },
+  {
+    id:'animationobsessive', name:'Animation Obsessive', category:'showcase', subcategory:'animation',
+    location:'Global', flag:'🌍',
+    url:'https://animationobsessive.substack.com/', submitUrl:'https://animationobsessive.substack.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Animation','Independent Film'],
+    prestige:4,
+    whyFit:'60K subscribers newsletter covering independent and international animation. Deep-dive editorial format. Pitch your story to them.',
+    similarWork:'Independent international animated shorts, deep dives',
+    howToSubmit:'Pitch via email or Substack contact.',
+    audience:'60K animation enthusiasts',
+    notes:'Growing newsletter with engaged, niche audience. Great for editorial coverage.'
+  },
+
+  // ─── AWARDS & COMPETITIONS ───────────────────────────────
+  {
+    id:'dandad', name:'D&AD Awards', category:'award',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://www.dandad.org/', submitUrl:'https://www.dandad.org/awards/',
+    deadline:'2026-12-15', fee:200, feeCurrency:'GBP', feeLabel:'~£200+',
+    categories:['Music Video','Animation','Direction'],
+    prestige:5,
+    whyFit:'TIER 1 creative industry award. Music Video is a specific Pencil category. Emphasizes narrative storytelling with music integral to the narrative. Also has New Blood Awards for emerging creators.',
+    similarWork:'Top creative industry work, award-winning music videos',
+    notes:'Target 2027 season. One of the most respected creative awards globally.'
+  },
+  {
+    id:'webby', name:'Webby Awards', category:'award',
+    location:'New York, USA', flag:'🇺🇸',
+    url:'https://www.webbyawards.com/', submitUrl:'https://entries.webbyawards.com/',
+    deadline:'2027-02-06', fee:200, feeCurrency:'USD', feeLabel:'~$200+',
+    categories:['Video','Animation','Music Video'],
+    prestige:5,
+    whyFit:'TIER 1 digital award. Video & Film category includes animation and music videos. Contact: evey@webbyawards.com. Work must have been live between Oct 2025 and Feb 2027.',
+    similarWork:'Digital-first creative work, online video excellence',
+    notes:'Target 2027 season. Major digital industry recognition.'
+  },
+  {
+    id:'motionawards', name:'The Motion Awards', category:'award',
+    location:'Global (by Motionographer)', flag:'🌍',
+    url:'https://motionawards.com/', submitUrl:'https://motionawards.com/',
+    deadline:'2026-09-30', fee:100, feeCurrency:'USD', feeLabel:'~$100',
+    categories:['Motion Design','Animation','Music Video'],
+    prestige:4,
+    whyFit:'By Motionographer. Dedicated to motion design excellence. Music Video category fits perfectly.',
+    similarWork:'Award-winning motion design and animated music videos',
+    notes:'Run by Motionographer — submit to both the platform AND the awards.'
+  },
+  {
+    id:'commarts', name:'Communication Arts', category:'award',
+    location:'USA', flag:'🇺🇸',
+    url:'https://www.commarts.com/', submitUrl:'https://www.commarts.com/competitions',
+    deadline:'2026-11-30', fee:50, feeCurrency:'USD', feeLabel:'~$50',
+    categories:['Motion','Animation','Interactive'],
+    prestige:4,
+    whyFit:'Long-standing US creative industry publication. Motion/Animation competition category. Good for US creative industry recognition.',
+    similarWork:'Award-winning animation, motion graphics, interactive design',
+    notes:'Annual competition. Good supplementary US award.'
+  },
+  {
+    id:'telly', name:'Telly Awards', category:'award',
+    location:'USA', flag:'🇺🇸',
+    url:'https://www.tellyawards.com/', submitUrl:'https://www.tellyawards.com/',
+    deadline:'2026-03-15', fee:225, feeCurrency:'USD', feeLabel:'$225',
+    categories:['Animation','Music Video','Non-Broadcast'],
+    prestige:3,
+    whyFit:'New Animation categories. Broad recognition for video content. Good entry-level industry award.',
+    similarWork:'Branded content, animation, music videos',
+    notes:'Target 2027 season (opens Oct 2026).'
+  },
+  {
+    id:'annie', name:'Annie Awards', category:'award',
+    location:'Los Angeles, USA', flag:'🇺🇸',
+    url:'https://annieawards.org/', submitUrl:'https://annieawards.org/',
+    deadline:'2026-09-30', fee:0, feeCurrency:'USD', feeLabel:'Check',
+    categories:['Animation','Short Subject','Special Projects'],
+    prestige:5,
+    whyFit:'THE premier animation industry award (by ASIFA-Hollywood). Short Subject or Special Production categories could fit. Extremely prestigious.',
+    similarWork:'Pixar, Laika, major studio and independent animated shorts',
+    notes:'Target 2027 season. May require qualifying festival screening first.'
+  },
+  {
+    id:'creativerev', name:'Creative Review Annual', category:'award',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://www.creativereview.co.uk/', submitUrl:'https://www.creativereview.co.uk/event/the-annual/',
+    deadline:'2026-12-01', fee:100, feeCurrency:'GBP', feeLabel:'~£100',
+    categories:['Animation','Music Video','Moving Image'],
+    prestige:4,
+    whyFit:'Prestigious UK creative industry annual. "Music Videos of the Year" editorial roundup alongside the formal annual awards.',
+    similarWork:'Top creative work from the UK and international',
+    notes:'The editorial roundup is separate from the paid annual — pitch for both.'
+  }
+];
+
+// ============================================================
+// RENDERING ENGINE
+// ============================================================
+let currentFilters = { festival:'all', showcase:'all', award:'all' };
+let currentSorts = { festival:'deadline', showcase:'prestige', award:'prestige' };
+let currentSearches = { festival:'', showcase:'', award:'' };
+
+function getDeadlineStatus(dateStr) {
+  if (!dateStr) return { class:'', label:'Ongoing' };
+  const now = new Date();
+  const dl = new Date(dateStr);
+  const days = Math.ceil((dl - now) / (1000*60*60*24));
+  if (days < 0) return { class:'deadline-passed', label:'Passed' };
+  if (days <= 14) return { class:'deadline-urgent', label:`${days}d left` };
+  if (days <= 60) return { class:'deadline-warn', label:formatDate(dateStr) };
+  return { class:'deadline-safe', label:formatDate(dateStr) };
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'Ongoing';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+
+function renderStars(n) {
+  let html = '';
+  for (let i = 0; i < 5; i++) {
+    html += `<span class="star ${i < n ? 'filled' : 'empty'}">${i < n ? '★' : '☆'}</span>`;
+  }
+  return html;
+}
+
+function renderCard(v) {
+  const dl = getDeadlineStatus(v.deadline);
+  const tags = (v.categories || []).map(c => {
+    let cls = 'card-tag';
+    if (c.toLowerCase().includes('music video')) cls += ' mv';
+    if (c.toLowerCase().includes('free') || v.feeLabel === 'FREE') cls += '';
+    return `<span class="${cls}">${c}</span>`;
+  }).join('');
+
+  const oscarTag = v.oscar ? '<span class="card-tag oscar">Oscar Qualifying</span>' : '';
+  const baftaTag = v.bafta ? '<span class="card-tag oscar">BAFTA Qualifying</span>' : '';
+  const freeTag = v.feeLabel === 'FREE' ? '<span class="card-tag free">Free</span>' : '';
+
+  const tierClass = v.prestige >= 5 ? 'tier-1' : '';
+
+  return `
+    <div class="venue-card ${tierClass}" data-region="${v.region||''}" data-subcategory="${v.subcategory||''}" data-id="${v.id}">
+      <div class="card-header">
+        <div class="card-name">${v.name}</div>
+        <div class="card-prestige">${renderStars(v.prestige)}</div>
+      </div>
+      <div class="card-location"><span class="flag">${v.flag||'🌍'}</span> ${v.location}</div>
+      <div class="card-meta">
+        ${v.deadline ? `<div class="meta-item"><span class="meta-label">Deadline </span><span class="meta-value ${dl.class}">${dl.label}</span></div>` : ''}
+        <div class="meta-item"><span class="meta-label">Fee </span><span class="meta-value">${v.feeLabel || 'Check'}</span></div>
+        ${v.platform ? `<div class="meta-item"><span class="meta-label">Via </span><span class="meta-value">${v.platform}</span></div>` : ''}
+      </div>
+      <div class="card-tags">${tags}${oscarTag}${baftaTag}${freeTag}</div>
+      <div class="card-why">${v.whyFit}</div>
+      ${v.similarWork ? `<div class="card-similar"><strong>Similar work:</strong> ${v.similarWork}</div>` : ''}
+      ${v.howToSubmit ? `<div class="card-similar"><strong>How to submit:</strong> ${v.howToSubmit}</div>` : ''}
+      ${v.notes ? `<div class="card-similar" style="font-style:italic;opacity:0.7;">${v.notes}</div>` : ''}
+      <div class="card-actions">
+        <a href="${v.url}" target="_blank" rel="noopener" class="card-btn primary">Visit &rarr;</a>
+        ${v.submitUrl && v.submitUrl !== v.url ? `<a href="${v.submitUrl}" target="_blank" rel="noopener" class="card-btn ghost">Submit &rarr;</a>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderVenues(category) {
+  const grid = document.getElementById(`${category}-grid`);
+  const countEl = document.getElementById(`${category}-count`);
+  const filter = currentFilters[category];
+  const sort = currentSorts[category];
+  const search = currentSearches[category].toLowerCase();
+
+  let items = venues.filter(v => v.category === category);
+
+  // Filter
+  if (filter !== 'all') {
+    if (category === 'showcase') {
+      items = items.filter(v => v.subcategory === filter);
+    } else {
+      items = items.filter(v => v.region === filter);
+    }
+  }
+
+  // Search
+  if (search) {
+    items = items.filter(v =>
+      v.name.toLowerCase().includes(search) ||
+      v.location.toLowerCase().includes(search) ||
+      (v.categories||[]).some(c => c.toLowerCase().includes(search)) ||
+      (v.whyFit||'').toLowerCase().includes(search)
+    );
+  }
+
+  // Sort
+  items.sort((a, b) => {
+    if (sort === 'deadline') {
+      if (!a.deadline && !b.deadline) return 0;
+      if (!a.deadline) return 1;
+      if (!b.deadline) return -1;
+      return new Date(a.deadline) - new Date(b.deadline);
+    }
+    if (sort === 'prestige') return (b.prestige||0) - (a.prestige||0);
+    if (sort === 'fee') return (a.fee||0) - (b.fee||0);
+    return 0;
+  });
+
+  if (countEl) {
+    countEl.innerHTML = `Showing <span>${items.length}</span> ${category === 'festival' ? 'festivals' : category === 'showcase' ? 'platforms' : 'awards'}`;
+  }
+
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="no-results">No venues match your filters.</div>';
+  } else {
+    grid.innerHTML = items.map(renderCard).join('');
+  }
+}
+
+function filterVenues(category, filter, el) {
+  currentFilters[category] = filter;
+  // Update pill UI
+  const bar = el.parentElement;
+  bar.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderVenues(category);
+}
+
+function sortVenues(category, sort) {
+  currentSorts[category] = sort;
+  renderVenues(category);
+}
+
+function searchVenues(category, query) {
+  currentSearches[category] = query;
+  renderVenues(category);
+}
+
+// ============================================================
+// TIMELINE
+// ============================================================
+function renderTimeline() {
+  const track = document.getElementById('timeline-track');
+  const withDeadlines = venues.filter(v => v.deadline).sort((a,b) => new Date(a.deadline) - new Date(b.deadline));
+
+  // Group by month
+  const months = {};
+  withDeadlines.forEach(v => {
+    const d = new Date(v.deadline);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    if (!months[key]) months[key] = { label: d.toLocaleDateString('en-US',{month:'long',year:'numeric'}), events:[] };
+    months[key].events.push(v);
+  });
+
+  let html = '';
+  const today = new Date();
+  const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+
+  Object.entries(months).forEach(([key, month]) => {
+    html += `<div class="tl-month">`;
+    html += `<div class="tl-month-label">${month.label}</div>`;
+    if (key === todayKey) {
+      html += `<div class="tl-today"><div class="tl-today-label">Today</div></div>`;
+    }
+    html += `<div class="tl-events">`;
+    month.events.forEach(v => {
+      const catClass = v.category;
+      const d = new Date(v.deadline);
+      html += `<div class="tl-event ${catClass}">`;
+      html += `<div class="tl-event-name">${v.name.length > 25 ? v.name.substring(0,25)+'...' : v.name}</div>`;
+      html += `<div class="tl-event-date">${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>`;
+      html += `</div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  track.innerHTML = html;
+}
+
+// ============================================================
+// STATS
+// ============================================================
+function updateStats() {
+  const festivals = venues.filter(v => v.category === 'festival');
+  const showcases = venues.filter(v => v.category === 'showcase');
+  const awards = venues.filter(v => v.category === 'award');
+  const now = new Date();
+  const open = venues.filter(v => v.deadline && new Date(v.deadline) > now);
+
+  animateNumber('stat-festivals', festivals.length);
+  animateNumber('stat-showcases', showcases.length);
+  animateNumber('stat-awards', awards.length);
+  animateNumber('stat-open', open.length);
+}
+
+function animateNumber(id, target) {
+  const el = document.getElementById(id);
+  let current = 0;
+  const step = Math.max(1, Math.floor(target / 30));
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = current;
+  }, 30);
+}
+
+// ============================================================
+// ACCORDION
+// ============================================================
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  btn.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ============================================================
+// PARTICLES
+// ============================================================
+function createParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['rgba(255,110,180,0.3)', 'rgba(176,108,255,0.3)', 'rgba(0,229,255,0.25)', 'rgba(255,215,0,0.2)', 'rgba(100,255,218,0.2)'];
+
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4 + Math.random() * 10;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const drift = (Math.random() - 0.5) * 200;
+    p.style.cssText = `
+      width:${size}px; height:${size}px; left:${Math.random()*100}%;
+      background:radial-gradient(circle, ${color}, transparent);
+      animation-duration:${15 + Math.random()*20}s;
+      animation-delay:${Math.random()*15}s;
+      --drift:${drift}px;
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ============================================================
+// SCROLL ANIMATIONS
+// ============================================================
+function initScrollAnimations() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+
+// ============================================================
+// LIGHTBOX (for future image gallery)
+// ============================================================
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-frame').src = src;
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('open');
+  document.getElementById('lightbox-frame').src = '';
+}
+
+// ============================================================
+// MOBILE NAV
+// ============================================================
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('show');
+  });
+});
+
+// Add show style for mobile nav
+const mobileStyle = document.createElement('style');
+mobileStyle.textContent = `
+  @media(max-width:768px) {
+    .nav-links.show {
+      display:flex!important; flex-direction:column; position:absolute;
+      top:100%; left:0; right:0; background:rgba(7,5,16,0.95);
+      backdrop-filter:blur(20px); padding:1rem 2rem; gap:1rem;
+      border-bottom:1px solid rgba(176,108,255,0.1);
+    }
+  }
+`;
+document.head.appendChild(mobileStyle);
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  createParticles();
+  initScrollAnimations();
+  renderVenues('festival');
+  renderVenues('showcase');
+  renderVenues('award');
+  renderTimeline();
+  updateStats();
+});
+</script>
+</body>
+</html>
