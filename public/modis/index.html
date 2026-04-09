@@ -99,10 +99,8 @@
     .hero-bg {
       position:absolute; inset:0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(176,108,255,0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 30% 60%, rgba(255,110,180,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 70% 30%, rgba(0,229,255,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(255,215,0,0.05) 0%, transparent 50%);
+        linear-gradient(180deg, rgba(7,5,16,0.3) 0%, rgba(7,5,16,0.6) 40%, rgba(7,5,16,0.95) 80%, rgba(7,5,16,1) 100%),
+        url('https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=p') center/cover no-repeat;
       animation: hero-pulse 12s ease-in-out infinite;
     }
     @keyframes hero-pulse {
@@ -566,14 +564,14 @@
       font-family:'Space Grotesk',sans-serif;
     }
     .venues-table th {
-      text-align:left; padding:0.6rem 0.8rem; color:var(--text-dim); text-transform:uppercase;
-      letter-spacing:1.5px; font-size:0.65rem; font-weight:600;
+      text-align:left; padding:0.4rem 0.6rem; color:var(--text-dim); text-transform:uppercase;
+      letter-spacing:1px; font-size:0.68rem; font-weight:600;
       border-bottom:1px solid rgba(176,108,255,0.15); white-space:nowrap; position:sticky; top:0;
       background:var(--bg-void);
     }
     .venues-table td {
-      padding:0.6rem 0.8rem; border-bottom:1px solid rgba(255,255,255,0.03);
-      color:var(--text-dim); vertical-align:top;
+      padding:0.4rem 0.6rem; border-bottom:1px solid rgba(255,255,255,0.03);
+      color:var(--text-dim); vertical-align:middle; font-size:0.82rem;
     }
     .venues-table tr:hover td { background:rgba(176,108,255,0.03); }
     .venues-table .t-name { color:var(--text-bright); font-weight:600; white-space:nowrap; }
@@ -623,7 +621,6 @@
     <a href="#" class="nav-logo"><span class="holo-text">A PIECE OF SUN</span></a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#storyboard">Storyboard</a></li>
       <li><a href="#festivals">Festivals</a></li>
       <li><a href="#showcases">Showcases</a></li>
       <li><a href="#awards">Awards</a></li>
@@ -642,8 +639,7 @@
       <div class="hero-eyebrow fade-in">Animated Music Video &mdash; Submission Guide</div>
       <h1 class="hero-title holo-text fade-in">A PIECE<br>OF SUN</h1>
       <p class="hero-logline fade-in">
-        <em>The sun hasn't appeared for 10,000 days.</em><br>
-        A stunning 3D animated journey through a world of iridescent dreams, kawaii characters, and cosmic wonder.
+        A stunning 3D animated music video &mdash; submission guide for festivals, showcases, and awards worldwide.
       </p>
       <div class="hero-badges fade-in">
         <span class="badge">3D Animation</span>
@@ -665,51 +661,32 @@
     </div>
     <div class="about-grid fade-in">
       <div class="about-text">
-        <p>"A Piece of Sun" is a beautifully crafted animated music video that tells the story of a fantastical world where the sun hasn't appeared for 10,000 days. Through iridescent landscapes and psychedelic dreamscapes, tiny kawaii characters &mdash; bears, bunnies, and cats with sparkling textures and enormous expressive eyes &mdash; journey through rainbow-furred surfaces, chrome bubble-filled homes, neon-lit subway stations, and futuristic cities in search of a lost piece of warmth.</p>
-        <p>The music is experimental, ambient, and instrumental &mdash; a conceptual sonic landscape that merges perfectly with the visual world. Directed by an emerging talent, this project represents a unique fusion of Japanese kawaii aesthetics, cosmic psychedelia, and contemporary 3D animation craft.</p>
-        <div class="about-tags">
+        <p>A fully AI-generated 3D animated music video featuring kawaii characters in iridescent dreamscapes. Experimental ambient music meets cosmic psychedelia and contemporary animation craft, directed by an emerging talent.</p>
+        <div class="about-tags" style="margin-top:1.5rem;">
           <span class="badge">Kawaii</span>
           <span class="badge pink">Psychedelic</span>
           <span class="badge cyan">Cosmic</span>
           <span class="badge gold">Iridescent</span>
           <span class="badge">Cyberpunk</span>
-          <span class="badge pink">3D CGI</span>
+          <span class="badge pink">Full AI</span>
         </div>
       </div>
-      <div class="about-visual">
-        <div class="storyboard-embed">
-          <iframe src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/embed?start=true&loop=true&delayms=3000" allowfullscreen></iframe>
-        </div>
+      <div class="about-visual" style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+        <img src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g395f0db50ce_0_306" style="width:100%;border-radius:12px;opacity:0.85;" alt="Scene">
+        <img src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g395f0db50ce_0_351" style="width:100%;border-radius:12px;opacity:0.85;" alt="Scene">
+        <img src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g3d07db1be70_0_57" style="width:100%;border-radius:12px;opacity:0.85;" alt="Scene">
+        <img src="https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g3d07db1be70_0_93" style="width:100%;border-radius:12px;opacity:0.85;" alt="Scene">
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- STATS -->
-  <section style="padding-top:3rem;padding-bottom:2rem;">
-    <div class="stats-bar fade-in">
-      <div class="stat-card">
-        <div class="stat-number purple" id="stat-festivals">0</div>
-        <div class="stat-label">Film Festivals</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number cyan" id="stat-showcases">0</div>
-        <div class="stat-label">Online Showcases</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number pink" id="stat-awards">0</div>
-        <div class="stat-label">Awards</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number gold" id="stat-open">0</div>
-        <div class="stat-label">Open Now</div>
-      </div>
-    </div>
-  </section>
+  <!-- stats removed -->
 
   <!-- FESTIVALS -->
-  <section id="festivals">
+  <section id="festivals" style="position:relative;">
+    <div style="position:absolute;top:0;right:-5%;width:300px;height:300px;background:url('https://docs.google.com/presentation/d/1vRuxkSzep68rM-3n2QcHwQkam8uGSgHRLc8q7yx_qgc/export/jpeg?pageid=g395f0db50ce_0_289') center/cover;border-radius:50%;opacity:0.06;filter:blur(30px);pointer-events:none;"></div>
     <div class="fade-in">
       <span class="section-tag">Film Festivals</span>
       <h2 class="section-title holo-text">Festival Circuit</h2>
@@ -727,6 +704,7 @@
       <div class="sort-bar">
         <label>Sort by</label>
         <select onchange="sortVenues('festival', this.value)">
+          <option value="recommended">Recommended</option>
           <option value="deadline">Deadline (soonest)</option>
           <option value="prestige">Prestige (highest)</option>
           <option value="fee">Fee (lowest)</option>
@@ -765,6 +743,7 @@
       <div class="sort-bar">
         <label>Sort by</label>
         <select onchange="sortVenues('showcase', this.value)">
+          <option value="recommended">Recommended</option>
           <option value="prestige">Priority (highest)</option>
           <option value="fee">Fee (lowest)</option>
         </select>
@@ -1392,16 +1371,28 @@ const venues = [
     notes:'Target 2027. Curatorial focus on artistic innovation aligns well.'
   },
   {
-    id:'siggraph', name:'SIGGRAPH Computer Animation Festival', category:'festival',
-    region:'us', location:'Los Angeles, USA (2026)', flag:'🇺🇸',
+    id:'siggraph', name:'SIGGRAPH 2026 Computer Animation Festival', category:'festival',
+    region:'us', location:'Los Angeles, USA', flag:'🇺🇸',
     url:'https://s2026.siggraph.org/', submitUrl:'https://s2026.siggraph.org/program/computer-animation-festival/',
-    deadline:'2026-04-15', fee:0, feeCurrency:'USD', feeLabel:'Check',
+    deadline:'2026-03-17', fee:0, feeCurrency:'USD', feeLabel:'FREE',
     categories:['Computer Animation','3D Animation','Visual Effects'],
     prestige:5, oscar:true, bafta:false,
-    whyFit:'Academy Award qualifying. "Best in Show" prize. Perfect for high-quality 3D animation. Jul 19-23 in LA. Work must be completed after March 18, 2025.',
+    whyFit:'Academy Award qualifying. "Best in Show" prize. Jul 19-23 in LA. Deadline PASSED March 17 — target SIGGRAPH Asia 2026 instead.',
     similarWork:'Pixar shorts, high-end 3D animation',
-    platform:'Direct submission',
-    notes:'If deadline hasn\'t passed, submit ASAP. Top-tier for CG animation.'
+    platform:'Linklings (ssl.linklings.net/conferences/siggraph)',
+    notes:'⚠️ DEADLINE PASSED (March 17, 2026). See SIGGRAPH Asia 2026 below.'
+  },
+  {
+    id:'siggraph-asia', name:'SIGGRAPH Asia 2026 Computer Animation Festival', category:'festival',
+    region:'other', location:'Kuala Lumpur, Malaysia', flag:'🇲🇾',
+    url:'https://asia.siggraph.org/2026/', submitUrl:'https://asia.siggraph.org/2026/submissions/',
+    deadline:'2026-07-12', fee:0, feeCurrency:'USD', feeLabel:'FREE',
+    categories:['Computer Animation','3D Animation','Visual Effects'],
+    prestige:5, oscar:true, bafta:false,
+    whyFit:'BEST ALTERNATIVE to SIGGRAPH 2026 (missed deadline). Same prestige, Academy Award qualifying. Dec 1-4 in Kuala Lumpur. Free submission via Linklings. Submit via Linklings platform — need video file (min HD 1920x1080, .mov/.mp4, ProRes/H.264), signed ACM Rights Management Form.',
+    similarWork:'Pixar shorts, high-end 3D animation, CG innovation',
+    platform:'Linklings (NOT FilmFreeway)',
+    notes:'⭐ HIGHLY RECOMMENDED. Free, Oscar qualifying, AI-friendly. Deadline July 12, 2026.'
   },
   {
     id:'indieani', name:'Korea Independent Animation Film Festival (Indie-AniFest)', category:'festival',
@@ -1850,7 +1841,8 @@ const aiPolicies = {
   'anifilm':   {aiScore:3, aiNote:'No stated policy. Czech Oscar-qualifying festival with MV category.', prizes:'Best Short Film, Best Music Video, Grand Prix, Audience Award'},
   'itfs':      {aiScore:3, aiNote:'No stated policy. German Oscar-qualifying festival with industry market.', prizes:'Grand Prix (€5,000), Lotte Reiniger Award, Young Animation Award'},
   'glas':      {aiScore:3, aiNote:'No stated policy. Independent/experimental focus — could go either way on AI.', prizes:'Best Film, Special Mentions, Audience Award'},
-  'siggraph':  {aiScore:5, aiNote:'AI disclosure required, but ALL computer animation is eligible. The most natural home for AI-generated CG work. Academy Award qualifying.', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student Project'},
+  'siggraph':  {aiScore:5, aiNote:'AI disclosure required, but ALL computer animation is eligible. The most natural home for AI-generated CG work. DEADLINE PASSED.', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student Project'},
+  'siggraph-asia':{aiScore:5, aiNote:'Same AI-friendly policy as SIGGRAPH. All CG animation welcome with disclosure. OPEN — deadline July 12.', prizes:'Best in Show (Oscar qualifying), Jury\'s Choice, Best Student Project'},
   'indieani':  {aiScore:3, aiNote:'No stated policy. Korean independent animation focus.', prizes:'Grand Prize, Special Awards'},
   'holland':   {aiScore:3, aiNote:'No stated policy. Has "Applied Animation" category fitting for MVs.', prizes:'Best Short, Applied Animation Award, Audience Award'},
   'animayo':   {aiScore:3, aiNote:'No stated policy. Spanish Oscar-qualifying festival.', prizes:'Best Music Video, Best 3D Animation, Grand Prix, Audience Award'},
@@ -1887,12 +1879,19 @@ const aiPolicies = {
   'annie':     {aiScore:2, aiNote:'ASIFA-Hollywood leaning protective. Animation Guild (IATSE Local 839) opposition to AI. Rules under active debate — high risk.', prizes:'Annie Award (Short Subject, Special Production, Best Direction)'},
   'creativerev':{aiScore:3,aiNote:'No stated policy. UK creative industry annual awards.', prizes:'Annual Award, "Music Videos of the Year" editorial roundup'},
 };
-// Merge into venues
+// Merge into venues and compute recommendation score
 venues.forEach(v => {
   const p = aiPolicies[v.id];
   if (p) { v.aiScore = p.aiScore; v.aiNote = p.aiNote; v.prizes = p.prizes; }
   if (!v.aiScore) { v.aiScore = 3; v.aiNote = 'No stated policy'; }
   if (!v.prizes) v.prizes = '';
+  // Recommendation score: higher = more recommended (AI-friendliness * 2 + prestige + deadline urgency bonus)
+  const now = new Date();
+  const dl = v.deadline ? new Date(v.deadline) : null;
+  const daysLeft = dl ? Math.ceil((dl - now) / (1000*60*60*24)) : 999;
+  const deadlineBonus = daysLeft < 0 ? -3 : daysLeft < 30 ? 3 : daysLeft < 90 ? 2 : 1;
+  const passed = daysLeft < 0 ? -5 : 0;
+  v.recScore = (v.aiScore * 2) + (v.prestige || 0) + deadlineBonus + passed;
 });
 
 // ============================================================
@@ -1920,7 +1919,7 @@ function setView(category, view, btn) {
 // RENDERING ENGINE
 // ============================================================
 let currentFilters = { festival:'all', showcase:'all', award:'all' };
-let currentSorts = { festival:'deadline', showcase:'prestige', award:'prestige' };
+let currentSorts = { festival:'recommended', showcase:'recommended', award:'recommended' };
 let currentSearches = { festival:'', showcase:'', award:'' };
 
 function renderAiGauge(score, showLabel) {
@@ -2008,8 +2007,8 @@ function renderTable(category, items) {
   if (!table) return;
   // AI gauge in table uses compact version
   let html = `<table class="venues-table"><thead><tr>
-    <th>Name</th><th>Location</th><th>Deadline</th><th>Fee</th><th>Rating</th>
-    <th>AI Policy</th><th>Prizes</th><th>Oscar</th>
+    <th>Name</th><th>Location</th><th>Deadline</th><th>Fee</th><th>Stars</th>
+    <th>AI</th><th>Prizes</th><th>Qualifying</th><th>Why Submit</th>
   </tr></thead><tbody>`;
   items.forEach(v => {
     const dl = getDeadlineStatus(v.deadline);
@@ -2022,6 +2021,7 @@ function renderTable(category, items) {
       <td>${renderAiGauge(v.aiScore)}</td>
       <td class="t-prizes">${v.prizes||'—'}</td>
       <td class="t-oscar">${v.oscar?'★ Oscar':v.bafta?'★ BAFTA':'—'}</td>
+      <td style="font-size:0.75rem;max-width:180px;color:var(--text-dim);">${(v.whyFit||'').substring(0,100)}${(v.whyFit||'').length>100?'...':''}</td>
     </tr>`;
   });
   html += '</tbody></table>';
@@ -2067,6 +2067,7 @@ function renderVenues(category) {
     if (sort === 'prestige') return (b.prestige||0) - (a.prestige||0);
     if (sort === 'fee') return (a.fee||0) - (b.fee||0);
     if (sort === 'ai') return (b.aiScore||3) - (a.aiScore||3);
+    if (sort === 'recommended') return (b.recScore||0) - (a.recScore||0);
     return 0;
   });
 
@@ -2261,7 +2262,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderVenues('showcase');
   renderVenues('award');
   renderTimeline();
-  updateStats();
 });
 </script>
 </body>
