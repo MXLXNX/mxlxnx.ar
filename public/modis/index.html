@@ -350,10 +350,13 @@
     /* TIMELINE */
     .timeline-container {
       overflow-x:auto; padding:2rem 0; position:relative;
-      -webkit-overflow-scrolling:touch;
+      -webkit-overflow-scrolling:touch; cursor:grab;
     }
-    .timeline-container::-webkit-scrollbar { height:4px; }
-    .timeline-container::-webkit-scrollbar-thumb { background:var(--iris-purple); border-radius:2px; }
+    .timeline-container:active { cursor:grabbing; }
+    .timeline-container::-webkit-scrollbar { height:12px; }
+    .timeline-container::-webkit-scrollbar-track { background:rgba(176,108,255,0.05); border-radius:6px; }
+    .timeline-container::-webkit-scrollbar-thumb { background:linear-gradient(90deg,var(--iris-purple),var(--iris-cyan)); border-radius:6px; min-width:60px; }
+    .timeline-container::-webkit-scrollbar-thumb:hover { background:linear-gradient(90deg,var(--iris-pink),var(--iris-purple)); }
     .timeline {
       display:flex; gap:0; min-width:max-content; position:relative; padding:3rem 2rem;
     }
@@ -2315,6 +2318,27 @@ mobileStyle.textContent = `
 document.head.appendChild(mobileStyle);
 
 // ============================================================
+// TIMELINE DRAG-TO-PAN
+// ============================================================
+function initTimelineDrag() {
+  const el = document.getElementById('timeline-container');
+  if (!el) return;
+  let isDown = false, startX, scrollLeft;
+  el.addEventListener('mousedown', e => {
+    isDown = true; startX = e.pageX - el.offsetLeft; scrollLeft = el.scrollLeft;
+    el.style.cursor = 'grabbing';
+  });
+  el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mouseup', () => { isDown = false; el.style.cursor = 'grab'; });
+  el.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - el.offsetLeft;
+    el.scrollLeft = scrollLeft - (x - startX);
+  });
+}
+
+// ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -2324,6 +2348,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderVenues('showcase');
   renderVenues('award');
   renderTimeline();
+  initTimelineDrag();
 });
 </script>
 </body>
