@@ -545,6 +545,7 @@
     /* SECTION SPECIFIC ACCENTS */
     .showcase-section .card-tag { background:rgba(0,229,255,0.08); color:var(--iris-cyan); border-color:rgba(0,229,255,0.15); }
     .award-section .card-tag { background:rgba(255,215,0,0.08); color:var(--iris-gold); border-color:rgba(255,215,0,0.15); }
+    .media-section .card-tag { background:rgba(255,110,180,0.08); color:var(--iris-pink); border-color:rgba(255,110,180,0.15); }
 
     /* LIGHTBOX */
     .lightbox {
@@ -658,6 +659,7 @@
       <li><a href="#festivals">Festivals</a></li>
       <li><a href="#showcases">Showcases</a></li>
       <li><a href="#awards">Awards</a></li>
+      <li><a href="#media">Media</a></li>
       <li><a href="#timeline">Timeline</a></li>
       <li><a href="#strategy">Strategy</a></li>
       <li><a href="#ai-policy" style="color:var(--iris-coral);">AI Policy</a></li>
@@ -807,6 +809,40 @@
     </div>
     <div class="venues-grid" id="award-grid" style="display:none;"></div>
     <div class="venues-table-wrap" id="award-table"></div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MEDIA -->
+  <section id="media" class="media-section">
+    <div class="fade-in">
+      <span class="section-tag">Music &amp; Art Press</span>
+      <h2 class="section-title holo-text">Media Outlets</h2>
+      <p class="section-desc">Music, culture, and art publications where "A Piece of Sun" can get editorial coverage, reviews, and features to reach wider audiences beyond the festival circuit.</p>
+    </div>
+    <div class="fade-in">
+      <div class="filter-bar" id="media-filters">
+        <div class="filter-pill active" data-filter="all" onclick="filterVenues('media','all',this)">All</div>
+        <div class="filter-pill" data-filter="music" onclick="filterVenues('media','music',this)">Music</div>
+        <div class="filter-pill" data-filter="culture" onclick="filterVenues('media','culture',this)">Culture / Art</div>
+        <div class="filter-pill" data-filter="electronic" onclick="filterVenues('media','electronic',this)">Electronic</div>
+      </div>
+      <div class="sort-bar">
+        <label>Sort by</label>
+        <select onchange="sortVenues('media', this.value)">
+          <option value="recommended">Recommended</option>
+          <option value="prestige">Priority (highest)</option>
+        </select>
+        <input type="text" class="search-box" placeholder="Search media..." oninput="searchVenues('media', this.value)" style="margin-left:auto;">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('media','table',this)">&#9776; List</button>
+          <button class="view-btn" onclick="setView('media','cards',this)">&#9638; Cards</button>
+        </div>
+      </div>
+      <div class="venue-count" id="media-count"></div>
+    </div>
+    <div class="venues-grid" id="media-grid" style="display:none;"></div>
+    <div class="venues-table-wrap" id="media-table"></div>
   </section>
 
   <div class="divider"></div>
@@ -1842,6 +1878,103 @@ const venues = [
     whyFit:'Prestigious UK creative industry annual. "Music Videos of the Year" editorial roundup alongside the formal annual awards.',
     similarWork:'Top creative work from the UK and international',
     notes:'The editorial roundup is separate from the paid annual — pitch for both.'
+  },
+  // ─── MEDIA OUTLETS ────────────────────────────────────────
+  {
+    id:'nowness-media', name:'NOWNESS', category:'media', subcategory:'culture',
+    location:'London / Global', flag:'🌍',
+    url:'https://www.nowness.com/', submitUrl:'https://www.nowness.com/story/become-a-nowness-contributor',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Film','Music Video','Art','Culture'],
+    prestige:5,
+    whyFit:'Premier visual culture platform at the intersection of art, design, fashion, and music. Curates short films and music videos with a focus on aesthetics and storytelling. Massive global audience of creatives and tastemakers.',
+    similarWork:'Art-house music videos, experimental animation, visual essays by top directors',
+    howToSubmit:'Online contributor portal. Film must be UNPUBLISHED for exclusive premiere consideration.',
+    notes:'Potential for paid exclusive streaming rights. Submit BEFORE going public anywhere else.'
+  },
+  {
+    id:'i-d', name:'i-D Magazine', category:'media', subcategory:'culture',
+    location:'London / Global', flag:'🌍',
+    url:'https://i-d.co/', submitUrl:'https://i-d.co/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music','Art','Fashion','Culture'],
+    prestige:5,
+    whyFit:'Iconic Vice Media-owned culture magazine covering music, art, fashion, and youth culture since 1980. Strong emphasis on visual storytelling and emerging creative talent. Editorial features on music videos are common.',
+    similarWork:'Features on FKA Twigs, Björk, Rosalía — visually driven artists',
+    howToSubmit:'Pitch to editorial team via press release or direct contact.',
+    notes:'Great for reaching the fashion-meets-music audience. Emphasize the visual and narrative innovation.'
+  },
+  {
+    id:'factmag', name:'Fact Magazine', category:'media', subcategory:'electronic',
+    location:'London, UK', flag:'🇬🇧',
+    url:'https://www.factmag.com/', submitUrl:'https://www.factmag.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Electronic Music','Art','Music Video','Culture'],
+    prestige:4,
+    whyFit:'Leading electronic music and art publication. Deeply invested in visual culture — regularly features music videos, audiovisual art, and experimental animation. Their readership loves boundary-pushing creative work.',
+    similarWork:'Arca, SOPHIE, Aphex Twin visual projects',
+    howToSubmit:'Pitch via press release to editorial. Include high-res stills and a private screener link.',
+    notes:'Strong fit given the project\'s aesthetic and electronic music roots.'
+  },
+  {
+    id:'thefader', name:'The FADER', category:'media', subcategory:'music',
+    location:'New York, USA', flag:'🇺🇸',
+    url:'https://www.thefader.com/', submitUrl:'https://www.thefader.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music','Music Video','Culture'],
+    prestige:5,
+    whyFit:'One of the most influential independent music publications. Known for championing emerging artists and visual storytelling. Music video premieres and features are a core part of their editorial.',
+    similarWork:'Premieres for Tyler the Creator, Bad Bunny, SZA music videos',
+    howToSubmit:'Pitch to editorial team. Include press kit with stills, synopsis, and private link.',
+    notes:'Excellent for reaching US music audiences. Strong social media amplification.'
+  },
+  {
+    id:'mixmag', name:'Mixmag', category:'media', subcategory:'electronic',
+    location:'London / Global', flag:'🌍',
+    url:'https://mixmag.net/', submitUrl:'https://mixmag.net/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Electronic Music','Dance','Culture','Music Video'],
+    prestige:4,
+    whyFit:'The world\'s biggest dance music and club culture magazine. Covers music videos, visual art, and creative innovation within electronic music. Global audience of DJs, producers, and music lovers.',
+    similarWork:'Visuals for Caribou, Four Tet, Floating Points',
+    howToSubmit:'Pitch to editorial. Emphasize the electronic music connection and visual innovation.',
+    notes:'If the music has any electronic or ambient elements, this is a strong match.'
+  },
+  {
+    id:'djmag', name:'DJ Mag', category:'media', subcategory:'electronic',
+    location:'London / Global', flag:'🌍',
+    url:'https://djmag.com/', submitUrl:'https://djmag.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Electronic Music','DJ Culture','Music Video'],
+    prestige:4,
+    whyFit:'Global electronic music authority with massive reach. Features music videos and visual projects regularly. Their audience is tuned into creative innovation in music.',
+    similarWork:'Music video features for electronic and experimental artists',
+    howToSubmit:'Press release to editorial team with screener link and press kit.',
+    notes:'Good for broad electronic music audience reach.'
+  },
+  {
+    id:'hearingthings', name:'Hearing Things', category:'media', subcategory:'music',
+    location:'USA', flag:'🇺🇸',
+    url:'https://www.hearingthings.co/', submitUrl:'https://www.hearingthings.co/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music','Culture','Criticism','Music Video'],
+    prestige:4,
+    whyFit:'Worker-owned music publication founded by ex-Pitchfork staff. Deeply committed to thoughtful music journalism and visual culture. Independent, credible, and growing fast as an alternative to legacy music media.',
+    similarWork:'In-depth features on experimental and independent artists',
+    howToSubmit:'Pitch directly to editorial. Emphasize the creative process and AI innovation angle.',
+    notes:'Great for a thoughtful, process-focused feature. The AI-generated angle could make for a strong story.'
+  },
+  {
+    id:'stereogum', name:'Stereogum', category:'media', subcategory:'music',
+    location:'New York, USA', flag:'🇺🇸',
+    url:'https://www.stereogum.com/', submitUrl:'https://www.stereogum.com/',
+    deadline:'', fee:0, feeLabel:'FREE',
+    categories:['Music','Indie','Music Video','Culture'],
+    prestige:4,
+    whyFit:'Major independent music blog with dedicated music video coverage. "Video of the Week" and regular music video roundups. Strong indie and alternative audience.',
+    similarWork:'Music video premieres for indie, alternative, and experimental artists',
+    howToSubmit:'Pitch to editorial with private screener and press kit.',
+    notes:'The "Video of the Week" feature would be an ideal placement.'
   }
 ];
 
@@ -1931,7 +2064,7 @@ venues.forEach(v => {
 // ============================================================
 // VIEW STATE
 // ============================================================
-let currentViews = { festival:'table', showcase:'table', award:'table' };
+let currentViews = { festival:'table', showcase:'table', award:'table', media:'table' };
 
 function setView(category, view, btn) {
   currentViews[category] = view;
@@ -1952,9 +2085,9 @@ function setView(category, view, btn) {
 // ============================================================
 // RENDERING ENGINE
 // ============================================================
-let currentFilters = { festival:'all', showcase:'all', award:'all' };
-let currentSorts = { festival:'recommended', showcase:'recommended', award:'recommended' };
-let currentSearches = { festival:'', showcase:'', award:'' };
+let currentFilters = { festival:'all', showcase:'all', award:'all', media:'all' };
+let currentSorts = { festival:'recommended', showcase:'recommended', award:'recommended', media:'recommended' };
+let currentSearches = { festival:'', showcase:'', award:'', media:'' };
 
 function renderAiGauge(score, showLabel) {
   const labels = {1:'Banned',2:'Restrictive',3:'Unknown',4:'Disclosure OK',5:'AI Welcome'};
@@ -2072,7 +2205,7 @@ function renderVenues(category) {
 
   // Filter
   if (filter !== 'all') {
-    if (category === 'showcase') {
+    if (category === 'showcase' || category === 'media') {
       items = items.filter(v => v.subcategory === filter);
     } else {
       items = items.filter(v => v.region === filter);
@@ -2105,7 +2238,8 @@ function renderVenues(category) {
   });
 
   if (countEl) {
-    countEl.innerHTML = `Showing <span>${items.length}</span> ${category === 'festival' ? 'festivals' : category === 'showcase' ? 'platforms' : 'awards'}`;
+    const catLabel = {festival:'festivals', showcase:'platforms', award:'awards', media:'outlets'};
+    countEl.innerHTML = `Showing <span>${items.length}</span> ${catLabel[category] || category}`;
   }
 
   if (items.length === 0) {
@@ -2356,6 +2490,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderVenues('festival');
   renderVenues('showcase');
   renderVenues('award');
+  renderVenues('media');
   renderTimeline();
   initTimelineDrag();
 });
