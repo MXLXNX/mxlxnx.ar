@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Large videos (>25MB) — kept locally at /tmp/mxlxnx-big-videos, restore to public/videos/ for local dev
+public/videos/F1_*.mp4
+public/videos/MELI.mp4
