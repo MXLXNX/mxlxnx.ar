@@ -6,6 +6,7 @@ import ProjectGrid from '../components/ProjectGrid.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
 import VideoGrid from '../components/VideoGrid.astro';
 import Contact from '../components/Contact.astro';
+import APieceOfSun from '../components/APieceOfSun.astro';
 
 // === F1 VISUALS - Les Twins / McLaren Party ===
 const f1Videos = [
@@ -271,6 +272,9 @@ const silentiaProjects = [
     </div>
   </section>
 
+  <!-- A Piece of Sun -->
+  <APieceOfSun lang="en" />
+
   <!-- F1 Visuals -->
   <VideoGrid
     videos={f1Videos}
@@ -431,4 +435,5 @@ const silentiaProjects = [
     height: 100%;
     border: none;
   }
+
 </style>

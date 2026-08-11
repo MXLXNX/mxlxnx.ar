@@ -6,6 +6,7 @@ import ProjectGrid from '../../components/ProjectGrid.astro';
 import VideoShowcase from '../../components/VideoShowcase.astro';
 import VideoGrid from '../../components/VideoGrid.astro';
 import Contact from '../../components/Contact.astro';
+import APieceOfSun from '../../components/APieceOfSun.astro';
 
 // === F1 VISUALS ===
 const f1Videos = [
@@ -76,6 +77,9 @@ const silentiaProjects = [
       <h2 class="selected-works-title">أعمال مختارة</h2>
     </div>
   </section>
+
+  <!-- A Piece of Sun -->
+  <APieceOfSun lang="ar" />
 
   <VideoGrid videos={f1Videos} sectionTitle="F1 فيجوالز" sectionSubtitle="المرئيات الرسمية لـ Les Twins في حفلة McLaren F1 الحصرية. الإخراج الفني ومواد الذكاء الاصطناعي والسرد القصصي للبث المباشر. إنتاج مع Flamboyant Paradise." featured={true} />
   <VideoGrid videos={meliVideos} sectionTitle="MERCADO LIBRE" sectionSubtitle="إعلان معزز بالذكاء الاصطناعي لمنصة Mercado Libre. مشروع فريق مع 1st Ave Machine." singleVideo={true} />

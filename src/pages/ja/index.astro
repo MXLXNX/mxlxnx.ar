@@ -6,6 +6,7 @@ import ProjectGrid from '../../components/ProjectGrid.astro';
 import VideoShowcase from '../../components/VideoShowcase.astro';
 import VideoGrid from '../../components/VideoGrid.astro';
 import Contact from '../../components/Contact.astro';
+import APieceOfSun from '../../components/APieceOfSun.astro';
 
 // === F1 VISUALS ===
 const f1Videos = [
@@ -76,6 +77,9 @@ const silentiaProjects = [
       <h2 class="selected-works-title">厳選作品</h2>
     </div>
   </section>
+
+  <!-- A Piece of Sun -->
+  <APieceOfSun lang="ja" />
 
   <VideoGrid videos={f1Videos} sectionTitle="F1 ビジュアル" sectionSubtitle="マクラーレンF1エクスクルーシブパーティーでのレ・ツインズ公式ビジュアル。アートディレクション、AI素材、ライブ配信用ストーリーテリング。Flamboyant Paradiseとの共同制作。" featured={true} />
   <VideoGrid videos={meliVideos} sectionTitle="MERCADO LIBRE" sectionSubtitle="Mercado Libre eコマースプラットフォーム向けAI強化広告。1st Ave Machineとのチームプロジェクト。" singleVideo={true} />
