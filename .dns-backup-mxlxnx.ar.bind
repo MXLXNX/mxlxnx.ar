@@ -1,0 +1,54 @@
+;;
+;; Domain:     mxlxnx.ar.
+;; Exported:   2026-04-29 02:10:47
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+mxlxnx.ar	3600	IN	SOA	brenda.ns.cloudflare.com. dns.cloudflare.com. 2052909524 10000 2400 604800 3600
+
+;; NS Records
+mxlxnx.ar.	86400	IN	NS	brenda.ns.cloudflare.com.
+mxlxnx.ar.	86400	IN	NS	chance.ns.cloudflare.com.
+
+;; A Records
+ai.mxlxnx.ar.	1	IN	A	99.192.232.42 ; cf_tags=cf-proxied:true
+ftp.mxlxnx.ar.	1	IN	A	99.192.232.42 ; cf_tags=cf-proxied:true
+mail.mxlxnx.ar.	1	IN	A	99.192.232.42 ; cf_tags=cf-proxied:true
+pop.mxlxnx.ar.	1	IN	A	99.192.232.42 ; cf_tags=cf-proxied:true
+smtp.mxlxnx.ar.	1	IN	A	99.192.232.42 ; cf_tags=cf-proxied:true
+
+;; CNAME Records
+mxlxnx.ar.	1	IN	CNAME	mxlxnx-ar.pages.dev. ; cf_tags=cf-proxied:true
+www.mxlxnx.ar.	1	IN	CNAME	mxlxnx-ar.pages.dev. ; cf_tags=cf-proxied:true
+
+;; MX Records
+mxlxnx.ar.	1	IN	MX	1 ASPMX.L.GOOGLE.COM.
+mxlxnx.ar.	1	IN	MX	10 ALT3.ASPMX.L.GOOGLE.COM.
+mxlxnx.ar.	1	IN	MX	5 ALT2.ASPMX.L.GOOGLE.COM.
+mxlxnx.ar.	1	IN	MX	10 ALT4.ASPMX.L.GOOGLE.COM.
+mxlxnx.ar.	1	IN	MX	5 ALT1.ASPMX.L.GOOGLE.COM.
+
+;; TXT Records
+mxlxnx.ar.	1	IN	TXT	"v=spf1 a mx ip4:99.192.232.2 include:_spf.google.com -all"
+mxlxnx.ar.	1	IN	TXT	"google-site-verification=gCxoet4AFndvMtIzJM2KwLGZ_R659Gf1bVUe6QbfRN8"
+x._domainkey.mxlxnx.ar.	1	IN	TXT	"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1eaYRfFMRjr/MXndV54xEpIRIL8S+2bDyMf7zefAXsUNISwtp8y49A6RvhWnXzFbNw1PA4HU5vJ42FsZBjVckeR" "cchutXd4u66w75VF8ni/gttPgIhd7vnMwVyI6hddYS4rFceCwxb7jgIlgIfLn5DthkxZAglGdaemxIKIMIMVyTbveudkrFj+iiMKAMKWn+D3XgoiHaAff/oWGofVnvxnE+a1wzBTRRYR/TZCunk6Yw" "hBXgr8RWK7sCA1ze1cljKgIyr4JCnsOGiYDqrIxB8XBCOV6/pwiZUcQHV7UZdNoLt98mA+yfdwBPSoX9bOov9tn+B86S4NYbMHaewiRiQIDAQAB"
