@@ -15,7 +15,7 @@ export const ui = {
     // Hero
     'hero.tagline': 'Transforming ideas into visual experiences',
     'hero.title': 'Malena',
-    'hero.subtitle': 'Creative Director & Visual Artist',
+    'hero.subtitle': 'Director, Art Director & AI Artist',
     'hero.cta.work': 'View Work',
     'hero.cta.contact': 'Get in Touch',
     'hero.scroll': 'Scroll to explore',
@@ -46,7 +46,7 @@ export const ui = {
     'contact.alternative': 'Or reach me directly at',
 
     // Footer
-    'footer.tagline': 'Creative Director & Visual Artist',
+    'footer.tagline': 'Director, Art Director & AI Artist',
     'footer.copyright': 'All rights reserved.',
     'footer.credits': 'Crafted with vision & creativity',
 
@@ -70,7 +70,7 @@ export const ui = {
     // Hero
     'hero.tagline': 'Transformando ideas en experiencias visuales',
     'hero.title': 'Malena',
-    'hero.subtitle': 'Directora Creativa & Artista Visual',
+    'hero.subtitle': 'Directora, Directora de Arte & Artista de IA',
     'hero.cta.work': 'Ver Trabajo',
     'hero.cta.contact': 'Contactar',
     'hero.scroll': 'Deslizá para explorar',
@@ -101,7 +101,7 @@ export const ui = {
     'contact.alternative': 'O escribime directamente a',
 
     // Footer
-    'footer.tagline': 'Directora Creativa & Artista Visual',
+    'footer.tagline': 'Directora, Directora de Arte & Artista de IA',
     'footer.copyright': 'Todos los derechos reservados.',
     'footer.credits': 'Creado con visión y creatividad',
 
