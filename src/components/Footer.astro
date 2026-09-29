@@ -7,6 +7,17 @@ const { lang = 'en' } = Astro.props;
 
 const currentYear = new Date().getFullYear();
 
+const taglines: Record<string, string> = {
+  en: 'Director, Art Director & AI Artist',
+  es: 'Directora, Directora de Arte & Artista de IA',
+  fr: 'Réalisatrice, Directrice Artistique & Artiste IA',
+  de: 'Regisseurin, Art Direktorin & KI-Künstlerin',
+  pt: 'Diretora, Diretora de Arte & Artista de IA',
+  ja: 'ディレクター、アートディレクター＆AIアーティスト',
+  ar: 'مخرجة، مديرة فنية وفنانة ذكاء اصطناعي'
+};
+const tagline = taglines[lang] || taglines.en;
+
 const socialLinks = [
   { label: 'Instagram', href: '#', icon: 'instagram' },
   { label: 'LinkedIn', href: '#', icon: 'linkedin' },
@@ -19,7 +30,7 @@ const socialLinks = [
     <div class="footer__top">
       <div class="footer__brand">
         <span class="footer__logo">MXLXNX</span>
-        <p class="footer__tagline">Creative & Multidisciplinary Artist</p>
+        <p class="footer__tagline">{tagline}</p>
       </div>
 
       <div class="footer__social">
